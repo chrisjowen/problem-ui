@@ -55,7 +55,7 @@
       <div class="m-5">
         <Textarea rows="12" class="mb-5" bind:value={problem} />
         <Button
-          class="bg-primary-500 hover:bg-primary-600  w-full"
+          class="bg-primary-500 hover:bg-primary-900  w-full"
           on:click={rewrite}>Submit</Button
         >
       </div>

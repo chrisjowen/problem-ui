@@ -19,7 +19,7 @@
         <Input type="text" id="first_name" placeholder="John" required />
       </div>
       <div>
-        <Button class="bg-primary-500 hover:bg-primary-600">Join Us</Button>
+        <Button class="bg-primary-500 hover:bg-primary-900">Join Us</Button>
       </div>
     </div>
   </div>

@@ -1,14 +1,15 @@
 <script lang="ts">
   import type { Solution } from "$lib/types/solution";
+  import { Card } from "flowbite-svelte";
   export let solution: Solution;
 </script>
 
 {#if solution}
-<section class="drop-shadow-100 p-6 bg-white border ">
+<Card size="full">
   <h1 class="text-2xl text-primary-900">Solution Overview</h1>
-  <div class="pt-4">
+  <div class="pt-4 user-content">
     {@html solution.description}
   </div>
-</section>
+</Card>
 
 {/if}
