@@ -1,25 +1,16 @@
-FROM node:16.19.0 as build
-
-# install dependencies
+FROM node:16-alpine AS builder
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY package*.json .
 RUN npm ci
-
-# Copy all local files into the image.
 COPY . .
-
 RUN npm run build
+RUN npm prune --production
 
-# ###
-# # Only copy over the Node pieces we need
-# # ~> Saves 35MB
-# ###
-# FROM node:14.15.0
-
-# WORKDIR /app
-# COPY --from=build /app .
-# COPY . .
-
-
-# EXPOSE 3000
-# CMD ["node", "./app.js"]
+FROM mhart/alpine-node:slim-16
+WORKDIR /app
+COPY --from=builder /app/build build/
+COPY --from=builder /app/node_modules node_modules/
+COPY package.json .
+EXPOSE 3000
+ENV NODE_ENV=production
+CMD [ "node", "build" ]
