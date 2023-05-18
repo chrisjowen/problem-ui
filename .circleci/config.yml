@@ -29,7 +29,7 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build --cache-from=app -t problem_ui:latest .
+            docker build --cache-from=app -t chrisjowen/problem_ui:latest .
       - run:
           name: Save Docker image layer cache
           command: |
