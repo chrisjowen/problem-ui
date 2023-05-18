@@ -1,6 +1,7 @@
 <script lang="ts">
   import axios from "axios";
   import {
+    Card,
     Spinner,
     Table,
     TableBody,
@@ -45,36 +46,44 @@
   }
 </script>
 
-<!-- <h1 class="text-2xl text-bold text-primary-900 mb-3">Similar Products</h1> -->
+<!-- <h1 class="text-2xl text-bold text-primary-600 mb-3">Similar Products</h1> -->
 
-<div class="bg-white border">
+<Card size="full" >
   {#if products.length > 0}
-    <Table >
+    <Table>
       <TableHead>
         <TableHeadCell>Name</TableHeadCell>
-        <TableHeadCell>Description</TableHeadCell>
+        <TableHeadCell class="invisible md:visible">Description</TableHeadCell>
       </TableHead>
       <TableBody class="divide-y">
         {#each products as product}
           <TableBodyRow>
             <TableBodyCell>
               <div class="flex">
-                <img src={icon(product.url)} width="20" class="mr-2" />
+                <!-- <img src={icon(product.url)} width="20" class="mr-2" /> -->
+
+                <object
+                  title={product.name}
+                  data={icon(product.url)}
+                  type="image/png"
+                  width="20"
+                  class="mr-2"
+                >
+                  <i class="fa fa-external-link-alt text-primary-900" />
+                </object>
                 <a
-                  class="underlined text-primary-900"
+                  class="underlined text-primary-600"
                   target="_blank"
                   href={product.url}>{product.name}</a
                 >
               </div>
             </TableBodyCell>
-            <TableBodyCell>
+            <TableBodyCell class="invisible md:visible">
               {product.description}
             </TableBodyCell>
           </TableBodyRow>
         {/each}
       </TableBody>
     </Table>
-  {:else}
-    <Spinner color="yellow" size={10} />
   {/if}
-</div>
+</Card>

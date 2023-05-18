@@ -24,22 +24,24 @@
   }
 </script>
 
-<!-- <h1 class="text-2xl mb-3 text-primary-900">Questionaires</h1> -->
+<!-- <h1 class="text-2xl mb-3 text-primary-600">Questionaires</h1> -->
 
 {#each questionaires as questionaire}
   <div
-    class="flex bg-white border p-3 text-primary-900"
+    class="flex bg-white border p-3 text-primary-600"
     on:click={select(questionaire)}
   >
-  <i class="fa-sharp fa-solid fa-clipboard-question text-primary-900 mr-3  mt-1 " />
-  
-  <span>{questionaire.stakeholder.type}</span>
+    <i
+      class="fa-sharp fa-solid fa-clipboard-question text-primary-600 mr-3  text-xs"
+    />
+
+    <span class="text-xs">{questionaire.stakeholder.type}</span>
   </div>
 {/each}
 
 {#if selectedQuestionaire}
   <Modal bind:open={showModal} class="w-full" size="xl" autoclose>
-    <h1 class="text-xl text-primary-900">Questions</h1>
+    <h1 class="text-xl text-primary-600">Questions</h1>
 
     <div class="pl-4">
       {#each selectedQuestionaire.questions as question}

@@ -1,5 +1,5 @@
 <script>
-  import Editor from "$lib/shared/autoform/editor/editor.svelte";
+  import Editor from "$lib/shared/editor/editor.svelte";
 
 </script>
 

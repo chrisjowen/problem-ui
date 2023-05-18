@@ -1,115 +1,130 @@
-<script>
-  import { Input, Label, Helper, Button } from "flowbite-svelte";
-  import * as Icon from "svelte-heros-v2";
+<script lang="ts">
+  import { Button } from "flowbite-svelte";
 
+  import problemApi from "$lib/api/problemApi";
+  import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
+
+  let sectors: any = [];
+  let problems: any = [];
+
+  onMount(() => {
+    problemApi.sectors("", 10).then((res) => {
+      sectors = res.data;
+    });
+
+    problemApi.problems("", 5).then((res) => {
+      problems = res.data;
+    });
+  });
 </script>
 
 <!-- HERO -->
-<div class="hero flex flex justify-center">
-  <div class="lg:mt-[100px] mt-[50px] w-1/2 lg:w-1/3 sm:w-1/2 ">
-    <h1 class="text-primary-500 lg:text-7xl md:text-5xl text-2xl bold">
-      Dream, Create &  Collabortate
+<div
+  class=" hero bg-primary-600 flex flex justify-center m-h-[50%] xl:m-h-[50%]"
+>
+  <div class="lg:mt-[100px] mt-[50px] w-[80%] lg:w-[45%] md:w-[50%] z-20">
+    <h1 class="text-white font-bold lg:text-7xl text-6xl bold">
+      <span class="text-primary-200">1000's of  Statup  Problems </span> Just Dying To Te Solved
     </h1>
-    <p class="mt-9 mb-[50px] text-red-50 lg:text-2xl">
-      Join a global community of innovators, creators and investors on problems
-      worth solving.
+    <p class="mt-9 mb-[50px] text-red-50 text-2xl lg:text-3xl xl:text-4xl">
+      Join a global community of innovators, creators and investors to resolve
+      problems worth solving.
     </p>
-    <div class="mt-9 mb-[50px] lg:mb-[150px] flex flex-row">
-      <div class="flex-1 mr-5">
-        <Input type="text" id="first_name" placeholder="John" required />
-      </div>
-      <div>
-        <Button class="bg-primary-500 hover:bg-primary-900">Join Us</Button>
-      </div>
-    </div>
+    <div class="mt-9 mb-[50px] lg:mb-[150px] flex flex-row" />
   </div>
 </div>
 
 <!-- Features  -->
 
-<div class="grid gap-2 md:grid-cols-4 m-9">
-  <div class="border col-span-3">
-    
-  </div>
-  <div class="col-span-1">
-    <div class="grid gap-2 grid-cols-2">
-      <div class="col-span-1 hover:bg-primary-100  p-4 flex items-center justify-center flex-col ">
-        <div>
-          <div class="rounded-full  p-4 bg-primary-500"> 
-            <Icon.User size={40} color="white" /> 
+<div class="p-9 m-h-[500px]">
+  <h1 class="mb-9 text-3xl text-primary-900 font-bold">Trending Problems</h1>
+  <div class="flex overflow-auto w-full pb-9">
+    {#each problems.slice(0, 6) as problem}
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <div
+        class="inline-block flex !w-[300px] md:!w-[500px] mr-2 flex-shrink-0"
+        transition:fade
+      >
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div
+          class=" bg-white border hover:border-primary-500 w-full md:flex flex-row"
+          size="full"
+        >
+          <div class="p-4">
+            <img
+              class="w-full md:w-auto object-cover object-center border"
+              src="/api/image/{problem.img}"
+              alt="content"
+              style="height: 150px"
+            />
+          </div>
+          <div class="flex-1 mb-4 m-4 space-y-4">
+            <h5 class="text-2xl font-bold text-primary-900">
+              {problem.title}
+            </h5>
+            <p class="">
+              {problem.blurb.slice(0, 90)}...
+            </p>
+            <p
+              class=" text-primary-500 p-1 pl-2 pr-2 bg-gray-200 text-xs inline-block"
+            >
+              <i class="fas fa-tag mr-1" />
+              {problem.sector.name}
+            </p>
           </div>
         </div>
-        <p class="text-center text-primary-500 mt-3 bold">Simple Competitor Analisys</p>
       </div>
-
-      <div class="col-span-1 hover:bg-primary-100  p-4 flex items-center justify-center flex-col ">
-        <div>
-          <div class="rounded-full  p-4 bg-primary-500"> 
-            <Icon.Map size={40} color="white" /> 
-          </div>
-        </div>
-        <p class="text-center text-primary-500 mt-3 bold">Estimate Market Size</p>
-      </div>
-
-      <div class="col-span-1 hover:bg-primary-100  p-4 flex items-center justify-center flex-col ">
-        <div>
-          <div class="rounded-full  p-4 bg-primary-500"> 
-            <Icon.User size={40} color="white" /> 
-          </div>
-        </div>
-        <p class="text-center text-primary-500 mt-3 bold">Simple Competitor Analisys</p>
-      </div>
-
-      <div class="col-span-1 hover:bg-primary-100  p-4 flex items-center justify-center flex-col ">
-        <div>
-          <div class="rounded-full  p-4 bg-primary-500"> 
-            <Icon.Map size={40} color="white" /> 
-          </div>
-        </div>
-        <p class="text-center text-primary-500 mt-3 bold">Estimate Market Size</p>
-      </div>
-
-      <div class="col-span-1 hover:bg-primary-100  p-4 flex items-center justify-center flex-col ">
-        <div>
-          <div class="rounded-full  p-4 bg-primary-500"> 
-            <Icon.User size={40} color="white" /> 
-          </div>
-        </div>
-        <p class="text-center text-primary-500 mt-3 bold">Simple Competitor Analisys</p>
-      </div>
-
-      <div class="col-span-1 hover:bg-primary-100  p-4 flex items-center justify-center flex-col ">
-        <div>
-          <div class="rounded-full  p-4 bg-primary-500"> 
-            <Icon.Map size={40} color="white" /> 
-          </div>
-        </div>
-        <p class="text-center text-primary-500 mt-3 bold">Estimate Market Size</p>
-      </div>
-    </div>
+    {/each}
   </div>
 </div>
 
-<!-- Testemonial  -->
+<div class=" p-2 bg-primary-100">
+  <h1 class="my-9 mx-4 text-3xl text-primary-900 font-bold">Problems By Sector</h1>
+  <div class="flex mx-4 overflow-x-auto w-full">
+    {#each sectors.slice(0, 50) as sector}
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <div
+        class="border hover:border-primary-600 bg-white drop-shadow-lg mb-9 flex-shrink-0 !w-[300px] mr-2"
+        on:click={showSector(sector)}
+      >
+        <img
+          class="w-full h-[100px] object-cover object-center p-2"
+          src="/api/image{sector.image}"
+          alt="content"
+        />
 
-<div class="bg-primary-100 p-9 h-[500px]">
-adasasdasd
+        <h5 class="mb-2 text-xl font-bold tracking-tight m-4 pb-4">
+          {sector.name}
+        </h5>
+      </div>
+    {/each}
+  </div>
 </div>
 
 <!-- Signup  -->
 
-<div class="bg-black p-9 h-[500px]">
-  adasasdasd
-  
-  </div>
+<!-- <div class="bg-black p-9 h-[100px]">adasasdasd</div> -->
 
 <style lang="scss">
   .hero {
-    background-image: url("/img/hero.png");
-    background-color: black;
-
-    background-repeat: no-repeat;
     width: 100%;
+  }
+
+  .hero {
+    position: relative;
+  }
+
+  .hero::before {
+    content: "";
+    background-image: url("/img/hero.png");
     background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.1;
+    z-index: 1;
   }
 </style>

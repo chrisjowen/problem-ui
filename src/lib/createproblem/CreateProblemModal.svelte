@@ -44,7 +44,7 @@
   <div class="grid grid-cols-6 items-center justify-center ">
     <div class="flex-1 col-span-4 m-9 h-full">
       {#if !creating}
-        <h1 class="text-primary-500 text-4xl bold text-center mb-2">
+        <h1 class="text-primary-600 text-4xl bold text-center mb-2">
           Describe Your Problem
         </h1>
         <p class="text-center text-gray-400">
@@ -56,12 +56,12 @@
           <Textarea rows="12" class="mb-5" bind:value={problem} />
   
           <Button
-            class="bg-primary-500 hover:bg-primary-900  w-full"
+            class="bg-primary-600 hover:bg-primary-600  w-full"
             on:click={rewrite}>Lets Go!</Button
           >
         </div>
       {:else}
-        <h1 class="text-primary-500 text-4xl bold text-center mb-6">
+        <h1 class="text-primary-600 text-4xl bold text-center mb-6">
           Analysing Problem
         </h1>
   

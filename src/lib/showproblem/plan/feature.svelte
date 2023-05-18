@@ -9,7 +9,7 @@
 </script>
 
 <p class="flex p-5 border  bg-white">
-  <i class="fa-brands fa-trello mt-1 mr-3 ml-1 text-primary-900" />
+  <i class="fa-brands fa-trello mt-1 mr-3 ml-1 text-primary-600" />
   <Editable class="w-full" value={value} editable={editable} on:blur={blur} />
   {#if editable}
     <span>

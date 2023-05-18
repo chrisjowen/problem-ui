@@ -36,9 +36,9 @@
 </script>
 
 <Tabs
-  contentClass="border-0 bg-gray-50 h-screen p-5 "
-  activeClasses="p-4  m-0 border-[0px] border-b-[4px] border-primary-900 text-primary-900 text-xs"
-  inactiveClasses="p-4 hover:border-b-[4px] border-primary-900 m-0 text-xs"
+  contentClass="border-0 bg-gray-50 h-full py-5 md:px-5 px-2 "
+  activeClasses="p-4  m-0 border-[0px] border-b-[4px] border-primary-600 text-primary-600 text-xs"
+  inactiveClasses="p-4 hover:border-b-[4px] border-primary-600 m-0 text-xs"
 >
   <TabItem open title="Related Products">
     <div slot="title" class="flex items-center gap-2">
@@ -47,13 +47,13 @@
     </div>
     <Products problemId={problem.id} bind:reload={reloadProducts} />
   </TabItem>
-  <TabItem title="Questionaire">
+  <!-- <TabItem title="Questionaire">
     <div slot="title" class="flex items-center gap-2">
       <i class="fa-sharp fa-solid fa-clipboard-question"></i>
-      Questionaire
+      Questionaires
     </div>
     <Questionaire problemId={problem.id}  bind:reload={reloadQuestionaire}  />
-  </TabItem>
+  </TabItem> -->
   <TabItem title="Personas">
     <div slot="title" class="flex items-center gap-2">
       <i class="fa-solid fa-person-through-window"></i>

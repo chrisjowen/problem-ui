@@ -44,7 +44,7 @@
 <div class="flex items-center justify-center">
   <div class="flex-1 m-9 h-full">
     {#if !creating}
-      <h1 class="text-primary-500 text-4xl bold text-center mb-2">
+      <h1 class="text-primary-600 text-4xl bold text-center mb-2">
         Describe The Problem
       </h1>
       <p class="text-center text-gray-400">
@@ -55,12 +55,12 @@
       <div class="m-5">
         <Textarea rows="12" class="mb-5" bind:value={problem} />
         <Button
-          class="bg-primary-500 hover:bg-primary-900  w-full"
+          class="bg-primary-600 hover:bg-primary-600  w-full"
           on:click={rewrite}>Submit</Button
         >
       </div>
     {:else}
-      <h1 class="text-primary-500 text-4xl bold text-center mb-2">
+      <h1 class="text-primary-600 text-4xl bold text-center mb-2">
         Analysing Problem
       </h1>
 

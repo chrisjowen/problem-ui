@@ -1,207 +1,180 @@
 <script lang="ts">
   import axios from "axios";
-  import Overview from "$lib/showproblem/overview/overview.svelte";
+  import { onMount } from "svelte";
+  import EditableTextArea from "$lib/shared/editableTextArea.svelte";
   import { page } from "$app/stores";
-  import { Tabs, TabItem, Card, Button } from "flowbite-svelte";
-  import { onDestroy, onMount } from "svelte";
-  import Makers from "$lib/showproblem/makers.svelte";
+  import {
+    Breadcrumb,
+    BreadcrumbItem,
+    Button,
+    TabItem,
+    Tabs,
+  } from "flowbite-svelte";
+  import Statistics from "$lib/showproblem/plan/statistics.svelte";
+  import SolutionOverview from "$lib/showproblem/plan/solutionoverview.svelte";
+  import Features from "$lib/showproblem/plan/features.svelte";
+  import Questions from "$lib/showproblem/plan/questions.svelte";
+  import TechnologiesAndExpertise from "$lib/showproblem/plan/technologiesAndExpertise.svelte";
   import Research from "$lib/showproblem/research/research.svelte";
-  import type { Problem } from "$lib/types/problem";
-  import type { Channel } from "$lib/types/channel";
-  import socket from "$lib/channel/problemsocket";
-  import Plan from "$lib/showproblem/plan/plan.svelte";
+  import UserList from "$lib/showproblem/userList.svelte";
+  import { auth } from "$lib/store";
+  import { goto } from "$app/navigation";
+  import problemApi from "$lib/api/problemApi";
 
-  import { browser } from "$app/environment";
+  let problem: any = null;
+  let solution: any = null;
+  let loggedInUser: any;
+  let problemId = $page.params.id;
 
-  let problem: Problem = null;
-  let channel: Channel = null;
-  let reloadSolution: any;
+  $: following = problem?.followers?.some(
+    (f: any) => f.id === loggedInUser?.id
+  );
 
-  onMount(async () => {
-    let response = await axios.get(`/api/problem/${$page.params.id}`);
-    problem = response.data;
-    channel = socket.channel(`problem:${$page.params.id}`, {});
-    channel.join().receive("ok", (resp: any) => {
-      console.log("Joined successfully", resp);
-    });
-    channel.on("reload:solution", () => {
-      reloadSolution();
+  onMount(() => {
+    loadProblem();
+    loadSolution();
+    auth.subscribe((value) => {
+      loggedInUser = value.loggedInUser;
     });
   });
 
-  onDestroy(() => {
-    if (channel) {
-      console.log("leaving channel");
-      channel.leave();
-    }
-  });
-
-  let sections: string[] = [];
-  $: {
-    if (browser && problem) {
-      let el = document.createElement("div");
-      el.innerHTML = problem.overview;
-      sections = [...el.querySelectorAll("h1,h2,h3")].map((node) => {
-        var classes = "pl-2";
-        if (node.nodeName == "H2") {
-          classes = "pl-6";
-        }
-        if (node.nodeName == "H3") {
-          classes = "pl-9";
-        }
-        return {
-          classes: classes,
-          text: node.innerText,
-        };
+  function loadProblem() {
+    axios
+      .get(`/api/problem/${problemId}`)
+      .then((res) => {
+        problem = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
       });
+  }
+
+  function loadSolution() {
+    axios
+      .get(`/api/problem/${problemId}/solution`)
+      .then((res) => {
+        solution = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  async function onFollow() {
+    console.log("follow", loggedInUser);
+    if (!loggedInUser) {
+      goto("/login");
+    } else {
+      await problemApi.follow(problemId);
+      loadProblem();
     }
   }
 </script>
 
-{#if problem}
-  <div
-    class="flex items-center justify-center text-white banner border-b-[1px] drop-shadow-lg h-full"
-  >
-    <h1 class="text-2xl lg:text-5xl drop-shadow-lg bg-primary-900 tx-white p-4">
-      {problem.title}
-    </h1>
+{#if !problem}
+  <div class="bg-gray-50 p-9">
+    <h2 class="mb-3 text-2xl font-bold tracking-tight text-primary-600">
+      Loading...
+    </h2>
   </div>
-
-  <Tabs
-    contentClass="border-0 bg-gray-50 h-screen"
-    activeClasses="p-4  m-0 border-[0px] border-b-[4px] border-primary-900 text-primary-900"
-    inactiveClasses="p-4 hover:border-b-[4px] border-primary-900 m-0"
-  >
-    <TabItem open>
-      <div slot="title" class="flex items-center gap-2">
-        <i class="fas fa-info-circle" />
-        Problem
-      </div>
-      <div class="m-4 mb-0 grid grid-cols-4 gap-4">
-        <Card
-          padding="sm"
-          class="flex justify-center items-center text-primary-700"
-          size="2xl"
-          color="primary"
+{:else}
+  <div>
+    <div class="bg-primary-100 p-2 flex flex-row justify-end space-x-2">
+      {#if following}
+        <Button size="xs" color="red">
+          <i class="fas fa-bell-slash mr-2" />
+          Unfollow
+        </Button>
+      {:else}
+        <Button size="xs" color="light" on:click={onFollow}>
+          <i class="fas fa-bell mr-2" />
+          Follow
+        </Button>
+      {/if}
+    </div>
+    <div class=" p-6">
+      <Breadcrumb aria-label="Default breadcrumb example">
+        <BreadcrumbItem href="/sector">Sectors</BreadcrumbItem>
+        <BreadcrumbItem href="/sector/{problem.sector.id}"
+          >{problem.sector.name}</BreadcrumbItem
         >
-          <i class="fas fa-info-circle text-7xl mb-2" />
-          <h2 class="text-primary-900 text-2xl bold">
-            Develop Problem Statement
-          </h2>
-          <p class="text-gray-500 mt-5 text-md bold text-center">
-            Refine & develop your problem statement and gain feedback
-          </p>
-        </Card>
-
-        <Card
-          padding="sm"
-          class="flex justify-center items-center text-primary-700 "
-          size="2xl"
+        <BreadcrumbItem>{problem.title}</BreadcrumbItem>
+      </Breadcrumb>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-5 m-3 md:gap-3">
+      <section class="border bg-gray-50 col-span-3">
+        <Tabs
+          class="bg-white"
+          contentClass=" bg-white border m-3 mt-3 "
+          activeClasses="p-4  m-0 border-[0px] border-b-[4px] border-primary-600 text-primary-600"
+          inactiveClasses="p-4 hover:border-b-[4px] border-primary-600 m-0"
         >
-          <i class="fa fa-book-open text-7xl mb-2" />
-          <h2 class="text-primary-900 text-2xl bold">Gather Market Research</h2>
-          <p class="text-gray-500 mt-5 text-md bold text-center">
-            Checkout compertition & gather customer feedback
-          </p>
-        </Card>
-        <Card
-          padding="sm"
-          class="flex justify-center items-center text-primary-700"
-          size="2xl"
-        >
-          <i class="fas fa-list-check text-7xl mb-2" />
-          <h2 class="text-primary-900 text-2xl bold">Ideate & Plan</h2>
-          <p class="text-gray-500 mt-5 text-md bold text-center">
-            Outline and discuss the ideal solutions to this problem
-          </p>
-        </Card>
-        <Card
-          padding="sm"
-          class="flex justify-center items-center text-primary-700 "
-          size="2xl"
-        >
-          <i class="fa-solid fa-people-group text-7xl mb-2" />
-          <h2 class="text-primary-900 text-2xl bold">Find Founders/Team</h2>
-          <p class="text-gray-500 mt-5 text-md bold text-center">
-            Find potential founders or team mates to build out the solution
-          </p>
-        </Card>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-5 mt-4">
-        <section class="col-span-4">
-          <div class=" pr-4 pl-4 mb-6">
-            <Overview bind:problem />
-          </div>
-        </section>
-
-        <div class="col-span-1 p-4 bg-gray-100 border mr-4 rounded-md mb-6">
-          <h1 class="mb-4 text-xl text-primary-900">Sections</h1>
-          {#each sections as section}
-            <p
-              class="flex items-center gap-2 text-sm p-4 bg-white m-2 border {section.classes}"
+          <TabItem open>
+            <div slot="title" class="flex items-center gap-2">
+              <i class="fas fa-info-circle" />
+              Problem
+            </div>
+            <div />
+            <EditableTextArea
+              bind:input={problem.overview}
+              owner={loggedInUser}
+              editable={loggedInUser}
+              let:editing
             >
-              <i class="fas fa-link" />
-              {section.text}
-            </p>
-          {/each}
+              {#if !editing}
+                <div class="p-4 text-center w-full">
+                  <div
+                    class="h-[256px] border m-auto"
+                    style="background-image:url('/api/image{problem.img}');  background-size: cover; background-position: center;"
+                  />
+                </div>
+              {/if}
+              <div class="p-3 mb-2">
+                {#if !editing}
+                  <h1 class="mb-4 ml-3 text-xl text-primary-600">
+                    Key Research
+                  </h1>
+                {/if}
+                <Research {problem} />
+              </div>
+            </EditableTextArea>
+          </TabItem>
+
+          {#if solution}
+            <TabItem>
+              <div slot="title" class="flex items-center gap-2">
+                <i class="fas fa-list-check" />
+                Proposed Solution
+              </div>
+              <div class=" ">
+                <SolutionOverview {solution} />
+              </div>
+              <div class="m-4">
+                <Statistics {solution} />
+              </div>
+              <div class="m-4 border p-4">
+                <TechnologiesAndExpertise {solution} />
+              </div>
+              <div class="m-4 border p-4">
+                <h1 class="mb-4 text-xl text-primary-600">Key Features</h1>
+                <Features {solution} />
+              </div>
+            </TabItem>
+          {/if}
+        </Tabs>
+      </section>
+      <section class="col-span-2 m-4 lg:mt-0">
+        <div class=" ">
+          <h1 class="mb-4 text-xl text-primary-600 font-bold">
+            Latest Question
+          </h1>
+          <Questions />
         </div>
-      </div>
-    </TabItem>
-    <TabItem>
-      <div slot="title" class="flex items-center gap-2">
-        <i class="fa fa-book-open" />
-        Market Research
-      </div>
-      <Research {problem} />
-    </TabItem>
-    <TabItem title="Plan">
-      <div slot="title" class="flex items-center gap-2">
-        <i class="fas fa-list-check" />
-        Ideate & Plan
-      </div>
-      <Plan problemId={problem.id} bind:reload={reloadSolution} />
-    </TabItem>
-
-    <TabItem title="Team">
-      <div slot="title" class="flex items-center gap-2">
-        <i class="fa-solid fa-people-group" />
-        Project Team
-      </div>
-      <div class="m-4">
-        <Makers />
-      </div>
-    </TabItem>
-    <!-- <TabItem title="Experiments">
-      <div class="m-4">
-        TODO
-      </div>
-    </TabItem>
-    <TabItem title="Announcements">
-      <div class="m-4">
-       TODO
-      </div>
-    </TabItem> -->
-  </Tabs>
+        <div class=" mb-4">
+          <h1 class="mb-4 text-xl text-primary-600 font-bold">Followers</h1>
+          <UserList users={problem.followers} />
+        </div>
+      </section>
+    </div>
+  </div>
 {/if}
-
-<style lang="scss">
-  .banner {
-    position: relative;
-
-    height: 280px;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url("https://picsum.photos/1200/200");
-      filter: sepia(100%) hue-rotate(190deg) saturate(500%);
-      opacity: 0.8;
-      background-size: cover;
-    }
-  }
-</style>

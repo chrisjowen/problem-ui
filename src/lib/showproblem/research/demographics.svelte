@@ -34,12 +34,12 @@
   ];
 </script>
 
-<h1 class="text-xl mb-3 text-primary-900">Demographics</h1>
+<h1 class="text-xl mb-3 text-primary-600">Demographics</h1>
 {#if stakeholder}
   {#each metrics as metric}
     <div class="flex flex-row pb-2 pt-2 border-b-[1px] border-gray-200">
       <div class="mr-4">
-        <i class="fa {metric.icon} text-sm text-primary-900" />
+        <i class="fa {metric.icon} text-sm text-primary-600" />
       </div>
       <div class="flex-1">{metric.value}</div>
     </div>

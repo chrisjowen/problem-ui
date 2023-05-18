@@ -20,7 +20,7 @@ const config = {
       ],
     },
     colors: {
-      primary: colors.blue,
+      primary: colors.indigo,
     },
   },
 

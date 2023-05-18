@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Input } from "flowbite-svelte";
+  import { onMount, onDestroy } from "svelte";
   let editing = false;
   export let editable = false;
   function edit() {

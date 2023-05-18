@@ -1,63 +1,133 @@
 <script lang="ts">
-  import { Input, Label, Helper, Button, Modal } from "flowbite-svelte";
-  import * as Icon from "svelte-heros-v2";
-  import { Card } from "flowbite-svelte";
+  import { Button, Input, Modal } from "flowbite-svelte";
   import axios from "axios";
-  import type { Problem } from "$lib/types/problem.ts";
   import { onMount } from "svelte";
   import CreateProblemModal from "$lib/createproblem/CreateProblemModal.svelte";
+  import { goto } from "$app/navigation";
+  import { fade } from "svelte/transition";
+  let timer;
+  let listView = false;
 
-  let problems: Problem[] = [];
+  $: problems = [];
   let showModal = false;
+  let q = "";
 
   function show() {
     showModal = true;
   }
 
   onMount(() => {
+    loadProblems();
+  });
+
+  const debounce = (v) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      q = v;
+      loadProblems();
+    }, 500);
+  };
+
+  function loadProblems() {
     axios
-      .get("/api/problem")
+      .get(`/api/problem?q=${q}`)
       .then((res) => {
         problems = res.data;
       })
       .catch((err) => {
         console.log(err);
       });
-  });
+  }
+  let showProblem = (problem: any) => () => {
+    goto(`/problem/show/${problem.id}`);
+  };
 </script>
 
-<div class="bg-gray-50 p-9">
-  <h2 class="mb-3 text-2xl font-bold tracking-tight text-primary-900">
-    Active Problems
-  </h2>
-  <!-- HERO -->
-  <div
-    class="grid gap-4 md:grid-cols-2 md:grid-cols-4 overflow-x-auto "
-  >
-    <div on:click={show} class="flex">
-        <Card href="#click" class="flex-1">
-          <div class="mr-4 flex items-center justify-center h-full">
-            <i class="fa fa-add text-7xl text-primary-900" />
+<div class="bg-gray-50 flex flex-col h-full">
+  <div class="bg-primary-100 p-9  z-40">
+    <Input
+      bind:value={q}
+      type="text"
+      placeholder="Search"
+      on:keyup={({ target: { value } }) => debounce(value)}
+    >
+      <i class="fas fa-search" slot="left" />
+    </Input>
+    <!-- <div class="my-4">
+      <div class="bg-primary-400 text-white text-xs inline-block rounded">
+        <div class="flex flex-row ">
+          <span class="flex-1 p-2 ">Virtual Reality (VR)</span>
+          <div class="p-2  hover:bg-primary-800 rounded">
+            <i class="fas fa-times "></i>
           </div>
-        </Card>
+        </div>
       </div>
-    {#each problems as problem, idx}
-      <div class="inline-block flex">
-        <Card
-          img="https://picsum.photos/282/{150 + idx}"
-          href="/problem/show/{problem.id}"
-        >
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary-900">
-            {problem.title}
-          </h5>
-          <p
-            class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight"
+      <div class="bg-primary-400 text-white text-xs inline-block rounded">
+        <div class="flex flex-row ">
+          <span class="flex-1 p-2 ">Virtual Reality (VR)</span>
+          <div class="p-2  hover:bg-primary-800 rounded">
+            <i class="fas fa-times "></i>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <section class="px-9 py-3 mb-3 text-xs flex flex-row drop-shadow-sm z-40 border-b-[1px]">
+    <div class="flex-1">
+      <i class="fas fa-info-circle m-2" />
+      {problems.length} Problems Found
+    </div>
+    <div>
+      <Button color="light" size="xs" on:click={() => (listView = false)}
+        ><i class="fas fa-th-large" /></Button
+      >
+      <Button color="light" size="xs" on:click={() => (listView = true)}
+        ><i class="fas fa-th-list" /></Button
+      >
+    </div>
+  </section>
+  <div class="flex-1 overflow-auto">
+    <div
+      class="grid gap-4 grid-cols-1 {listView
+        ? 'md:grid-cols-1'
+        : 'xl:grid-cols-3'}  sm:grid-cols-1 px-4"
+    >
+      {#each problems as problem}
+        <div class="inline-block flex w-full" transition:fade>
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <div
+            class=" bg-white border hover:border-primary-500 hover:drop-shadow-lg drop-shadow-sm w-full md:flex flex-row"
+            on:click={showProblem(problem)}
+            size="full"
           >
-            {problem.blurb}
-          </p>
-        </Card>
-      </div>
-    {/each}
+            <div class="p-4">
+              <img
+                class="w-full md:w-auto object-cover object-center border"
+                src="/api/image/{problem.img}"
+                alt="content"
+                style="height: {listView ? '120px' : '200px'};"
+              />
+            </div>
+            <div class="flex-1 mb-4 m-4 space-y-4">
+              <h5 class="text-2xl font-bold text-gray-500">
+                {problem.title}
+              </h5>
+              <!-- {#if !listView} -->
+              <p class="">
+                {problem.blurb.slice(0, 100)}...
+              </p>
+              <!-- {/if} -->
+              <p
+                class=" text-primary-500 p-1 pl-2 pr-2 bg-gray-200 text-xs inline-block"
+              >
+                <i class="fas fa-tag mr-1" />
+                {problem.sector.name}
+              </p>
+            </div>
+          </div>
+        </div>
+      {/each}
+    </div>
   </div>
 </div>
 

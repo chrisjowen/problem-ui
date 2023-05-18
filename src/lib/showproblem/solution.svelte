@@ -23,10 +23,10 @@
 <div class="bg-gray-50">
   {#if solution}
   <section >
-    <div class="grid grid-cols-5 h-screen ">
+    <div class="grid grid-cols-5 h-full ">
       <div class="col-span-3">
         <section class="drop-shadow-100 p-5 m-9 bg-white border drop-shadow-md">
-          <h1 class="text-2xl text-primary-900">Solution Overview</h1>
+          <h1 class="text-2xl text-primary-600">Solution Overview</h1>
           <div class="pt-4 ">
             {@html solution.description}
           </div>
@@ -34,34 +34,34 @@
       </div>
       <div class="p-4 col-span-2 bg-gray-100 border-gray-200  border-l-[1px]">
         <section >
-          <h1 class="mb-4 text-xl text-primary-900">Time & Budget</h1>
+          <h1 class="mb-4 text-xl text-primary-600">Time & Budget</h1>
           <div  class=" mb-5 bg-white border p-4">
             <Statistics solution={solution} />
           </div>
         </section>
         <section  class="mb-6">
-          <h1 class="mb-4 text-xl text-primary-900">Key Features</h1>
+          <h1 class="mb-4 text-xl text-primary-600">Key Features</h1>
           {#each solution.keyFeatures as feature}
             <Feature value={feature} {editable} />
           {/each}
         </section>
         <section>
           <div class="m-1">
-            <h1 class="mb-4 text-xl text-primary-900">Technologies</h1>
+            <h1 class="mb-4 text-xl text-primary-600">Technologies</h1>
             <div >
               {#each solution.technologies as technology}
-                <span class="text-xs bg-primary-900 p-2 mr-1 mb-2 inline-block text-white">
+                <span class="text-xs bg-primary-600 p-2 mr-1 mb-2 inline-block text-white">
                   {technology}
                 </span>
               {/each}
             </div>
           </div>
           <div class="m-1">
-            <h1 class="mb-4 text-xl text-primary-900">Team Expertise</h1>
+            <h1 class="mb-4 text-xl text-primary-600">Team Expertise</h1>
             <div >
               {#each solution.expertise as expertise}
                 <span
-                  class="text-xs bg-primary-900 p-2 mr-1 mb-1 inline-block text-white"
+                  class="text-xs bg-primary-600 p-2 mr-1 mb-1 inline-block text-white"
                 >
                   {expertise}
                 </span>
