@@ -1,4 +1,4 @@
-FROM node:14.15.0 as build
+FROM node:16.19.0 as build
 
 # install dependencies
 WORKDIR /app
