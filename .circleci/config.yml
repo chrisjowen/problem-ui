@@ -42,7 +42,7 @@ jobs:
       - run: 
           name: Publish Docker Image to Docker Hub
           command: |
-            docker login -u chrisjowen -p '$DOCKERHUB_PASSWORD'
+            docker login -u chrisjowen -p "$DOCKERHUB_PASSWORD"
             docker push problem_ui:latest
             
       
