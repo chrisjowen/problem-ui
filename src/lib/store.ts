@@ -5,7 +5,7 @@ import { writable } from 'svelte/store';
 export const flags = writable({
 
 });
-const authValue = browser ? JSON.parse(window.localStorage.getItem('auth') || '{"{}"}') : {};
+const authValue = browser ? JSON.parse(window.localStorage.getItem('auth') || '{}') : {};
 
 if(authValue.token) {
     axios.defaults.headers.common['Authorization'] = `bearer ${authValue.token}`
