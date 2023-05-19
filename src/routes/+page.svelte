@@ -4,6 +4,7 @@
   import problemApi from "$lib/api/problemApi";
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
+  import { goto } from "$app/navigation";
 
   let sectors: any = [];
   let problems: any = [];
@@ -17,6 +18,15 @@
       problems = res.data;
     });
   });
+
+  let showProblem = (problem: any) => () => {
+    goto(`/problem/show/${problem.id}`);
+  };
+
+  let showSector = (sector: any) => () => {
+    goto(`/sector/${sector.id}`);
+  };
+
 </script>
 
 <!-- HERO -->
@@ -50,6 +60,7 @@
         <div
           class=" bg-white border hover:border-primary-500 w-full md:flex flex-row"
           size="full"
+          on:click={showProblem(problem)}
         >
           <div class="p-4">
             <img
@@ -57,6 +68,7 @@
               src="/api/image/{problem.img}"
               alt="content"
               style="height: 150px"
+              
             />
           </div>
           <div class="flex-1 mb-4 m-4 space-y-4">
