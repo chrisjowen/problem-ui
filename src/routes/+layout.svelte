@@ -22,9 +22,7 @@
     console.log("loggedInUser", loggedInUser);
   });
 
-  afterNavigate(() => {
-    document.getElementById("main").scrollTop = 0;
-  });
+
 
   $: showNavBar = $page.route.id != "/login";
 </script>
@@ -47,7 +45,7 @@
             ProblemsWorthSolving.com
           </span>
         </NavBrand>
-        <NavHamburger on:click={toggle} />
+        <!-- <NavHamburger on:click={toggle}  /> -->
         <NavUl {hidden} activeClass="text-white " nonActiveClass="text-white">
           <NavLi href="/" active={true}
             ><i class="fas fa-home text-xs mr-1" /> Home</NavLi

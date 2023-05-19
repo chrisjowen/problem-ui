@@ -20,6 +20,7 @@
   import { auth } from "$lib/store";
   import { goto } from "$app/navigation";
   import problemApi from "$lib/api/problemApi";
+  import Disqus from "$lib/components/shared/disqus.svelte";
 
   let problem: any = null;
   let solution: any = null;
@@ -164,16 +165,14 @@
         </Tabs>
       </section>
       <section class="col-span-2 m-4 lg:mt-0">
-        <div class=" ">
-          <h1 class="mb-4 text-xl text-primary-600 font-bold">
-            Latest Question
-          </h1>
-          <Questions />
-        </div>
         <div class=" mb-4">
           <h1 class="mb-4 text-xl text-primary-600 font-bold">Followers</h1>
           <UserList users={problem.followers} />
         </div>
+        <div class="bg-white border mb-4">
+         <Disqus />
+        </div>
+     
       </section>
     </div>
   </div>

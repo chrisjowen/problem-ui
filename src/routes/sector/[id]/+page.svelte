@@ -83,7 +83,7 @@
     </div> 
 
    
-    <div class=" mx-4 mb-4">
+    <div class=" mx-4 mb-4 hidden">
       <Alert dismissable border>
         <span slot="icon">
           <i class="fas fa-info-circle"></i>
@@ -93,10 +93,9 @@
       </Alert> 
     </div>
    
-
-    <div class="grid grid-cols-1 md:grid-cols-5 md:gap-4">
-      <section class=" col-span-3   ml-4 mb-4">
-      
+    
+    <div class="grid grid-cols-1 md:grid-cols-5 md:gap-4 m-3 ">
+      <section class=" col-span-3   mb-4">
         <div class="bg-white border">
           <EditableTextArea bind:input={sector.description}>
             <div class="p-4 text-center w-full ">
@@ -109,8 +108,8 @@
         </div>
       
       </section>
-      <section class="col-span-2 md:mr-4">
-        <div class=" mb-4">
+      <section class="col-span-2 md:mr-4 ">
+        <div class=" mb-4 hidden">
           <h1 class="mb-4 text-xl text-primary-600 font-bold">Experts</h1>
           <UserList />
         </div>
