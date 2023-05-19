@@ -6,6 +6,12 @@
     NavUl,
     NavLi,
     Avatar,
+    Button,
+    Drawer,
+    Sidebar,
+    SidebarGroup,
+    SidebarItem,
+    SidebarWrapper,
   } from "flowbite-svelte";
   import "../app.postcss";
   import { afterNavigate } from "$app/navigation";
@@ -16,21 +22,74 @@
   import { fade } from "svelte/transition";
 
   let loggedInUser: any = null;
+  let hideSideBar = true;
 
   auth.subscribe((value) => {
     loggedInUser = value.loggedInUser;
     console.log("loggedInUser", loggedInUser);
   });
 
-
-
   $: showNavBar = $page.route.id != "/login";
 </script>
 
 <div class="flex flex-col h-screen">
   {#if showNavBar}
-    <div class=" bg-primary-700 text-white">
-      <Navbar
+    <div class="w-full bg-primary-700 text-white">
+      <div class="flex flex-row">
+        <div class="flex-1 p-6">
+          <span on:click={() => hideSideBar = false} class="md:hidden">
+            <i class="fas fa-bars mr-4" />
+          </span>
+          <span
+            class="self-center whitespace-nowrap text-sm md:text-lg font-semibold dark:text-white"
+          >
+            ProblemsWorthSolving.com
+          </span>
+        </div>
+
+        <Drawer transitionType="fly" bind:hidden={hideSideBar} id="sidebar2">
+         
+          <Sidebar>
+            <SidebarWrapper
+              divClass="overflow-y-auto p-2   "
+            >
+              <SidebarGroup>
+                <SidebarItem label="Home" href="/"> 
+                  <svelte:fragment slot="icon">
+                    <i class="fas fa-home text-xs " /> 
+                  </svelte:fragment>
+                </SidebarItem>
+                <SidebarItem label="Problems"  href="/problem/list">
+                  <svelte:fragment slot="icon">
+                    <i class="fas fa-search text-xs " /> 
+                  </svelte:fragment>
+                </SidebarItem>
+                <SidebarItem label="Sectors"  href="/sector">
+                  <svelte:fragment slot="icon">
+                    <i class="fas fa-list text-xs " /> 
+                  </svelte:fragment>
+                </SidebarItem>
+              </SidebarGroup>
+            </SidebarWrapper>
+          </Sidebar>
+        </Drawer>
+
+        <div class="hidden md:block">
+          <ul class="justify-end p-6 space-x-6">
+            <a href="/"><i class="fas fa-home text-xs mr-1" /> Home </a>
+            <a href="/problem/list">
+              <i class="fas fa-search text-xs mr-1" /> Problems</a
+            >
+            <a href="/sector"
+              ><i class="fas fa-list text-xs mr-1" /> Sectors</a
+            >
+          </ul>
+        </div>
+      </div>
+    </div>
+  {/if}
+
+  <!-- <Navbar
         fluid={true}
         let:hidden
         let:toggle
@@ -45,8 +104,8 @@
             ProblemsWorthSolving.com
           </span>
         </NavBrand>
-        <!-- <NavHamburger on:click={toggle}  /> -->
-        <NavUl {hidden} activeClass="text-white " nonActiveClass="text-white">
+     
+        <NavUl {hidden} activeClass="text-white " nonActiveClass="hover:text-white text-primary-300">
           <NavLi href="/" active={true}
             ><i class="fas fa-home text-xs mr-1" /> Home</NavLi
           >
@@ -67,9 +126,7 @@
             </NavLi>
           {/if}
         </NavUl>
-      </Navbar>
-    </div>
-  {/if}
+      </Navbar> -->
 
   <div class="flex-1 overflow-auto relative">
     <slot />
