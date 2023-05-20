@@ -9,6 +9,10 @@ class ProblemApi {
         return axios.post(`/api/problem/${problemId}/follow`)
     }
 
+    unfollow(problemId: string) {
+        return axios.post(`/api/problem/${problemId}/unfollow`)
+    }
+
     sectors(query: string = "", page: number = 1, pageSize: number = 50) {
         return axios.get('/api/sector')
     }

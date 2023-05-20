@@ -70,6 +70,15 @@
       loadProblem();
     }
   }
+
+  async function onUnFollow() {
+    if (!loggedInUser) {
+      goto("/login");
+    } else {
+      await problemApi.unfollow(problemId);
+      loadProblem();
+    }
+  }
 </script>
 
 {#if !problem}
@@ -82,7 +91,7 @@
   <div>
     <div class="bg-primary-100 p-2 flex flex-row justify-end space-x-2">
       {#if following}
-        <Button size="xs" color="red">
+        <Button size="xs" color="red" on:click={onUnFollow}>
           <i class="fas fa-bell-slash mr-2" />
           Unfollow
         </Button>

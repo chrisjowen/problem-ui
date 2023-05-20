@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import CreateProblemModal from "$lib/createproblem/CreateProblemModal.svelte";
   import { goto } from "$app/navigation";
-  import { fade } from "svelte/transition";
+  import { slide } from "svelte/transition";
   let timer;
   let listView = false;
 
@@ -88,12 +88,13 @@
   </section>
   <div class="flex-1 overflow-auto">
     <div
+      transition:slide="{{  duration: 250 }}"
       class="grid gap-4 grid-cols-1 {listView
         ? 'md:grid-cols-1'
         : 'xl:grid-cols-3'}  sm:grid-cols-1 px-4"
     >
       {#each problems as problem}
-        <div class="inline-block flex w-full" transition:fade>
+        <div class="inline-block flex w-full" >
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
             class=" bg-white border hover:border-primary-500 hover:drop-shadow-lg drop-shadow-sm w-full md:flex flex-row"

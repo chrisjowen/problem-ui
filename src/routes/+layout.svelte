@@ -1,12 +1,5 @@
 <script lang="ts">
   import {
-    Navbar,
-    NavBrand,
-    NavHamburger,
-    NavUl,
-    NavLi,
-    Avatar,
-    Button,
     Drawer,
     Sidebar,
     SidebarGroup,
@@ -14,13 +7,11 @@
     SidebarWrapper,
   } from "flowbite-svelte";
   import "../app.postcss";
-  import { afterNavigate } from "$app/navigation";
-
+  
   import { page } from "$app/stores";
   import { auth } from "$lib/store";
   import Gravitar from "$lib/components/shared/gravitar.svelte";
-  import { fade } from "svelte/transition";
-
+  
   let loggedInUser: any = null;
   let hideSideBar = true;
 
@@ -37,7 +28,7 @@
     <div class="w-full bg-primary-700 text-white">
       <div class="flex flex-row">
         <div class="flex-1 p-6">
-          <span on:click={() => hideSideBar = false} class="md:hidden">
+          <span on:click={() => (hideSideBar = false)} class="md:hidden">
             <i class="fas fa-bars mr-4" />
           </span>
           <span
@@ -47,86 +38,58 @@
           </span>
         </div>
 
-        <Drawer transitionType="fly" bind:hidden={hideSideBar} id="sidebar2">
-         
-          <Sidebar>
-            <SidebarWrapper
-              divClass="overflow-y-auto p-2   "
-            >
+        <Drawer  bind:hidden={hideSideBar} id="sidebar2">
+          <Sidebar >
+            <SidebarWrapper divClass="overflow-y-auto p-2">
               <SidebarGroup>
-                <SidebarItem label="Home" href="/"> 
+                <SidebarItem label="Home" href="/" on:click={() => hideSideBar = true}>
                   <svelte:fragment slot="icon">
-                    <i class="fas fa-home text-xs " /> 
+                    <i class="fas fa-home text-xs" />
                   </svelte:fragment>
                 </SidebarItem>
-                <SidebarItem label="Problems"  href="/problem/list">
+                <SidebarItem label="Problems" href="/problem/list" on:click={() => hideSideBar = true}>
                   <svelte:fragment slot="icon">
-                    <i class="fas fa-search text-xs " /> 
+                    <i class="fas fa-search text-xs" />
                   </svelte:fragment>
                 </SidebarItem>
-                <SidebarItem label="Sectors"  href="/sector">
+                <SidebarItem label="Sectors" href="/sector" on:click={() => hideSideBar = true}>
                   <svelte:fragment slot="icon">
-                    <i class="fas fa-list text-xs " /> 
+                    <i class="fas fa-list text-xs" />
                   </svelte:fragment>
                 </SidebarItem>
+                {#if loggedInUser}
+                  <SidebarItem label="Profile" href="/sector" on:click={() => hideSideBar = true}>
+                    <svelte:fragment slot="icon">
+                      <Gravitar email={loggedInUser.email} size="xs" />
+                    </svelte:fragment>
+                  </SidebarItem>
+                {/if}
               </SidebarGroup>
             </SidebarWrapper>
           </Sidebar>
         </Drawer>
 
         <div class="hidden md:block">
-          <ul class="justify-end p-6 space-x-6">
+          <div class="justify-end p-6 space-x-6 flex">
             <a href="/"><i class="fas fa-home text-xs mr-1" /> Home </a>
             <a href="/problem/list">
-              <i class="fas fa-search text-xs mr-1" /> Problems</a
-            >
+              <i class="fas fa-search text-xs mr-1" />
+              Problems
+            </a>
             <a href="/sector"
-              ><i class="fas fa-list text-xs mr-1" /> Sectors</a
-            >
-          </ul>
+              ><i class="fas fa-list text-xs mr-1" />
+              Sectors
+            </a>
+            {#if loggedInUser}
+              <div>
+                <Gravitar email={loggedInUser.email} size="sm" />
+              </div>
+            {/if}
+          </div>
         </div>
       </div>
     </div>
   {/if}
-
-  <!-- <Navbar
-        fluid={true}
-        let:hidden
-        let:toggle
-        color="transparant"
-        navDivClass="m-0  flex flex-wrap justify-between items-center "
-        navClass="px-2 sm:px-4 py-2.5  w-full z-10 top-0 left-0  bg-primary-700 drop-shadow-lg"
-      >
-        <NavBrand href="/">
-          <span
-            class="self-center whitespace-nowrap text-lg font-semibold dark:text-white"
-          >
-            ProblemsWorthSolving.com
-          </span>
-        </NavBrand>
-     
-        <NavUl {hidden} activeClass="text-white " nonActiveClass="hover:text-white text-primary-300">
-          <NavLi href="/" active={true}
-            ><i class="fas fa-home text-xs mr-1" /> Home</NavLi
-          >
-          <NavLi href="/problem/list">
-            <i class="fas fa-search text-xs mr-1" /> Problems</NavLi
-          >
-          <NavLi href="/sector"
-            ><i class="fas fa-list text-xs mr-1" /> Sectors</NavLi
-          >
-
-          {#if loggedInUser}
-            <NavLi href="/sector">
-              <div class="flex flex-row">
-                <span class="mr-2 relative top-[-5px]">
-                  <Gravitar email={loggedInUser.email} size="sm" /></span
-                >
-              </div>
-            </NavLi>
-          {/if}
-        </NavUl>
-      </Navbar> -->
 
   <div class="flex-1 overflow-auto relative">
     <slot />

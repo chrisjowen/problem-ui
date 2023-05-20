@@ -3,7 +3,6 @@
 
   import problemApi from "$lib/api/problemApi";
   import { onMount } from "svelte";
-  import { fade } from "svelte/transition";
   import { goto } from "$app/navigation";
 
   let sectors: any = [];
@@ -54,7 +53,6 @@
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="inline-block flex !w-[300px] md:!w-[500px] mr-2 flex-shrink-0"
-        transition:fade
       >
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
