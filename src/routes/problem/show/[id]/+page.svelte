@@ -11,9 +11,7 @@
     Tabs,
   } from "flowbite-svelte";
   import Statistics from "$lib/showproblem/plan/statistics.svelte";
-  import SolutionOverview from "$lib/showproblem/plan/solutionoverview.svelte";
   import Features from "$lib/showproblem/plan/features.svelte";
-  import Questions from "$lib/showproblem/plan/questions.svelte";
   import TechnologiesAndExpertise from "$lib/showproblem/plan/technologiesAndExpertise.svelte";
   import Research from "$lib/showproblem/research/research.svelte";
   import UserList from "$lib/showproblem/userList.svelte";
@@ -115,7 +113,7 @@
       <section class="border bg-gray-50 col-span-3">
         <Tabs
           class="bg-white"
-          contentClass=" bg-white border m-3 mt-3 "
+          contentClass=" bg-white  "
           activeClasses="p-4  m-0 border-[0px] border-b-[4px] border-primary-600 text-primary-600"
           inactiveClasses="p-4 hover:border-b-[4px] border-primary-600 m-0"
         >
@@ -157,8 +155,10 @@
                 Proposed Solution
               </div>
               <div class=" ">
-                <SolutionOverview {solution} />
-              </div>
+                {#if solution}
+                <EditableTextArea bind:input={solution.description}  />
+                {/if}
+              </div>  
               <div class="m-4">
                 <Statistics {solution} />
               </div>

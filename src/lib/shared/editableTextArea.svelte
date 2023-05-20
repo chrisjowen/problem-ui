@@ -3,7 +3,7 @@
   import Editor from "$lib/shared/editor/editor.svelte";
   import { Avatar, Button, Card, Input, Modal } from "flowbite-svelte";
   export let input: String;
-  export let owner: any;
+  export let owner: null | any = null;
   export let editable = false;
   let editing = false;
   let fullscreen = false;
@@ -21,12 +21,12 @@
   };
 
   $: className = editing
-    ? "absolute top-0 right-0 left-0 bg-white h-full bg-white flex flex-col"
+    ? "absolute top-0 w-full bg-white h-full bg-white flex flex-col"
     : "flex flex-col";
 </script>
 
 <div class={className}>
-  <div class="flex text-xs bg-gray-50">
+  <div class="flex text-xs bg-gray-50 border-b-[1px]">
     {#if owner}
       <div class="p-3 flex-1 flex">
         <div>

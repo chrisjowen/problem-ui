@@ -49,12 +49,12 @@
                 </SidebarItem>
                 <SidebarItem label="Problems" href="/problem/list" on:click={() => hideSideBar = true}>
                   <svelte:fragment slot="icon">
-                    <i class="fas fa-search text-xs" />
+                    <i class="fa-solid fa-magnifying-glass text-xs "></i>
                   </svelte:fragment>
                 </SidebarItem>
                 <SidebarItem label="Sectors" href="/sector" on:click={() => hideSideBar = true}>
                   <svelte:fragment slot="icon">
-                    <i class="fas fa-list text-xs" />
+                    <i class="fa-solid fa-industry text-xs"></i>
                   </svelte:fragment>
                 </SidebarItem>
                 {#if loggedInUser}
@@ -73,11 +73,11 @@
           <div class="justify-end p-6 space-x-6 flex">
             <a href="/"><i class="fas fa-home text-xs mr-1" /> Home </a>
             <a href="/problem/list">
-              <i class="fas fa-search text-xs mr-1" />
+              <i class="fa-solid fa-magnifying-glass text-xs mr-1"></i>
               Problems
             </a>
-            <a href="/sector"
-              ><i class="fas fa-list text-xs mr-1" />
+            <a href="/sector">
+              <i class="fa-solid fa-industry text-xs mr-1"></i>
               Sectors
             </a>
             {#if loggedInUser}

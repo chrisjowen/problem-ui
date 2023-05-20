@@ -61,7 +61,7 @@
   </div>
 {:else}
   <div>
-    <div class="bg-primary-100 p-2 flex flex-row justify-end space-x-2">
+    <div class="bg-primary-100 p-2 flex flex-row justify-end space-x-2 hidden">
       <Button size="xs" color="light" on:click={follow}>
         <i class="fas fa-bell mr-2"></i>
         Follow
