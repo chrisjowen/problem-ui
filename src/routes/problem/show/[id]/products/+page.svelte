@@ -2,7 +2,6 @@
   import { page } from "$app/stores";
   import api from "$lib/api";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
-  import Products from "$lib/components/problem/products.svelte";
   import { onMount } from "svelte";
 
   let problem: any = null;
