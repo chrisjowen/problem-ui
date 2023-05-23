@@ -1,4 +1,5 @@
 <script>
+  import { browser } from "$app/environment";
   import { Avatar } from "flowbite-svelte";
   import * as  md5 from "md5";
 
@@ -6,7 +7,7 @@
   export let size = "xs";
   export let className = "";
 
-  $: url = `https://www.gravatar.com/avatar/${md5(email)}`;
+  $: url = browser ? `https://www.gravatar.com/avatar/${md5(email)}` : "";
 </script>
 
 <Avatar src={url} {size} rounded class="{className}" />
