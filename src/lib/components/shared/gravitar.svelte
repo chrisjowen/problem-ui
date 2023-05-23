@@ -7,7 +7,7 @@
   export let size = "xs";
   export let className = "";
 
-  $: url = browser ? `https://www.gravatar.com/avatar/${md5(email)}` : "";
+  // $: url = browser ? `https://www.gravatar.com/avatar/${md5(email)}` : "";
 </script>
 
-<Avatar src={url} {size} rounded class="{className}" />
+<!-- <Avatar src={url} {size} rounded class="{className}" /> -->
