@@ -7,18 +7,29 @@
     SidebarWrapper,
   } from "flowbite-svelte";
   import "../app.postcss";
-  
   import { page } from "$app/stores";
-  import { auth } from "$lib/store";
+  import { auth, overflow } from "$lib/store";
   import Gravitar from "$lib/components/shared/gravitar.svelte";
-  
+  import { Listgroup } from "flowbite-svelte";
+  import { onMount } from "svelte";
+
   let loggedInUser: any = null;
   let hideSideBar = true;
+  let showUserMenu = false;
+
+  let userLinks = [
+    { name: "Profile", href: "/profile/me" },
+    { name: "Logout", href: "/logout" },
+  ];
 
   auth.subscribe((value) => {
     loggedInUser = value.loggedInUser;
     console.log("loggedInUser", loggedInUser);
   });
+
+  onMount(() => {
+     showUserMenu = false;
+  })
 
   $: showNavBar = $page.route.id != "/login";
 </script>
@@ -27,7 +38,7 @@
   {#if showNavBar}
     <div class="w-full bg-primary-700 text-white">
       <div class="flex flex-row">
-        <div class="flex-1 p-6">
+        <div class="flex-1 p-3 md:p-6">
           <span on:click={() => (hideSideBar = false)} class="md:hidden">
             <i class="fas fa-bars mr-4" />
           </span>
@@ -38,27 +49,43 @@
           </span>
         </div>
 
-        <Drawer  bind:hidden={hideSideBar} id="sidebar2">
-          <Sidebar >
+        <Drawer bind:hidden={hideSideBar} id="sidebar2">
+          <Sidebar>
             <SidebarWrapper divClass="overflow-y-auto p-2">
               <SidebarGroup>
-                <SidebarItem label="Home" href="/" on:click={() => hideSideBar = true}>
+                <SidebarItem
+                  label="Home"
+                  href="/"
+                  on:click={() => (hideSideBar = true)}
+                >
                   <svelte:fragment slot="icon">
                     <i class="fas fa-home text-xs" />
                   </svelte:fragment>
                 </SidebarItem>
-                <SidebarItem label="Problems" href="/problem/list" on:click={() => hideSideBar = true}>
+                <SidebarItem
+                  label="Problems"
+                  href="/problem/list"
+                  on:click={() => (hideSideBar = true)}
+                >
                   <svelte:fragment slot="icon">
-                    <i class="fa-solid fa-magnifying-glass text-xs "></i>
+                    <i class="fa-solid fa-magnifying-glass text-xs" />
                   </svelte:fragment>
                 </SidebarItem>
-                <SidebarItem label="Sectors" href="/sector" on:click={() => hideSideBar = true}>
+                <SidebarItem
+                  label="Sectors"
+                  href="/sector"
+                  on:click={() => (hideSideBar = true)}
+                >
                   <svelte:fragment slot="icon">
-                    <i class="fa-solid fa-industry text-xs"></i>
+                    <i class="fa-solid fa-industry text-xs" />
                   </svelte:fragment>
                 </SidebarItem>
                 {#if loggedInUser}
-                  <SidebarItem label="Profile" href="/sector" on:click={() => hideSideBar = true}>
+                  <SidebarItem
+                    label="Profile"
+                    href="/profile/me"
+                    on:click={() => (hideSideBar = true)}
+                  >
                     <svelte:fragment slot="icon">
                       <Gravitar email={loggedInUser.email} size="xs" />
                     </svelte:fragment>
@@ -73,17 +100,34 @@
           <div class="justify-end p-6 space-x-6 flex">
             <a href="/"><i class="fas fa-home text-xs mr-1" /> Home </a>
             <a href="/problem/list">
-              <i class="fa-solid fa-magnifying-glass text-xs mr-1"></i>
+              <i class="fa-solid fa-magnifying-glass text-xs mr-1" />
               Problems
             </a>
             <a href="/sector">
-              <i class="fa-solid fa-industry text-xs mr-1"></i>
+              <i class="fa-solid fa-industry text-xs mr-1" />
               Sectors
             </a>
             {#if loggedInUser}
-              <div>
-                <Gravitar email={loggedInUser.email} size="sm" />
+              <div class="relative">
+                <div on:click={() => (showUserMenu = true)}>
+                  <Gravitar email={loggedInUser.email} size="sm" />
+                </div>
+                {#if showUserMenu}
+                  <div
+                    on:mouseleave={() => (showUserMenu = false)}
+                    class="w-48 top-[35px] absolute left-[-160px] z-50"
+                  >
+                    <Listgroup color="gray" active items={userLinks} let:item>
+                      {item.name}
+                    </Listgroup>
+                  </div>
+                {/if}
               </div>
+            {:else}
+              <a href="/login">
+                <i class="fas fa-sign-in-alt text-xs mr-1" />
+                Login
+              </a>
             {/if}
           </div>
         </div>
@@ -91,7 +135,7 @@
     </div>
   {/if}
 
-  <div class="flex-1 overflow-auto relative">
+  <div class="flex-1 {$overflow ? 'overflow-auto' : 'overflow-hidden'}  ">
     <slot />
   </div>
 </div>

@@ -11,6 +11,8 @@ if(authValue.token) {
     axios.defaults.headers.common['Authorization'] = `bearer ${authValue.token}`
 }
 
+export const overflow = writable(true)
+
 export const auth = writable(authValue)
 
 export const suggestions = writable({

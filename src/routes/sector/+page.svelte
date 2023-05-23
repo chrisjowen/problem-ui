@@ -39,7 +39,7 @@
   </div>
   <!-- HERO -->
   <div
-    class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4  xl:grid-cols-6 overflow-x-auto pl-6 pr-6 pb-6"
+    class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 overflow-x-auto pl-6 pr-6 pb-6"
   >
     {#each sorted as sector, idx}
       <div class="bg-white border hover:border-primary-600" on:click={showSector(sector)}>

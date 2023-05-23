@@ -73,8 +73,8 @@
         <i class="fa-solid fa-code"></i>
     </button>
 
-
-    <div class="flex-1 flex flex-row justify-end">
+<!-- 
+    <div class="flex-1 flex flex-row justify-end ">
       <button
         class="text-xs w-[40px] hover:bg-gray-50"
         on:click={() => (fullscreen = !fullscreen)}
@@ -85,6 +85,6 @@
           <i class="fa-solid fa-down-left-and-up-right-to-center" />
         {/if}
       </button>
-    </div>
+    </div> -->
   </div>
 {/if}

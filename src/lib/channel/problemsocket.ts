@@ -8,4 +8,20 @@ if (browser) {
   socket.connect();
 }
 
-export default socket;
+export let connect = (topic: string) => {
+  return new Promise((resolve, reject) => {
+
+  let channel = socket!.channel(topic, {token: "123"});
+  channel
+    .join()
+    .receive("ok", (resp) => {
+      console.log("Joined successfully", resp);
+      resolve(channel);
+    })
+    .receive("error", (resp) => {
+      reject(resp);
+      console.log("Unable to join", resp);
+    });
+  });
+}
+

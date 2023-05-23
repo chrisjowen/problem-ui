@@ -1,18 +1,14 @@
 <script lang="ts">
-  import PictureUploadComand from "./commands/pictureUploadComand.svelte";
   import { onMount, onDestroy } from "svelte";
   import { Editor } from "@tiptap/core";
   import StarterKit from "@tiptap/starter-kit";
   import { createEventDispatcher } from "svelte";
-  import { Card, Modal } from "flowbite-svelte";
-  import { slide, blur } from "svelte/transition";
-  import { Listgroup, ListgroupItem } from "flowbite-svelte";
+  import { blur } from "svelte/transition";
   import Table from "@tiptap/extension-table";
   import TableRow from "@tiptap/extension-table-row";
   import TableCell from "@tiptap/extension-table-cell";
   import TableHeader from "@tiptap/extension-table-header";
   import Image from "@tiptap/extension-image";
-  import axios from "axios";
   import TopMenu from "./topMenu.svelte";
   import FloatingTextMenu from "./floatingTextMenu.svelte";
 

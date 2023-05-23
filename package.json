@@ -48,6 +48,7 @@
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "phoenix": "^1.7.2",
-    "phoenix-channels": "^1.0.0"
+    "phoenix-channels": "^1.0.0",
+    "uuid": "^9.0.0"
   }
 }

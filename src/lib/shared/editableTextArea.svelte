@@ -1,14 +1,22 @@
 <script lang="ts">
   import Gravitar from "$lib/components/shared/gravitar.svelte";
   import Editor from "$lib/shared/editor/editor.svelte";
-  import { Avatar, Button, Card, Input, Modal } from "flowbite-svelte";
+  import { Button } from "flowbite-svelte";
+  import { createEventDispatcher } from "svelte";
+
   export let input: String;
   export let owner: null | any = null;
   export let editable = false;
+
+  const dispatch = createEventDispatcher();
+
   let editing = false;
   let fullscreen = false;
-
   let original = `${input}`;
+
+  // $: {
+  //   $overflow = !editing;
+  // }
 
   let onDiscard = () => {
     editing = false;
@@ -18,15 +26,16 @@
   let onSave = () => {
     editing = false;
     fullscreen = false;
+    dispatch("save", input);
   };
 
   $: className = editing
-    ? "absolute top-0 w-full bg-white h-full bg-white flex flex-col"
+    ? "absolute top-0 bottom-0 bg-white right-0 left-0 bg-white flex flex-col z-50"
     : "flex flex-col";
 </script>
 
 <div class={className}>
-  <div class="flex text-xs bg-gray-50 border-b-[1px]">
+  <div class="flex text-xs bg-gray-100 text-gray-600 border-b-[1px]">
     {#if owner}
       <div class="p-3 flex-1 flex">
         <div>

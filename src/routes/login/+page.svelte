@@ -1,14 +1,21 @@
 <script lang="ts">
   import { Input, Button, Alert } from "flowbite-svelte";
-  import { login } from "$lib/api/auth";
+  import { login, register } from "$lib/api/auth";
   import { goto } from "$app/navigation";
   let mode = "login";
   let username = "";
   let password = "";
   let error: null | string = null;
-
+  let registration = {
+    email: "",
+    password: "",
+    passwordConfirm: "",
+    name: "",
+    last_name: "",
+  };
 
   function registerMode() {
+    error = null;
     mode = "register";
   }
 
@@ -16,12 +23,21 @@
     error = null;
     login(username, password)
       .then((res) => {
-        console.log(res);
         goto("/");
       })
       .catch((err) => {
         error = err;
-        console.log(err);
+      });
+  }
+
+  function onRegister() {
+    error = null;
+    register(registration)
+      .then((res) => {
+        goto("/");
+      })
+      .catch((err) => {
+        error = err;
       });
   }
 </script>
@@ -34,8 +50,16 @@
       Dream, Create & Collabortate
     </h1>
   </div>
+
   <div class=" items-center w-full mt-9 flex items-center">
     <div class="w-full">
+      {#if error}
+        <div class="m-9">
+          <Alert color="red"
+            >{@html error}
+          </Alert>
+        </div>
+      {/if}
       {#if mode === "login"}
         <h1
           class="text-primary-900 font-bold lg:text-4xl md:text-5xl text-2xl bold text-center"
@@ -43,9 +67,6 @@
           Login
         </h1>
         <div class="m-9 space-y-4">
-            {#if error}
-            <Alert color="red">Error logging in, retry or <a href="#">Reset Password?</a> </Alert>
-          {/if}
           <Input
             id="large-input"
             size="lg"
@@ -55,6 +76,7 @@
           <Input
             id="large-input"
             size="lg"
+            type="password"
             placeholder="Password"
             bind:value={password}
           />
@@ -69,7 +91,10 @@
               </Button>
 
               <p class="mt-9 text-xl font-bold">
-                <a href="#" class="hover:text-primary-900">Forgot Password</a> | <a class="hover:text-primary-900" on:click={registerMode}>Register</a>
+                <a href="#" class="hover:text-primary-900">Forgot Password</a> |
+                <a class="hover:text-primary-900" on:click={registerMode}
+                  >Register</a
+                >
               </p>
             </div>
           </div>
@@ -81,13 +106,38 @@
           Register
         </h1>
         <div class="m-9 space-y-4">
-          <Input  size="lg" placeholder="Firstname" />
-          <Input  size="lg" placeholder="Lastname" />
-          <Input  size="lg" placeholder="Email" />
-          <Input  type="password" size="lg" placeholder="Password" />
-          <Input  type="password" size="lg" placeholder="Repeat Password" />
+          <Input
+            size="lg"
+            placeholder="Firstname"
+            bind:value={registration.name}
+          />
+          <Input
+            size="lg"
+            placeholder="Lastname"
+            bind:value={registration.last_name}
+          />
+          <Input
+            size="lg"
+            placeholder="Email"
+            bind:value={registration.email}
+          />
+          <Input
+            type="password"
+            size="lg"
+            placeholder="Password"
+            bind:value={registration.password}
+          />
+          <Input
+            type="password"
+            size="lg"
+            placeholder="Repeat Password"
+            bind:value={registration.passwordConfirm}
+          />
           <div class="flex flex-row justify-end">
-            <Button class="bg-primary-600 hover:bg-primary-600 w-full">
+            <Button
+              class="bg-primary-600 hover:bg-primary-600 w-full"
+              on:click={onRegister}
+            >
               <i class="fas fa-user-plus mr-4" />
               Register</Button
             >

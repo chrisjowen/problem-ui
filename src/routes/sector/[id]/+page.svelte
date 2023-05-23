@@ -3,26 +3,25 @@
   import { onMount } from "svelte";
   import EditableTextArea from "$lib/shared/editableTextArea.svelte";
   import { page } from "$app/stores";
-  import { Alert, Breadcrumb, BreadcrumbItem, Button, Card } from "flowbite-svelte";
+  import { Alert, Breadcrumb, BreadcrumbItem, Button } from "flowbite-svelte";
   import { goto } from "$app/navigation";
   import UserList from "$lib/showproblem/userList.svelte";
   import { auth } from "$lib/store";
+  import CreateProblem from "$lib/components/problem/CreateProblem.svelte";
   let sector: any = null;
   let problems: any[] = [];
-  let loggedInUser: any = null
-
+  let loggedInUser: any = null;
+  let showProblemModal = false;
 
   onMount(() => {
     loadSector();
     loadProblems();
-    auth.subscribe((value) => {
-      loggedInUser = value.loggedInUser;
-    });
+    loggedInUser = $auth?.loggedInUser;
   });
 
   function follow() {
     console.log("follow", loggedInUser);
-    if(!loggedInUser) {
+    if (!loggedInUser) {
       goto("/login");
     }
   }
@@ -39,9 +38,9 @@
   }
   function loadProblems() {
     axios
-      .get(`/api/sector/${$page.params.id}/problems`)
+      .get(`/api/sector/${$page.params.id}/problems?page_size=5`)
       .then((res) => {
-        problems = res.data;
+        problems = res.data.entries;
       })
       .catch((err) => {
         console.log(err);
@@ -60,65 +59,68 @@
     </h2>
   </div>
 {:else}
+  <CreateProblem bind:open={showProblemModal} {sector} />
   <div>
     <div class="bg-primary-100 p-2 flex flex-row justify-end space-x-2 hidden">
       <Button size="xs" color="light" on:click={follow}>
-        <i class="fas fa-bell mr-2"></i>
+        <i class="fas fa-bell mr-2" />
         Follow
       </Button>
-      <!-- <Button size="xs" color="green">
-        <i class="fas fa-bell-slash mr-2"></i>
-        Unfollow
-      </Button> -->
-      <!-- <Button size="xs" color="light">
-       <i class="fas fa-user-plus mr-2"></i>
-          Expert
-      </Button> -->
     </div>
-    <div class=" p-6">
-      <Breadcrumb aria-label="Default breadcrumb example">
-        <BreadcrumbItem href="/sector" >Sectors</BreadcrumbItem>
-        <BreadcrumbItem href="/sector/{sector.id}">{sector.name}</BreadcrumbItem>
-      </Breadcrumb>
-    </div> 
+    <div class="bg-primary-500 p-2 flex flex-row space-x-2">
+      <div class="flex-1 p-2">
+        <Breadcrumb aria-label="Default breadcrumb example">
+          <BreadcrumbItem href="/sector" linkClass="text-white text-xs">Sectors</BreadcrumbItem>
+          <BreadcrumbItem href="/sector/{sector.id}"
+          linkClass="text-white text-xs">{sector.name}</BreadcrumbItem
+          >
+        </Breadcrumb>
+      </div>
+      <div>
+      {#if loggedInUser}
+        <Button
+          size="xs"
+          color="light"
+          on:click={() => (showProblemModal = true)}
+        >
+          <i class="fas fa-add mr-2" />
+          Create Problem
+        </Button>
+      {/if}
+    </div>
+    </div>
 
-   
     <div class=" mx-4 mb-4 hidden">
       <Alert dismissable border>
         <span slot="icon">
-          <i class="fas fa-info-circle"></i>
+          <i class="fas fa-info-circle" />
         </span>
-        Are you highly knowadgable about this sector? 
-        <a href="#" class="underline font-bold">Register as an expert in {sector.name}</a>
-      </Alert> 
+        Are you highly knowadgable about this sector?
+        <a href="#" class="underline font-bold"
+          >Register as an expert in {sector.name}</a
+        >
+      </Alert>
     </div>
-   
-    
-    <div class="grid grid-cols-1 md:grid-cols-5 md:gap-4 m-3 ">
-      <section class=" col-span-3   mb-4">
+
+    <div class="grid grid-cols-1 md:grid-cols-6 md:gap-4 md:m-3">
+      <section class=" col-span-4 mb-4">
         <div class="bg-white border">
           <EditableTextArea bind:input={sector.description}>
-            <div class="p-4 text-center w-full ">
+            <div class="p-4 text-center w-full">
               <div
-                class="h-[256px]  border m-auto"
+                class="h-[256px] border m-auto"
                 style="background-image:url('/api/image{sector.image}');  background-size: cover; background-position: center;"
               />
             </div>
           </EditableTextArea>
         </div>
-      
       </section>
-      <section class="col-span-2 md:mr-4 ">
+      <section class="col-span-2 m-2 md:m-0">
         <div class=" mb-4 hidden">
           <h1 class="mb-4 text-xl text-primary-600 font-bold">Experts</h1>
           <UserList />
         </div>
-        <div>
-          <h1 class="mb-4 font-bold text-2xl  tracking-tight text-primary-500">
-            Latest {sector.name} Problems
-          </h1>
-        </div>
-        <div class="grid  grid-cols-1 md:grid-cols-1 overflow-x-auto">
+        <div class="grid grid-cols-1 md:grid-cols-1 overflow-x-auto">
           {#each problems as problem, idx}
             <div class="inline-block flex w-full mb-4">
               <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -129,37 +131,30 @@
               >
                 <div class="p-4">
                   <img
-                    class="w-full md:w-auto h-[150px] object-cover object-center border"
+                    class="w-full md:w-auto h-[100px] object-cover object-center border"
                     src="/api/image/{problem.img}"
                     alt="content"
                   />
                 </div>
                 <div class="flex-1 mb-4 m-4 space-y-4">
                   <h5 class="text-xl font-bold text-gray-400">
-                     {problem.title}
+                    {problem.title}
                   </h5>
                   <p class="">
                     {problem.blurb.slice(0, 100)}...
-                  </p>
-      
-                  <p class=" text-primary-600 p-1 pl-2 pr-2 bg-gray-200 text-xs inline-block">
-                    <i class="fas fa-tag mr-1" />
-                    {sector.name}
                   </p>
                 </div>
               </div>
             </div>
           {/each}
-          <div >
-            <div class=" text-xs text-center border p-2 bg-primary-900 hover:bg-primary-700 text-white" >
-              <i class="fas fa-search mr-2"></i>
-              Search All {sector.name} Problems
-            </div>
+          <div class="flex justify-end">
+         
+          <Button size="xs"  class="w-full">
+              <i class="fas fa-search mr-2" />
+              Search Problems
+            </Button>
           </div>
-        
         </div>
-       
-      
       </section>
     </div>
   </div>

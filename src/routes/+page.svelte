@@ -34,7 +34,7 @@
 >
   <div class="lg:mt-[100px] mt-[50px] w-[80%] lg:w-[45%] md:w-[50%] z-20">
     <h1 class="text-white font-bold lg:text-7xl text-6xl bold">
-      <span class="text-primary-200">1000's of  Statup  Problems </span> Just Dying To Be Solved
+      <span class="text-primary-200">1000's of  Startup  Problems </span> Just Dying To Be Solved
     </h1>
     <p class="mt-9 mb-[50px] text-red-50 text-2xl lg:text-3xl xl:text-4xl">
       Join a global community of innovators, creators and investors to resolve
@@ -89,8 +89,8 @@
   </div>
 </div>
 
-<div class=" p-2 bg-primary-100">
-  <h1 class="my-9 mx-4 text-3xl text-primary-900 font-bold">Problems By Sector</h1>
+<div class=" p-2 bg-primary-500 mt-9">
+  <h1 class="my-9 mx-4 text-3xl text-white font-bold">Problems By Sector</h1>
   <div class="flex mx-4 overflow-x-auto w-full">
     {#each sectors.slice(0, 50) as sector}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -111,10 +111,7 @@
     {/each}
   </div>
 </div>
-
-<!-- Signup  -->
-
-<!-- <div class="bg-black p-9 h-[100px]">adasasdasd</div> -->
+ 
 
 <style lang="scss">
   .hero {

@@ -44,7 +44,7 @@
 </script>
 
 <div class="bg-gray-50 flex flex-col h-full">
-  <div class="bg-primary-100 p-9  z-40">
+  <div class="bg-primary-100 p-3   z-40">
     <Input
       bind:value={q}
       type="text"
