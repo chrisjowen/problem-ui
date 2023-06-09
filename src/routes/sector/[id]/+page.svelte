@@ -85,7 +85,7 @@
             <div
               class="absolute top-0 left-0 w-full h-full flex z-10 md:rounded-t-xl"
               style="
-                background-image:url('/api/image{sector.image}'); 
+                background-image:url('{PUBLIC_IMG_CDN_BASE}{sector.image}'); 
                 background-size: cover;  
                 background-repeat: no-repeat;
                 filter: brightness(0.7) grayscale(100%);
