@@ -29,11 +29,11 @@ class ProblemApi extends RestApi {
     }
 
     links(id: string) {
-        return new RestApi(`${this.baseUrl}/${id}/link`);
+        return new RestApi(`/api/problem/${id}/link`);
     }
 
     sectors(id: String) {
-        return new RestApi(`${this.baseUrl}/${id}/sector`);
+        return new RestApi(`/api/problem/${id}/sector`);
     }
 
     precheck(statement: string, sector: string) {
