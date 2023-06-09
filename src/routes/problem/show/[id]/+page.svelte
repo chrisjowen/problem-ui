@@ -96,7 +96,7 @@
               left:0
               right:0;
               bottom:0;
-              background: black url('/api/image{problem.img}');
+              background: black url('{PUBLIC_IMG_CDN_BASE}{problem.img}');
               background-size: cover;  
               background-position: center;
               background-repeat: no-repeat;

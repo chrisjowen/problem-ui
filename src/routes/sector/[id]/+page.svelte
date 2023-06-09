@@ -7,7 +7,7 @@
   import UserList from "$lib/components/shared/UserList.svelte";
   import { auth } from "$lib/store";
   import api from "$lib/api";
-  import { PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
+  import { PUBLIC_IMG_CDN_BASE, PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
   let sector: any = null;
   let loggedInUser: any = null;
   let showProblemModal = false;
