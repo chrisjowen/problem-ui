@@ -89,7 +89,7 @@
               on:keydown={onFireSelect(sector)}
             >
               <img
-                src="/api/image{sector.image}"
+                src="{PUBLIC_IMG_CDN_BASE}{sector.image}"
                 class="w-6 h-6 mr-2"
                 alt={sector.name}
               />
