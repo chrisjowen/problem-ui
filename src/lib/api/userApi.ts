@@ -1,14 +1,9 @@
-import axios from "axios";
+import RestApi from "./common/restApi";
 
-class UserApi {
-    private baseUrl: string;
+class UserApi extends RestApi {
 
     constructor() {
-        this.baseUrl = "/api/user";
-    }
-
-    get(id: string, preloads : string[] = []) {
-        return axios.get(`${this.baseUrl}/${id}?preloads=${preloads.join(',')}`)
+        super("/api/user");
     }
 }
 

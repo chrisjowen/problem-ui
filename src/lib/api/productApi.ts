@@ -1,14 +1,11 @@
-import axios from "axios";
+import RestApi from "./common/restApi";
 
-class ProductApi {
+class ProductApi  extends RestApi{
 
     constructor() {
-        console.log('Problem');
+        super('/api/product');
     }
 
-    delete(id: any) {
-        return axios.delete(`/api/product/${id}`)
-    }
 }
 
 export default new ProductApi();

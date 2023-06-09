@@ -1,20 +1,15 @@
 <script lang="ts">
   import { Button, Input, Modal } from "flowbite-svelte";
-  import axios from "axios";
   import { onMount } from "svelte";
-  import CreateProblemModal from "$lib/createproblem/CreateProblemModal.svelte";
   import { goto } from "$app/navigation";
   import { slide } from "svelte/transition";
+  import api from "$lib/api";
+  import { PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
   let timer;
   let listView = false;
 
   $: problems = [];
-  let showModal = false;
   let q = "";
-
-  function show() {
-    showModal = true;
-  }
 
   onMount(() => {
     loadProblems();
@@ -28,23 +23,30 @@
     }, 500);
   };
 
-  function loadProblems() {
-    axios
-      .get(`/api/problem?q=${q}`)
-      .then((res) => {
-        problems = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async function loadProblems() {
+    let response = await api.problem.list(`title[like]=${q.toLowerCase()}`, 50, 0, ["sector"]);
+    problems = response.data.entries;
   }
   let showProblem = (problem: any) => () => {
     goto(`/problem/show/${problem.id}`);
   };
+
+
+  function highlight(input: any) {
+    if (q) {
+      return input.replace(
+        new RegExp(q, "gi"),
+        (match) => `<span class="bg-yellow-200">${match}</span>`
+      );
+    }
+
+    return input;
+  }
 </script>
 
 <div class="bg-gray-50 flex flex-col h-full">
-  <div class="bg-primary-100 p-3   z-40">
+  <div class="bg-primary-100 p-3  flex  z-40">
+    <div class="flex-1 mr-4">
     <Input
       bind:value={q}
       type="text"
@@ -53,6 +55,12 @@
     >
       <i class="fas fa-search" slot="left" />
     </Input>
+  </div>
+    <div>
+      <Button class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600"  on:click={() => goto("/problem/create") }>
+        <i class="fas fa-plus mr-2" /> Create Problem
+      </Button>
+    </div>
     <!-- <div class="my-4">
       <div class="bg-primary-400 text-white text-xs inline-block rounded">
         <div class="flex flex-row ">
@@ -104,14 +112,14 @@
             <div class="p-4">
               <img
                 class="w-full md:w-auto object-cover object-center border"
-                src="/api/image/{problem.img}"
+                src="{PUBLIC_PROBLEM_API_PATH}/api/image/{problem.img}"
                 alt="content"
                 style="height: {listView ? '120px' : '200px'};"
               />
             </div>
             <div class="flex-1 mb-4 m-4 space-y-4">
               <h5 class="text-2xl font-bold text-gray-500">
-                {problem.title}
+                {@html highlight(problem.title)}
               </h5>
               <!-- {#if !listView} -->
               <p class="">
@@ -132,13 +140,7 @@
   </div>
 </div>
 
-<Modal bind:open={showModal} class="w-full" size="xl">
-  <CreateProblemModal />
-</Modal>
 
-<!-- Testemonial  -->
-
-<!-- Signup  -->
 
 <style lang="scss">
   .hero {

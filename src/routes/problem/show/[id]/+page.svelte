@@ -1,94 +1,192 @@
 <script lang="ts">
-  import axios from "axios";
+	import { classNames } from 'classnames';
   import { onMount } from "svelte";
-  import EditableTextArea from "$lib/shared/editableTextArea.svelte";
+  import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
   import { page } from "$app/stores";
-  import { Alert, Breadcrumb, BreadcrumbItem } from "flowbite-svelte";
-  import UserList from "$lib/showproblem/userList.svelte";
+  import { Button } from "flowbite-svelte";
+  import UserList from "$lib/components/shared/UserList.svelte";
   import { auth } from "$lib/store";
   import { goto } from "$app/navigation";
-  import problemApi from "$lib/api/problemApi";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import api from "$lib/api";
+  import Products from "$lib/components/problem/Products.svelte";
+  import LatestComments from "$lib/components/shared/comments/LatestComments.svelte";
+  import type { PaginationResults, Comment } from "$lib/types";
+  import LinksList from "$lib/components/shared/links/LinksList.svelte";
+  import LatestDiscussions from "$lib/components/shared/discussions/LatestDiscussions.svelte";
+  import Stakeholders from "$lib/components/showproblem/research/stakeholders.svelte";
+  import { PUBLIC_PROBLEM_API_PATH } from '$env/static/public';
 
   let problem: any = null;
+  let comments: PaginationResults<Comment>;
   let solution: any = null;
   let loggedInUser: any;
   let problemId = $page.params.id;
 
   onMount(() => {
     loadProblem();
-    loadSolution();
-    auth.subscribe((value) => {
-      loggedInUser = value.loggedInUser;
-    });
+    loadComments();
+    loggedInUser = $auth.loggedInUser;
   });
 
-  function loadProblem() {
-    axios
-      .get(`/api/problem/${problemId}`)
-      .then((res) => {
-        problem = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function loadSolution() {
-    axios
-      .get(`/api/problem/${problemId}/solution`)
-      .then((res) => {
-        solution = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async function loadProblem() {
+    let response = await api.problem.get(problemId, [
+      "sector",
+      "user",
+      "followers",
+      "products",
+    ]);
+    problem = response.data;
   }
 
   function onUpdateProblemStatement() {
     api.problem.update(problemId, { overview: problem.overview });
   }
+  $: following = problem?.followers?.some(
+    (f: any) => f.id === loggedInUser?.id
+  );
+  async function onFollow() {
+    if (!loggedInUser) {
+      goto("/login");
+    } else {
+      await api.problem.follow(problem.id);
+      loadProblem();
+    }
+  }
+
+  async function onUnFollow() {
+    if (!loggedInUser) {
+      goto("/login");
+    } else {
+      await api.problem.unfollow(problem.id);
+      loadProblem();
+    }
+  }
+
+  function loadComments() {
+    api.problem
+      .comments(problemId)
+      .list("", 4, 0, ["user"])
+      .then((res) => {
+        comments = res.data;
+      });
+  }
 </script>
 
 <ProblemLayout bind:problem>
+  
+  <!-- <div slot="innerMenu" class="  p-4">
+    <Button size="xs" class="bg-primary-700">
+      <i class="fas fa-check mr-2" />
+      Publish
+    </Button>
+  </div> -->
+
   {#if problem}
-    <!-- <div class="pb-4">
-      <Alert border>
-        <span slot="icon">
-          <i class="fas fa-info-circle" />
-        </span>
-        Problem is currently {problem.status}
-      </Alert>
-    </div> -->
-  
-  
-    <div class="border bg-white mb-4">
-      <EditableTextArea
-        bind:input={problem.overview}
-        owner={problem.user}
-        editable={loggedInUser?.id == problem.user.id}
-        let:editing
-        on:save={onUpdateProblemStatement}
-      >
-    
-        {#if !editing}
-          <div class="p-4  w-full">
+    <div class="flex md:mt-4">
+      <div class="xl:max-w-[940px] m-auto md:mx-4 md:rounded-t-lg">
+        <div class="md:border md:rounded-lg bg-white md:mb-4">
+          <div class="relative text-gray-400 sm:flex md:rounded-t-lg">
             <div
-              class="h-[256px] border m-auto rounded"
-              style="background-image:url('/api/image{problem.img}');  background-size: cover; background-position: center;"
-            >
-            <div class="flex m-2 bg-white border rounded">
-              <div class="rounded-full  ">
-                <i class="fas fa-info-circle text-3xl m-2 mx-4 mb-2 text-primary-600" />
+              class=" md:rounded-t-lg"
+              style="
+              position: absolute;
+              width:100%;
+              top:0; 
+              left:0
+              right:0;
+              bottom:0;
+              background: black url('/api/image{problem.img}');
+              background-size: cover;  
+              background-position: center;
+              background-repeat: no-repeat;
+              filter: brightness(0.7) grayscale(100%);
+            "
+            />
+
+            <div class="md:p-4 p-2 z-30 md:mb-8">
+              <img
+                src="{PUBLIC_PROBLEM_API_PATH}/api/image{problem.img}"
+                alt={problem.title}
+                class="sm:w-[150px] w-[70%] border md:rounded-xl block md:inline-block md:mb-5 md:mb-0 m-auto md:float-left drop-shadow-xl"
+              />
+            </div>
+            <div class="flex-1">
+              <div
+                class=" sm:m-4 p-4 relative z-30 bg-white md:rounded-xl drop-shadow-lg"
+              >
+                <h1
+                  class="text-3xl text-primary-900 font-bold mb-4 bg-blue-100 inline-block p-2 relative"
+                >
+                  {problem.title}
+                </h1>
+                <p class="mb-4 text-gray-700">
+                  {problem.blurb.slice(0, 200)}...
+                </p>
+
+                <div class="flex space-x-2 justify-end mt-4">
+                  <Button
+                    size="xs"
+                    class="w-full md:w-auto "
+                    on:click={following ? onUnFollow : onFollow}
+                    color="light"
+                  >
+                    <i
+                      class="  {!following
+                        ? 'fas fa-user-plus '
+                        : 'fa fa-check text-green-500'} mr-2"
+                    />
+                    {following ? "Following" : "Follow"}
+                  </Button>
+                </div>
               </div>
-              <h1 class="text-3xl font-bold text-primary-600 mt-2 mb-2 ">{problem.title}</h1>
             </div>
-            </div>
-            
           </div>
-        {/if}
-      </EditableTextArea>
+          <EditableTextArea
+            bind:input={problem.overview}
+            owner={problem.user}
+            editable={loggedInUser?.id == problem.user.id}
+            let:editing
+            on:save={onUpdateProblemStatement}
+            height="350px"
+          />
+        </div>
+        <div class="bg-white p-2 md:rounded-md lg:border lg:mb-8">
+          <LatestComments
+            pagination={comments}
+            on:created={loadComments}
+            type="problem"
+          />
+        </div>
+      </div>
+      <div class="flex-1 hidden xl:block mr-4">
+        <div class="mb-4">
+          <h1 class="mb-4 text-xl text-gray-800">Followers</h1>
+          <UserList placeholder="No Followers" users={problem.followers} />
+        </div>
+        <div class="mb-4">
+          <h1 class="mb-4 text-xl text-gray-800">Related Links</h1>
+          <LinksList api={api.problem.links(problemId)} pageSize={4} />
+          <div class="flex justify-end m-2">
+            <a href="./{problemId}/links" class="text-xs text-blue-500"
+              >All Links</a
+            >
+          </div>
+        </div>
+
+        <div class="">
+          <h1 class="mb-4 text-xl text-gray-800">Latest Discssions</h1>
+          <LatestDiscussions
+            api={api.problem.discussion(problemId)}
+            id={problemId}
+          />
+          <div class="flex justify-end m-2">
+            <a href="./{problemId}/discussion" class="text-xs text-blue-500"
+              >All Discussions</a
+            >
+          </div>
+        </div>
+      </div>
     </div>
   {/if}
 </ProblemLayout>

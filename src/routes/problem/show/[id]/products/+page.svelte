@@ -2,23 +2,24 @@
   import { page } from "$app/stores";
   import api from "$lib/api";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
+  import Products from "$lib/components/problem/Products.svelte";
   import { onMount } from "svelte";
 
   let problem: any = null;
 
-  onMount(() => {
-    api.problem.get($page.params.id).then((res) => {
+  onMount(reload);
+  function reload() {
+    api.problem.get($page.params.id, ["products", "sector"]).then((res) => {
       problem = res.data;
     });
-  });
-
+  }
   
 </script>
 
 <ProblemLayout bind:problem>
   {#if problem}
-    <div class="m-2 md:m-0">
-      <Products problemId={problem.id} />
+    <div class="p-4">
+      <Products on:delete={reload}  bind:products={problem.products} />
     </div>
   {/if}
 </ProblemLayout>

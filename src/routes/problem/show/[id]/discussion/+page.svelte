@@ -1,26 +1,46 @@
 <script lang="ts">
+  import type { PaginationResults } from "$lib/types";
   import { page } from "$app/stores";
   import api from "$lib/api";
-  import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
-  import Disqus from "$lib/components/shared/disqus.svelte";
-  import { Breadcrumb, BreadcrumbItem } from "flowbite-svelte";
   import { onMount } from "svelte";
+  import DiscussionList from "$lib/components/shared/discussions/DiscussionList.svelte";
+  import { goto } from "$app/navigation";
+  import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
 
   let problem: any = null;
+  let problemId = $page.params.id;
+  let discussions: PaginationResults<any>;
 
   onMount(() => {
-    api.problem.get($page.params.id).then((res) => {
+    api.problem.get($page.params.id, ["sector"]).then((res) => {
       problem = res.data;
     });
+    loadDiscussions();
   });
+
+  async function loadDiscussions() {
+    api.problem
+      .discussion($page.params.id)
+      .list("", 50, 1, ["user"])
+      .then((res) => {
+        discussions = res.data;
+      });
+  }
+
+  async function createDiscussion(event: any) {
+    let discussion = event.detail;
+    await api.problem.discussion(problemId).create(discussion);
+    loadDiscussions();
+  }
+
+  let onClick = (event: any, ) => {
+    goto(`/problem/show/${problemId}/discussion/${event.detail.id}`);
+  };
+
 </script>
 
 <ProblemLayout bind:problem>
-  {#if problem}
-    <div class="mb-4">
-      <div class="bg-white border">
-        <Disqus />
-      </div>
-    </div>
-  {/if}
+  <div class="p-4">
+    <DiscussionList {discussions} on:create={createDiscussion} on:click={onClick} />
+  </div>
 </ProblemLayout>

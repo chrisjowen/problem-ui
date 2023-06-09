@@ -9,7 +9,7 @@
   import "../app.postcss";
   import { page } from "$app/stores";
   import { auth, overflow } from "$lib/store";
-  import Gravitar from "$lib/components/shared/gravitar.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { Listgroup } from "flowbite-svelte";
   import { onMount } from "svelte";
 
@@ -45,7 +45,7 @@
           <span
             class="self-center whitespace-nowrap text-sm md:text-lg font-semibold dark:text-white"
           >
-            ProblemsWorthSolving.com
+            PWSolving
           </span>
         </div>
 
@@ -97,7 +97,7 @@
         </Drawer>
 
         <div class="hidden md:block">
-          <div class="justify-end p-6 space-x-6 flex">
+          <div class="justify-end p-7 space-x-6 flex text-xs">
             <a href="/"><i class="fas fa-home text-xs mr-1" /> Home </a>
             <a href="/problem/list">
               <i class="fa-solid fa-magnifying-glass text-xs mr-1" />
@@ -110,7 +110,7 @@
             {#if loggedInUser}
               <div class="relative">
                 <div on:click={() => (showUserMenu = true)}>
-                  <Gravitar email={loggedInUser.email} size="sm" />
+                  <Gravitar email={loggedInUser.email} size="xs" />
                 </div>
                 {#if showUserMenu}
                   <div

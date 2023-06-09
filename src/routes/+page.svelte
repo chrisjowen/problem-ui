@@ -1,20 +1,19 @@
 <script lang="ts">
-  import { Button } from "flowbite-svelte";
-
-  import problemApi from "$lib/api/problemApi";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
+  import api from "$lib/api";
+  import { PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
 
   let sectors: any = [];
   let problems: any = [];
 
   onMount(() => {
-    problemApi.sectors("", 10).then((res) => {
-      sectors = res.data;
+    api.sector.list("", 100).then((res) => {
+      sectors = res.data.entries;
     });
 
-    problemApi.problems("", 5).then((res) => {
-      problems = res.data;
+    api.problem.list("", 20, 1, ["sector"]).then((res) => {
+      problems = res.data.entries;
     });
   });
 
@@ -25,7 +24,6 @@
   let showSector = (sector: any) => () => {
     goto(`/sector/${sector.id}`);
   };
-
 </script>
 
 <!-- HERO -->
@@ -34,7 +32,8 @@
 >
   <div class="lg:mt-[100px] mt-[50px] w-[80%] lg:w-[45%] md:w-[50%] z-20">
     <h1 class="text-white font-bold lg:text-7xl text-6xl bold">
-      <span class="text-primary-200">1000's of  Startup  Problems </span> Just Dying To Be Solved
+      <span class="text-primary-200">1000's of Startup Problems </span> Just Dying
+      To Be Solved
     </h1>
     <p class="mt-9 mb-[50px] text-red-50 text-2xl lg:text-3xl xl:text-4xl">
       Join a global community of innovators, creators and investors to resolve
@@ -47,41 +46,42 @@
 <!-- Features  -->
 
 <div class="p-9 m-h-[500px]">
-  <h1 class="mb-9 text-3xl text-primary-900 font-bold">Trending Problems</h1>
-  <div class="flex overflow-auto w-full pb-9">
-    {#each problems.slice(0, 6) as problem}
+  <h1 class="mb-9 text-3xl text-primary-900 font-bold ">Trending Problems</h1>
+  <div class="flex overflow-auto w-full pb-9 ">
+    {#each problems as problem}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="inline-block flex !w-[300px] md:!w-[500px] mr-2 flex-shrink-0"
       >
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
-          class=" bg-white border hover:border-primary-500 w-full md:flex flex-row"
+          class="rounded-lg bg-white border hover:drop-shadow-xl w-full md:flex flex-row"
           size="full"
           on:click={showProblem(problem)}
         >
           <div class="p-4">
             <img
               class="w-full md:w-auto object-cover object-center border"
-              src="/api/image/{problem.img}"
+              src="{PUBLIC_PROBLEM_API_PATH}/api/image/{problem.img}"
               alt="content"
               style="height: 150px"
-              
             />
           </div>
-          <div class="flex-1 mb-4 m-4 space-y-4">
-            <h5 class="text-2xl font-bold text-primary-900">
-              {problem.title}
+          <div class="flex-1 mb-4 m-4 flex flex-col">
+            <h5 class="text-xl font-bold text-primary-900">
+              {problem.title.slice(0, 25)}
             </h5>
-            <p class="">
+            <p class="flex-1">
               {problem.blurb.slice(0, 90)}...
             </p>
-            <p
-              class=" text-primary-500 p-1 pl-2 pr-2 bg-gray-200 text-xs inline-block"
-            >
-              <i class="fas fa-tag mr-1" />
-              {problem.sector.name}
-            </p>
+            <div>
+              <p
+                class="text-primary-500 p-1 pl-2 pr-2 bg-gray-200 text-xs inline-block"
+              >
+                <i class="fas fa-tag mr-1" />
+                {problem.sector.name}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -89,29 +89,29 @@
   </div>
 </div>
 
-<div class=" p-2 bg-primary-500 mt-9">
-  <h1 class="my-9 mx-4 text-3xl text-white font-bold">Problems By Sector</h1>
-  <div class="flex mx-4 overflow-x-auto w-full">
+<div class="p-2 bg-primary-100">
+  <h1 class="my-9 mx-4 text-2xl text-primary-900 font-bold">Sectors</h1>
+  <div class="flex mx-4 overflow-x-auto ">
     {#each sectors.slice(0, 50) as sector}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
-        class="border hover:border-primary-600 bg-white drop-shadow-lg mb-9 flex-shrink-0 !w-[300px] mr-2"
+        class="rounded-lg hover:bd-blue-900 bg-white hover:drop-shadow-xl drop-shadow-sm  relative mb-9 flex-shrink-0 !w-[300px] mr-4 border-primary-200 border"
         on:click={showSector(sector)}
       >
         <img
-          class="w-full h-[100px] object-cover object-center p-2"
-          src="/api/image{sector.image}"
+          class="w-full rounded-lg h-[200px] object-cover object-center"
+          src="{PUBLIC_PROBLEM_API_PATH}/api/image{sector.image}"
           alt="content"
         />
-
-        <h5 class="mb-2 text-xl font-bold tracking-tight m-4 pb-4">
+        <h5
+          class="p-2 m-2 font-bold rounded text-xs bg-primary-700 text-white absolute top-0 right-0 drop-shadow-xl"
+        >
           {sector.name}
         </h5>
       </div>
     {/each}
   </div>
 </div>
- 
 
 <style lang="scss">
   .hero {

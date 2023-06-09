@@ -47,7 +47,7 @@
     <h1
       class="text-white font-bold lg:text-7xl md:text-5xl text-2xl bold text-center"
     >
-      Dream, Create & Collabortate
+      Dream, Create & <br />Collabortate
     </h1>
   </div>
 

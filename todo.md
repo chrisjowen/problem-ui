@@ -1,3 +1,67 @@
+PRIORITY LIST
+
+
+- Edit problem title and blurb
+
+- Profile
+    - Projects I follow
+    - Sectors I follow
+
+    - People I follow 
+    - People mollowing me
+
+- New Problem Wizzard
+    - Suggest problems
+    - Draft mode & publishing problems (versioning)
+
+
+- Discussion
+    - Discusson Tags
+    - Suggest similar discussions
+
+- Editor
+    - Images
+    - Better table editor or remove for now
+    - Code highlighter
+ 
+- Notifications
+    - Follower
+    - New problem in sector
+    - Change to problem
+    - Discussion response
+    
+
+- Solve to "Coming soon"
+    - Questionnaire
+    - "Im interested"
+
+
+- Followers
+    - Search
+    - Better list view
+    - Profile link
+
+- Sector 
+    - search
+    - Suggest a sector
+
+
+Quick Fixes
+
+    - Mobile bottom menu
+    - Date not correct for editing
+    - Bio for user fake
+    - Follow Industry
+    - Delete Link
+
+
+
+
+
+
+
+OLD:
+
 User
 
 1. Register (Done)

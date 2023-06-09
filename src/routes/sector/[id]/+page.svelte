@@ -1,50 +1,32 @@
 <script lang="ts">
-  import axios from "axios";
   import { onMount } from "svelte";
-  import EditableTextArea from "$lib/shared/editableTextArea.svelte";
+  import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
   import { page } from "$app/stores";
-  import { Alert, Breadcrumb, BreadcrumbItem, Button } from "flowbite-svelte";
+  import { Breadcrumb, BreadcrumbItem, Button } from "flowbite-svelte";
   import { goto } from "$app/navigation";
-  import UserList from "$lib/showproblem/userList.svelte";
+  import UserList from "$lib/components/shared/UserList.svelte";
   import { auth } from "$lib/store";
-  import CreateProblem from "$lib/components/problem/CreateProblem.svelte";
+  import api from "$lib/api";
+  import { PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
   let sector: any = null;
-  let problems: any[] = [];
   let loggedInUser: any = null;
   let showProblemModal = false;
+  let sectorId = $page.params.id;
 
   onMount(() => {
-    loadSector();
-    loadProblems();
     loggedInUser = $auth?.loggedInUser;
+    loadSector();
+
   });
 
-  function follow() {
-    console.log("follow", loggedInUser);
-    if (!loggedInUser) {
-      goto("/login");
-    }
+  async function loadSector() {
+    let response = await api.sector.get(sectorId, []);
+    loadProblems()
+    sector = response.data;
   }
-
-  function loadSector() {
-    axios
-      .get(`/api/sector/${$page.params.id}`)
-      .then((res) => {
-        sector = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  function loadProblems() {
-    axios
-      .get(`/api/sector/${$page.params.id}/problems?page_size=5`)
-      .then((res) => {
-        problems = res.data.entries;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async function loadProblems() {
+    let response = await api.problem.list(`sector_id=${sectorId}`, 5, 1);
+    sector.problems = response.data.entries;
   }
 
   let showProblem = (problem: any) => () => {
@@ -59,99 +41,90 @@
     </h2>
   </div>
 {:else}
-  <CreateProblem bind:open={showProblemModal} {sector} />
+
   <div>
-    <div class="bg-primary-100 p-2 flex flex-row justify-end space-x-2 hidden">
-      <Button size="xs" color="light" on:click={follow}>
-        <i class="fas fa-bell mr-2" />
-        Follow
-      </Button>
-    </div>
     <div class="bg-primary-500 p-2 flex flex-row space-x-2">
       <div class="flex-1 p-2">
         <Breadcrumb aria-label="Default breadcrumb example">
-          <BreadcrumbItem href="/sector" linkClass="text-white text-xs">Sectors</BreadcrumbItem>
-          <BreadcrumbItem href="/sector/{sector.id}"
-          linkClass="text-white text-xs">{sector.name}</BreadcrumbItem
+          <BreadcrumbItem href="/sector" linkClass="text-white text-xs"
+            >Sectors</BreadcrumbItem
+          >
+          <BreadcrumbItem
+            href="/sector/{sector.id}"
+            linkClass="text-white text-xs">{sector.name}</BreadcrumbItem
           >
         </Breadcrumb>
       </div>
-      <div>
-      {#if loggedInUser}
-        <Button
-          size="xs"
-          color="light"
-          on:click={() => (showProblemModal = true)}
-        >
-          <i class="fas fa-add mr-2" />
-          Create Problem
-        </Button>
-      {/if}
-    </div>
+      <div />
     </div>
 
-    <div class=" mx-4 mb-4 hidden">
-      <Alert dismissable border>
-        <span slot="icon">
-          <i class="fas fa-info-circle" />
-        </span>
-        Are you highly knowadgable about this sector?
-        <a href="#" class="underline font-bold"
-          >Register as an expert in {sector.name}</a
-        >
-      </Alert>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-6 md:gap-4 md:m-3">
-      <section class=" col-span-4 mb-4">
-        <div class="bg-white border">
-          <EditableTextArea bind:input={sector.description}>
-            <div class="p-4 text-center w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-6">
+      <section class=" col-span-4 md:m-4">
+        <div class="bg-white md:border rounded-xl">
+          <div class="relative p-8">
+            <div
+              class="z-50 relative sm:w-[350px] w-full rounded-md drop-shadow-xl m-auto"
+            >
               <div
-                class="h-[256px] border m-auto"
-                style="background-image:url('/api/image{sector.image}');  background-size: cover; background-position: center;"
-              />
+                class="bg-white rounded-lg border border-[15px] border-white"
+              >
+                <img
+                  src="{PUBLIC_PROBLEM_API_PATH}/api/image{sector.image}"
+                  alt={sector.name}
+                  class="rounded-lg w-full"
+                />
+                <h1
+                  class=" bg-white text-xl px-3 pt-3 rounded-b-lg text-center font-bold"
+                >
+                  <i class="fa fa-industry mr-2" />
+                  {sector.name}
+                </h1>
+              </div>
             </div>
-          </EditableTextArea>
+
+            <div
+              class="absolute top-0 left-0 w-full h-full flex z-10 md:rounded-t-xl"
+              style="
+                background-image:url('/api/image{sector.image}'); 
+                background-size: cover;  
+                background-repeat: no-repeat;
+                filter: brightness(0.7) grayscale(100%);
+            "
+            />
+          </div>
+
+          <EditableTextArea bind:input={sector.description} />
         </div>
       </section>
-      <section class="col-span-2 m-2 md:m-0">
-        <div class=" mb-4 hidden">
-          <h1 class="mb-4 text-xl text-primary-600 font-bold">Experts</h1>
-          <UserList />
-        </div>
+      <section class="col-span-2 md:my-3 md:m-0 md:mr-4 mx-4">
         <div class="grid grid-cols-1 md:grid-cols-1 overflow-x-auto">
-          {#each problems as problem, idx}
-            <div class="inline-block flex w-full mb-4">
+          <h1 class="text-xl m-2 text-gray-600 mb-4">Active Problems</h1>
+
+          {#each sector.problems as problem, idx}
+            <div class="inline-block flex w-full mb-2">
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <div
-                class=" bg-white border hover:border-primary-600 w-full md:flex flex-row"
+                class=" bg-white border hover:drop-shadow-lg w-full flex flex-row rounded-lg"
                 on:click={showProblem(problem)}
-                size="full"
               >
                 <div class="p-4">
                   <img
-                    class="w-full md:w-auto h-[100px] object-cover object-center border"
-                    src="/api/image/{problem.img}"
+                    class="w-full lg:w-auto h-[25px] object-cover object-center border"
+                    src="{PUBLIC_PROBLEM_API_PATH}/api/image/{problem.img}"
                     alt="content"
                   />
                 </div>
                 <div class="flex-1 mb-4 m-4 space-y-4">
-                  <h5 class="text-xl font-bold text-gray-400">
+                  <h5 class="text-md font-bold text-gray-800">
                     {problem.title}
                   </h5>
-                  <p class="">
-                    {problem.blurb.slice(0, 100)}...
-                  </p>
                 </div>
               </div>
             </div>
           {/each}
-          <div class="flex justify-end">
-         
-          <Button size="xs"  class="w-full">
-              <i class="fas fa-search mr-2" />
-              Search Problems
+          <div class=" flex justify-end">
+            <Button class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600"  on:click={() => goto(`/problem/create/${sector.id}`) }>
+              <i class="fas fa-plus mr-2" /> Create Problem
             </Button>
           </div>
         </div>

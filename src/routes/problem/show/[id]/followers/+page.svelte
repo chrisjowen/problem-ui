@@ -5,7 +5,7 @@
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import { Breadcrumb, BreadcrumbItem, Button } from "flowbite-svelte";
   import { onMount } from "svelte";
-  import UserList from "$lib/showproblem/userList.svelte";
+  import UserList from "$lib/components/shared/UserList.svelte";
   import { goto } from "$app/navigation";
 
   let problem: any = null;
@@ -16,7 +16,7 @@
   });
 
   function loadProblem() {
-    api.problem.get($page.params.id).then((res) => {
+    api.problem.get($page.params.id, ["followers", "sector"]).then((res) => {
       problem = res.data;
     });
   }
@@ -25,7 +25,6 @@
     (f: any) => f.id === loggedInUser?.id
   );
   async function onFollow() {
-    console.log("follow", loggedInUser);
     if (!loggedInUser) {
       goto("/login");
     } else {
@@ -46,19 +45,18 @@
 
 <ProblemLayout bind:problem>
   {#if problem}
-    <div class="m-2 md:m-0">
-      <div class=" flex justify-end">
-        <Button
-          class="mb-2 w-full md:w-auto"
-          size="xs"
-          on:click={following ? onUnFollow : onFollow}
-          color={following ? "light" : "light"}
-        >
-          <i class="fas fa-user-plus mr-2" />
-
-          {following ? "Unfollow" : "Follow"}</Button
-        >
-      </div>
+  <div class="px-4 pt-4 flex justify-end space-x-2">
+    <Button
+      class="mb-2 "
+      size="xs"
+      on:click={following ? onUnFollow : onFollow}
+      color={!following ? "light" : "green"}
+    >
+      <i class="  {!following ? "fas fa-user-plus " : "fa fa-check"} mr-2" />
+      {following ? "Following" : "Follow"}</Button
+    >
+  </div>
+    <div class="mx-4 ">
       <UserList users={problem.followers} placeholder="No Followers" />
     </div>
   {/if}

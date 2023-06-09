@@ -1,5 +1,5 @@
 <script>
-  import Editor from "$lib/shared/editor/editor.svelte";
+  import Editor from "$lib/components/shared/editor/Editor.svelte";
 
 </script>
 

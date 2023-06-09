@@ -1,11 +1,18 @@
 <script lang="ts">
+  import { classNames } from "classnames";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { Breadcrumb, BreadcrumbItem } from "flowbite-svelte";
+  import {
+    BottomNav,
+    BottomNavItem,
+    Breadcrumb,
+    BreadcrumbItem,
+    Button,
+  } from "flowbite-svelte";
 
   export let problem: any = null;
   export let menuItems: any[] = [];
-  export let small = false;
+  export let small = true;
 
   let path = $page.url.pathname;
 
@@ -13,31 +20,34 @@
     if (problem && menuItems.length === 0) {
       menuItems = [
         {
-          title: "Problem",
+          title: "Overview",
           icon: "fas fa-info-circle text-primary-400",
           href: `/problem/show/${problem.id}`,
         },
+
         {
-          title: "Discussion",
+          title: "Discuss",
           icon: "fa-solid fa-comment text-green-400",
           href: `/problem/show/${problem.id}/discussion`,
         },
+
+        // TODO: Learn is $$$$
+        {
+          title: "Followers",
+          icon: "fa fa-user-plus text-red-400",
+          href: `/problem/show/${problem.id}/followers`,
+        },
+        {
+          title: "Resources",
+          icon: "fa fa-link text-blue-400",
+          href: `/problem/show/${problem.id}/links`,
+        },
+
         {
           title: "Solutions",
           icon: "fa fa-lightbulb text-yellow-400",
           href: `/problem/show/${problem.id}/solutions`,
         },
-        {
-          title: "Followers",
-          icon: "fa fa-user text-blue-400",
-          href: `/problem/show/${problem.id}/followers`,
-        },
-        {
-          title: "Products",
-          icon: "fa-brands fa-product-hunt text-orange-400",
-          href: `/problem/show/${problem.id}/products`,
-        },
-     
       ];
     }
   }
@@ -47,6 +57,8 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+
 {#if !problem}
   <div class="bg-gray-50 p-9">
     <h2 class="mb-3 text-2xl font-bold tracking-tight text-primary-600">
@@ -55,54 +67,106 @@
   </div>
 {:else}
   <div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40">
-    <div class="bg-primary-500 p-4 hidden md:block">
+    <div class="bg-primary-500 drop-shadow-sm p-4">
       <slot name="topmenu">
-        <div >
-          <Breadcrumb >
-            <BreadcrumbItem href="/sector" linkClass="text-white text-xs"
-              >Sectors</BreadcrumbItem
-            >
+        <div>
+          <Breadcrumb>
+            <BreadcrumbItem href="/sector" linkClass="text-white text-xs ">
+              Sectors
+            </BreadcrumbItem>
             <BreadcrumbItem
               href="/sector/{problem.sector.id}"
               linkClass="text-white text-xs"
             >
               {problem.sector.name}
             </BreadcrumbItem>
-            <BreadcrumbItem spanClass="text-white text-xs"
-              >{problem.title}</BreadcrumbItem
-            >
+            <BreadcrumbItem spanClass="text-white text-xs">
+              {problem.title}
+            </BreadcrumbItem>
           </Breadcrumb>
         </div>
       </slot>
     </div>
-    <div class="flex flex-1 flex-row overflow-hidden slide ">
-        <div class="bg-gray-200 text-xs md:w-[200px]">
-            <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-            <ul class="flex flex-col h-full">
-              {#each menuItems as item}
-                <li>
-                  <a
-                    href="#stay"
-                    on:click={() => goto(item.href)}
-                    class="block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm
+    <div class="flex flex-1 flex-row overflow-hidden slide">
+      <div
+        class="bg-gray-200 text-xs {small
+          ? ''
+          : 'lg:w-[200px]'}  hidden md:block"
+      >
+        <ul class="{small ? "" : "flex flex-col"}">
+          {#each menuItems as item}
+            <li>
+              <a
+                href="#stay"
+                on:click={() => goto(item.href)}
+                class="block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm
+                {small ? 'text-center' : ''} 
                     {path == item.href
-                      ? '!text-gray-600 bg-gray-100'
-                      : ' hover:text-gray-600  hover:bg-gray-100 '}"
-                  >
-                    {#if item.icon}
-                      <i class="{item.icon}  md:mr-2" />
-                    {/if}
-                    <div class="hidden md:inline">{item.title}</div>
-                  </a>
-                </li>
-              {/each}
-            </ul>
-          </div>
-      <div class="overflow-auto flex-1 md:p-4">
-        <slot />
+                  ? '!text-gray-600 bg-gray-100'
+                  : ' hover:text-gray-600  hover:bg-gray-100 '}"
+              >
+                {#if item.icon}
+                  <i class="{item.icon}  {small ? '' : 'lg:mr-2'} " />
+                {/if}
+                <div class=" {small ? 'text-xs' : 'lg:inline'} ">
+                  {item.title}
+                </div>
+              </a>
+            </li>
+          {/each}
+          <li>
+            <a
+              href="#stay"
+              on:click={toggleWidth}
+              class="{small
+                ? 'text-center'
+                : ''} block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm hover:text-gray-600 hover:bg-gray-100"
+            >
+              <i
+                class="fas {small
+                  ? 'fa-chevron-right'
+                  : 'fa-chevron-left lg:mr-2'} "
+              />
+
+              {#if !small}
+                Hide
+              {/if}
+            </a>
+          </li>
+        </ul>
       </div>
-   
+      <div />
+
+      <div class="overflow-auto flex-1 h-full flex flex-col">
+        <div class="border-v-[1px] flex justify-end bg-primary-50 border-b-[1px]">
+          <slot name="innerMenu" />
+        </div>
+
+        <div class="flex-1 overflow-auto">
+          <slot />
+          <div class=" mb-[100px]" />
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="block md:hidden">
+    <BottomNav
+      navType="group"
+      position="absolute"
+      innerDiv="grid-cols-5 text-lg  drop-shadow-t-xl"
+    >
+      {#each menuItems as item}
+        <BottomNavItem
+          on:click={() => goto(item.href)}
+          btnDefault={path == item.href
+            ? "!text-gray-600 bg-gray-100"
+            : " hover:text-gray-600  hover:bg-gray-100 "}
+        >
+          <i class={item.icon} />
+        </BottomNavItem>
+      {/each}
+    </BottomNav>
   </div>
 {/if}
 
