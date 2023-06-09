@@ -1,5 +1,5 @@
 <script>
-  import Gravitar from "$lib/components/shared/Gravitar.svelte";
+  import Gravitar from "$lib/components/shared/Gravitars.svelte";
   export let users = [];
   export let placeholder = "No users"
 </script>

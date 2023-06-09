@@ -3,7 +3,7 @@
   import DiscussionForm from "$lib/components/shared/discussions/DiscussionForm.svelte";
   import { Button, Modal } from "flowbite-svelte";
   import { createEventDispatcher } from "svelte";
-  import Gravitar from "$lib/components/shared/Gravitar.svelte";
+  import Gravitar from "$lib/components/shared/Gravitars.svelte";
   import { auth } from "$lib/store";
   import { goto } from "$app/navigation";
 

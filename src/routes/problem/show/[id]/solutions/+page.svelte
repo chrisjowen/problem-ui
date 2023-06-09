@@ -5,7 +5,7 @@
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
-  import Gravitar from "$lib/components/shared/Gravitar.svelte";
+  import Gravitar from "$lib/components/shared/Gravitars.svelte";
 
   let problem: any = null;
   let loggedInUser = $auth.loggedInUser;

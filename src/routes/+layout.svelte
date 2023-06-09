@@ -9,7 +9,7 @@
   import "../app.postcss";
   import { page } from "$app/stores";
   import { auth, overflow } from "$lib/store";
-  import Gravitar from "$lib/components/shared/Gravitar.svelte";
+  import Gravitar from "$lib/components/shared/Gravitars.svelte";
   import { Listgroup } from "flowbite-svelte";
   import { onMount } from "svelte";
 
