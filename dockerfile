@@ -1,5 +1,8 @@
 FROM node:16.19.0 as build
 
+ENV PUBLIC_PROBLEM_API_PATH=$PUBLIC_PROBLEM_API_PATH
+ENV PUBLIC_PROBLEM_SOCKET_PATH=$PUBLIC_PROBLEM_SOCKET_PATH
+
 # install dependencies
 WORKDIR /app
 COPY package.json package-lock.json ./
