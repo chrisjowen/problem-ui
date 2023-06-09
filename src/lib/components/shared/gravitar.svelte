@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { browser } from "$app/environment";
   import { Avatar } from "flowbite-svelte";
   import { MD5 } from 'crypto-js';
