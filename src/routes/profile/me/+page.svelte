@@ -1,12 +1,12 @@
 <script lang="ts">
   import { auth } from "$lib/store";
-  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { Breadcrumb, BreadcrumbItem } from "flowbite-svelte";
   import { onMount } from "svelte";
   import api from "$lib/api";
   import type { Problem } from "$lib/types";
   import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
   import { PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
 
   let me = $auth.loggedInUser;
   let problems: Problem[] = [];
