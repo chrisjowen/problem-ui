@@ -69,7 +69,7 @@
                 class="bg-white rounded-lg border border-[15px] border-white"
               >
                 <img
-                  src="{PUBLIC_PROBLEM_API_PATH}/api/image{sector.image}"
+                  src="{PUBLIC_IMG_CDN_BASE}{sector.image}"
                   alt={sector.name}
                   class="rounded-lg w-full"
                 />
@@ -110,7 +110,7 @@
                 <div class="p-4">
                   <img
                     class="w-full lg:w-auto h-[25px] object-cover object-center border"
-                    src="{PUBLIC_PROBLEM_API_PATH}/api/image/{problem.img}"
+                    src="{PUBLIC_IMG_CDN_BASE}/{problem.img}"
                     alt="content"
                   />
                 </div>

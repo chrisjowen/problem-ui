@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import api from "$lib/api";
-  import { PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
+  import { PUBLIC_IMG_CDN_BASE, PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
 
   let sectors: any[] = [];
 
@@ -42,7 +42,7 @@
       <div class="bg-white border hover:drop-shadow-lg rounded-lg" on:click={showSector(sector)}>
           <img
             class="w-full h-[200px] object-cover object-center p-2 "
-            src="{PUBLIC_PROBLEM_API_PATH}/api/image{sector.image}"
+            src="{PUBLIC_IMG_CDN_BASE}{sector.image}"
             alt="content" />
 
           <h5 class="mb-2 text-lg font-bold tracking-tight  m-4 pb-4 text-center">

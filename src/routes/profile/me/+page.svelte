@@ -5,7 +5,7 @@
   import api from "$lib/api";
   import type { Problem } from "$lib/types";
   import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
-  import { PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
+  import { PUBLIC_IMG_CDN_BASE, PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
   import Gravitar from "$lib/components/shared/Gravitars.svelte";
 
   let me = $auth.loggedInUser;
@@ -86,7 +86,7 @@
               {#each me.problems as problem}
                 <div class="flex bg-white border p-4 rounded-lg mb-2">
                   <img
-                    src="{PUBLIC_PROBLEM_API_PATH}/api/image{problem.img}"
+                    src="{PUBLIC_IMG_CDN_BASE}{problem.img}"
                     class="w-[70px] mr-6"
                     alt=""
                   />

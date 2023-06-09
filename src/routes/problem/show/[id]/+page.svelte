@@ -15,7 +15,7 @@
   import LinksList from "$lib/components/shared/links/LinksList.svelte";
   import LatestDiscussions from "$lib/components/shared/discussions/LatestDiscussions.svelte";
   import Stakeholders from "$lib/components/showproblem/research/stakeholders.svelte";
-  import { PUBLIC_PROBLEM_API_PATH } from '$env/static/public';
+  import { PUBLIC_IMG_CDN_BASE, PUBLIC_PROBLEM_API_PATH } from '$env/static/public';
 
   let problem: any = null;
   let comments: PaginationResults<Comment>;
@@ -106,7 +106,7 @@
 
             <div class="md:p-4 p-2 z-30 md:mb-8">
               <img
-                src="{PUBLIC_PROBLEM_API_PATH}/api/image{problem.img}"
+                src="{PUBLIC_IMG_CDN_BASE}{problem.img}"
                 alt={problem.title}
                 class="sm:w-[150px] w-[70%] border md:rounded-xl block md:inline-block md:mb-5 md:mb-0 m-auto md:float-left drop-shadow-xl"
               />

@@ -3,7 +3,7 @@
   import { onMount, createEventDispatcher } from "svelte";
   import type { PaginationResults, Sector } from "$lib/types";
   import HighlightedText from "./shared/HighlightedText.svelte";
-  import { PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
+  import { PUBLIC_IMG_CDN_BASE, PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
 
   export let initialSectorId : string | number | null = null;
 
@@ -63,7 +63,7 @@
     on:keydown={onReSelectSector}
   >
     <img
-      src="{PUBLIC_PROBLEM_API_PATH}/api/image{sector.image}"
+      src="{PUBLIC_IMG_CDN_BASE}{sector.image}"
       class="w-6 h-6 mr-2"
       alt={sector.name}
     />

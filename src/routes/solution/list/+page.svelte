@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Button, Input, Modal } from "flowbite-svelte";
+  import { Button, Input } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { slide } from "svelte/transition";
   import api from "$lib/api";
-  import { PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
+  import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
   let timer;
   let listView = false;
 
@@ -76,7 +76,7 @@
             <div class="p-4">
               <img
                 class="w-full md:w-auto object-cover object-center border"
-                src="{PUBLIC_PROBLEM_API_PATH}/api/image/{problem.img}"
+                src="{PUBLIC_IMG_CDN_BASE}/{problem.img}"
                 alt="content"
                 style="height: {listView ? '120px' : '200px'};"
               />
