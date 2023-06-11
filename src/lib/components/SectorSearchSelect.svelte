@@ -63,7 +63,7 @@
     on:keydown={onReSelectSector}
   >
     <img
-      src="{PUBLIC_IMG_CDN_BASE}{sector.image}"
+      src="{PUBLIC_IMG_CDN_BASE}/tr:w-50,h-50{sector.image}"
       class="w-6 h-6 mr-2"
       alt={sector.name}
     />
@@ -89,7 +89,7 @@
               on:keydown={onFireSelect(sector)}
             >
               <img
-                src="{PUBLIC_IMG_CDN_BASE}{sector.image}"
+                src="{PUBLIC_IMG_CDN_BASE}/tr:w-50,h-50{sector.image}"
                 class="w-6 h-6 mr-2"
                 alt={sector.name}
               />

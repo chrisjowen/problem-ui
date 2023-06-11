@@ -12,9 +12,6 @@
   let discussions: PaginationResults<any>;
 
   onMount(() => {
-    api.problem.get($page.params.id, ["sector"]).then((res) => {
-      problem = res.data;
-    });
     loadDiscussions();
   });
 

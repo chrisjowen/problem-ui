@@ -52,4 +52,20 @@ export interface Sector {
 
 
 
+export interface Obstacle {
+    id: null | string;
+    description: string;
+    hint: string;
+    questions: string[];
+    tags: string[];
+    problem_id: null | string;
+    problem: null | any;
+    updated_at: null | string;
+    inserted_at: null | string;
+}
+
+
+
+
+
 

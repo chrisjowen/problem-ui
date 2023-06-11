@@ -9,17 +9,8 @@
   import { goto } from "$app/navigation";
 
   let problem: any = null;
+  let reload: Function = () => {};
   let loggedInUser = $auth.loggedInUser;
-
-  onMount(() => {
-    loadProblem();
-  });
-
-  function loadProblem() {
-    api.problem.get($page.params.id, ["followers", "sector"]).then((res) => {
-      problem = res.data;
-    });
-  }
 
   $: following = problem?.followers?.some(
     (f: any) => f.id === loggedInUser?.id
@@ -29,7 +20,7 @@
       goto("/login");
     } else {
       await api.problem.follow(problem.id);
-      loadProblem();
+      reload();
     }
   }
 
@@ -38,12 +29,12 @@
       goto("/login");
     } else {
       await api.problem.unfollow(problem.id);
-      loadProblem();
+      reload();
     }
   }
 </script>
 
-<ProblemLayout bind:problem>
+<ProblemLayout bind:problem bind:reload={reload}>
   {#if problem}
   <div class="px-4 pt-4 flex justify-end space-x-2">
     <Button

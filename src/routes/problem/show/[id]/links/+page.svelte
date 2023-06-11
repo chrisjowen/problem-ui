@@ -7,17 +7,10 @@
   import { onMount } from "svelte";
 
   let problem: any = null;
+  let reload: Function;
   let problemId = $page.params.id;
 
-  onMount(reload);
-
   let filters: string[] = [];
-
-  function reload() {
-    api.problem.get(problemId, ["products", "sector"]).then((res) => {
-      problem = res.data;
-    });
-  }
 
   $: selected = (type: string) => {
     if (filters.includes(type)) {
@@ -66,7 +59,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
-<ProblemLayout bind:problem>
+<ProblemLayout bind:problem bind:reload>
   {#if problem}
     <div class="p-4 border bg-white">
       <Input

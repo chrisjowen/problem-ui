@@ -6,17 +6,12 @@
   import { onMount } from "svelte";
 
   let problem: any = null;
+  let reload: Function;
 
-  onMount(reload);
-  function reload() {
-    api.problem.get($page.params.id, ["products", "sector"]).then((res) => {
-      problem = res.data;
-    });
-  }
   
 </script>
 
-<ProblemLayout bind:problem>
+<ProblemLayout bind:problem bind:reload>
   {#if problem}
     <div class="p-4">
       <Products on:delete={reload}  bind:products={problem.products} />

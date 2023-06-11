@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { classNames } from "classnames";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import {
@@ -7,12 +6,28 @@
     BottomNavItem,
     Breadcrumb,
     BreadcrumbItem,
-    Button,
   } from "flowbite-svelte";
+  import { selectedProblem } from "$lib/store";
+  import api from "$lib/api";
+  import { onMount } from "svelte";
 
   export let problem: any = null;
   export let menuItems: any[] = [];
   export let small = true;
+
+
+  onMount(reload);
+  
+  function reload() {
+    if ($selectedProblem?.id?.toString() === $page.params.id ) {
+      problem = $selectedProblem;
+    } else {
+      api.problem.get($page.params.id, ["products", "sector", "user"]).then((res) => {
+        $selectedProblem = res.data;
+        problem = res.data;
+      });
+    }
+  }
 
   let path = $page.url.pathname;
 
@@ -44,13 +59,27 @@
         },
 
         {
-          title: "Solutions",
-          icon: "fa fa-lightbulb text-yellow-400",
-          href: `/problem/show/${problem.id}/solutions`,
+          title: "Obstacles",
+          icon: "fa fa-exclamation-triangle text-red-400",
+          href: `/problem/show/${problem.id}/obstacles`,
         },
+        // {
+        //   title: "Solutions",
+        //   icon: "fa fa-lightbulb text-yellow-400",
+        //   href: `/problem/show/${problem.id}/solutions`,
+        // },
       ];
     }
   }
+
+function inPath(item: any) {
+  let base = `/problem/show/${problem.id}`;
+
+  if(path == base && item.href == path) {
+    return true;
+  }
+  return item.href!=base && path.indexOf(item.href) > -1
+}
 
   function toggleWidth() {
     small = !small;
@@ -93,7 +122,7 @@
           ? ''
           : 'lg:w-[200px]'}  hidden md:block"
       >
-        <ul class="{small ? "" : "flex flex-col"}">
+        <ul class={small ? "" : "flex flex-col"}>
           {#each menuItems as item}
             <li>
               <a
@@ -101,7 +130,7 @@
                 on:click={() => goto(item.href)}
                 class="block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm
                 {small ? 'text-center' : ''} 
-                    {path == item.href
+                    {inPath(item)
                   ? '!text-gray-600 bg-gray-100'
                   : ' hover:text-gray-600  hover:bg-gray-100 '}"
               >
@@ -138,13 +167,17 @@
       <div />
 
       <div class="overflow-auto flex-1 h-full flex flex-col">
-        <div class="border-v-[1px] flex justify-end bg-primary-50 border-b-[1px]">
+        <div
+          class="border-v-[1px] flex justify-end bg-primary-50 border-b-[1px]"
+        >
           <slot name="innerMenu" />
         </div>
 
-        <div class="flex-1 overflow-auto">
+        <div class="flex-1 overflow-auto ">
+          <div class="max-w-[2000px]">
           <slot />
           <div class=" mb-[100px]" />
+        </div>
         </div>
       </div>
     </div>
@@ -174,5 +207,15 @@
   .slide {
     transition: width 2s;
     overflow: hidden;
+  }
+    ::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 7px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
   }
 </style>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { classNames } from 'classnames';
+  import { classNames } from "classnames";
   import { onMount } from "svelte";
   import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
   import { page } from "$app/stores";
@@ -15,7 +15,11 @@
   import LinksList from "$lib/components/shared/links/LinksList.svelte";
   import LatestDiscussions from "$lib/components/shared/discussions/LatestDiscussions.svelte";
   import Stakeholders from "$lib/components/showproblem/research/stakeholders.svelte";
-  import { PUBLIC_IMG_CDN_BASE, PUBLIC_PROBLEM_API_PATH } from '$env/static/public';
+  import {
+    PUBLIC_IMG_CDN_BASE,
+    PUBLIC_PROBLEM_API_PATH,
+  } from "$env/static/public";
+  import ObstacleList from "$lib/components/shared/obstacles/ObstacleList.svelte";
 
   let problem: any = null;
   let comments: PaginationResults<Comment>;
@@ -74,7 +78,6 @@
 </script>
 
 <ProblemLayout bind:problem>
-  
   <!-- <div slot="innerMenu" class="  p-4">
     <Button size="xs" class="bg-primary-700">
       <i class="fas fa-check mr-2" />
@@ -163,19 +166,24 @@
         <div class="mb-4">
           <h1 class="mb-4 text-xl text-gray-800">Followers</h1>
           <UserList placeholder="No Followers" users={problem.followers} />
+          <div class="flex justify-end m-2">
+            <a href="./{problemId}/followers" class="text-xs text-blue-500"
+              >All Followers</a
+            >
+          </div>
         </div>
         <div class="mb-4">
-          <h1 class="mb-4 text-xl text-gray-800">Related Links</h1>
+          <h1 class="mb-4 text-xl text-gray-800">Resources</h1>
           <LinksList api={api.problem.links(problemId)} pageSize={4} />
           <div class="flex justify-end m-2">
             <a href="./{problemId}/links" class="text-xs text-blue-500"
-              >All Links</a
+              >All Resources</a
             >
           </div>
         </div>
 
         <div class="">
-          <h1 class="mb-4 text-xl text-gray-800">Latest Discssions</h1>
+          <h1 class="mb-4 text-xl text-gray-800">Discssions</h1>
           <LatestDiscussions
             api={api.problem.discussion(problemId)}
             id={problemId}
@@ -183,6 +191,16 @@
           <div class="flex justify-end m-2">
             <a href="./{problemId}/discussion" class="text-xs text-blue-500"
               >All Discussions</a
+            >
+          </div>
+        </div>
+
+        <div class="">
+          <h1 class="mb-4 text-xl text-gray-800">Obstacles</h1>
+          <ObstacleList api={api.problem.obstacles(problemId)} id={problemId} />
+          <div class="flex justify-end m-2">
+            <a href="./{problemId}/discussion" class="text-xs text-blue-500"
+              >All Obstacles</a
             >
           </div>
         </div>

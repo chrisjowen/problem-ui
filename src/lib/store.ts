@@ -19,6 +19,11 @@ export const suggestions = writable({
     features: [],
 });
 
+
+export const selectedProblem = writable({})
+
+
+
 if(authValue.token) {
     axios.defaults.headers.common['Authorization'] = `bearer ${authValue.token}`
     token.set(authValue.token)

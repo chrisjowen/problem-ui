@@ -7,7 +7,7 @@ Finally, investors would have a keen interest in which companies or teams to inv
 
 -----
 
-In singapore many software developers have been retrenched, these guys could be building interesting startups but they do not know how to find interesting, and potentially luctitive problems worth solving. Additionally, there are innovators from all industries that have problems they would like to solve, but finding software developers to build solutions is difficult. Finally investors need a one stop place to find local startups that are worth investing. 
+At present many software developers have been retrenched, these guys could be building interesting startups but they do not know how to find interesting, and potentially luctitive problems worth solving. Additionally, there are innovators from all industries that have problems they would like to solve, but finding software developers to build solutions is difficult. Finally investors need a one stop place to find local startups that are worth investing. 
 
 NOTE: One other issue is that innovators oftern lack the ability to describe their problem in a susionct way, leveraging AI may help here
 
