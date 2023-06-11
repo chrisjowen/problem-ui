@@ -16,6 +16,7 @@
   let input : any;
 
   onMount(() => {
+    sectors = $state.sectors;
     loadSectors(initialSectorId);
   });
 

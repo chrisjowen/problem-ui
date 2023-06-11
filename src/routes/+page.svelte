@@ -8,11 +8,11 @@
   let problems: any = [];
 
   onMount(() => {
-    api.sector.list("", 100).then((res) => {
+    api.sector.list("", 5).then((res) => {
       sectors = res.data.entries;
     });
 
-    api.problem.list("", 20, 1, ["sector"]).then((res) => {
+    api.problem.list("", 5, 1, ["sector"]).then((res) => {
       problems = res.data.entries;
     });
   });
