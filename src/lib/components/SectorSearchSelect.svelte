@@ -4,6 +4,7 @@
   import type { PaginationResults, Sector } from "$lib/types";
   import HighlightedText from "./shared/HighlightedText.svelte";
   import { imageUrl } from "$lib/util/imageutil";
+  import { state } from "$lib/store";
 
   export let initialSectorId : string | number | null = null;
 
