@@ -3,9 +3,7 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import api from "$lib/api";
-  import {
-    PUBLIC_IMG_CDN_BASE,
-  } from "$env/static/public";
+  import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
   import { state } from "$lib/store";
 
   let sectors: any[] = [];
@@ -22,9 +20,9 @@
     if ($state?.sectors != null) {
       sectors = $state.sectors.entries;
     } else {
-      let response = await api.sector.list();
-      $state.sectors = response.data;
-      sectors = $state.sectors.entries;
+      api.sector.list().then((r) => {
+        sectors = r.data.entries;
+      });
     }
   });
 
