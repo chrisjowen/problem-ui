@@ -18,7 +18,7 @@
   });
 
   onMount(async () => {
-    if($state?.sectors) {
+    if($state?.sectors!=null) {
       sectors = $state.sectors
     }
     let response = await api.sector.list()
