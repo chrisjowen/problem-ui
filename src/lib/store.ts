@@ -20,6 +20,9 @@ export const suggestions = writable({
 });
 
 
+export const state = writable({
+    sectors: [],
+});
 export const selectedProblem = writable({})
 
 

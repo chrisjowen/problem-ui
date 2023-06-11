@@ -4,6 +4,7 @@
   import { goto } from "$app/navigation";
   import api from "$lib/api";
   import { PUBLIC_IMG_CDN_BASE, PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
+  import { state } from "$lib/store";
 
   let sectors: any[] = [];
 
@@ -17,8 +18,11 @@
   });
 
   onMount(async () => {
+    if($state?.sectors) {
+      sectors = $state.sectors
+    }
     let response = await api.sector.list()
-    sectors = response.data.entries
+    $state.sectors = response.data.entries
   });
 
   let showSector = (sector: any) => () => {
