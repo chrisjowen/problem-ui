@@ -16,7 +16,6 @@
   let showModal = false;
   let selectedLink: null | Link;
 
-  onMount(reload);
 
   async function reload() {
     let response = await api.list(query, pageSize, page);
