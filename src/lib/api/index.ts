@@ -5,6 +5,7 @@ import sectorApi from './sectorApi';
 import solutionApi from './solutionApi';
 import discussionApi from './discussionApi';
 import workflowApi from './workflowApi';
+import aiProblemApi from './aiProblemApi';
 
 import RestApi from './common/restApi';
 
@@ -17,5 +18,6 @@ export default {
     discussion: discussionApi,
     workflow: workflowApi,
     suggestion: new RestApi('/api/problem_suggestion'),
-    follower: new RestApi('/api/follower')
+    follower: new RestApi('/api/follower'),
+    aiProblem: aiProblemApi
 }

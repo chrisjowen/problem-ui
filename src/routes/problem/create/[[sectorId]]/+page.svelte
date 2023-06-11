@@ -1,17 +1,16 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import api from "$lib/api";
-  import { connect } from "$lib/channel/socket";
   import SectorSearchSelect from "$lib/components/SectorSearchSelect.svelte";
+  import ProblemCreateSteps from "$lib/components/problem/create/ProblemCreateSteps.svelte";
   import StatementBlurb from "$lib/components/problem/create/StatementBlurb.svelte";
   import StatementTip from "$lib/components/problem/create/StatementTip.svelte";
   import StatusIndicator from "$lib/components/problem/create/StatusIndicator.svelte";
-  import { auth } from "$lib/store";
   import type { Sector } from "$lib/types";
   import { StepIndicator, Button } from "flowbite-svelte";
-  import { onDestroy, onMount } from "svelte";
+  
 
+  let watch: Function;
   let sector: null | Sector;
   let valid = false;
   let check: any = null;
@@ -23,23 +22,13 @@
     "Step 2 - Describe The Problem",
     "Step 3 - Sit Back And Relax",
   ];
-  let creatingMessage = "Creating Problem..."
   let form = {
     title: "",
     blurb: "",
   };
   let lastLength = 0;
-  let channel: any;
-
-
-  onDestroy(() => {
-    if (channel) {
-      channel.leave();
-    }
-  });
 
   function onSectorSelected(e: CustomEvent<Sector>): void {
-    creatingMessage = "Creating Problem..."
     sector = e.detail;
     currentStep = 2;
     check = null;
@@ -54,7 +43,7 @@
       valid = false;
       isChecking = true;
       lastLength = form.blurb.length;
-      api.problem
+      api.aiProblem
         .precheck(form.blurb, sector.name)
         .then((response) => {
           check = response.data;
@@ -70,23 +59,14 @@
 
   function buildTemplate() {
     currentStep = 3;
+    debugger
     api.workflow
       .template({
         sector_id: sector!.id,
         statement: form.blurb,
       })
       .then(async (res) => {
-        channel = await connect(
-          `problem:trace:${res.data.trace_id}`,
-          $auth.token
-        );
-
-        channel.on("problem:creating", () => creatingMessage = "Creating Problem...");
-        channel.on("problem:creating:meta", () => creatingMessage = "Summarizing the problem...");
-        channel.on("problem:creating:image", () => creatingMessage = "Generating a banner image...");
-        channel.on("problem:created", (resp: any) => {
-          goto(`/problem/show/${resp.id}`);
-        });
+        watch(res.data.trace_id);
       });
   }
 
@@ -153,16 +133,7 @@
 
       {#if currentStep == 3}
         <section class=" p-4">
-          <div>
-            <ul class="space-y-9">
-              <li class="flex">
-                <i class="fas fa-spinner fa-spin text-gray-400 text-4xl" />
-                <span class="ml-8 text-lg flex-1 mt-1">
-                  {creatingMessage} please do not refresh the page
-                  </span>
-              </li>
-            </ul>
-          </div>
+         <ProblemCreateSteps bind:watch={watch} />
         </section>
       {/if}
     </div>
