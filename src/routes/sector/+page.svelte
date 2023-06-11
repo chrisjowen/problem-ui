@@ -8,7 +8,7 @@
 
   let sectors: any[] = [];
 
-  $: sorted = sectors.sort((a, b) => {
+  $: sorted = sectors?.sort((a, b) => {
     if (a.name < b.name) {
       return -1;
     } else {
