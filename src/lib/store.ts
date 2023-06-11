@@ -30,7 +30,7 @@ export const selectedProblem = writable({})
 
 
 
-api.sector.list("", 1, 100).then((res) => {
+api.sector.list("", 100, 1).then((res) => {
     state.set({
         sectors: res.data
     })

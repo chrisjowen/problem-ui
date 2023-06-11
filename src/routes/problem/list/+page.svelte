@@ -101,6 +101,13 @@
         ? 'md:grid-cols-1'
         : 'xl:grid-cols-3'}  sm:grid-cols-1 px-4"
     >
+        
+
+      {#if !problems || problems.length == 0}
+      <p>Loading...</p>
+      {/if}
+
+
       {#each problems as problem}
         <div class="inline-block flex w-full" >
           <!-- svelte-ignore a11y-click-events-have-key-events -->
