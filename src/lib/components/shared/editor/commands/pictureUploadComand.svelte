@@ -1,22 +1,36 @@
 <script lang="ts">
+  import { imageUrl } from "$lib/util/imageutil";
+  import axios from "axios";
   import { Modal } from "flowbite-svelte";
   import { Dropzone } from "flowbite-svelte";
 
   export let editor: any;
   let pictureModal = false;
-  let files = [];
+  let files: any[] = [];
 
   let buttonClicked = () => {
-    editor.commands.setImage({ src: "https://placebeard.it/300x300" });
+    pictureModal = true;
   };
-  let fileChanged = (event) => {
-    // console.log(files)
+  let fileChanged = () => {
+    const formData = new FormData();
+    formData.append("file", files[0]);
+
+    axios
+      .post("/api/image/general", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        editor.commands.setImage({ src: imageUrl(res.data.path) });
+        pictureModal = false;
+      });
   };
 </script>
 
-<slot buttonClicked={buttonClicked}></slot>
+<slot {buttonClicked} />
 
-<Modal open={pictureModal}>
+<Modal bind:open={pictureModal} size="full">
   <Dropzone id="dropzone" on:change={fileChanged} bind:files>
     <svg
       aria-hidden="true"

@@ -13,7 +13,7 @@
   const dispatch = createEventDispatcher();
 
   let editing = false;
-  let fullscreen = false;
+  let fullscreen = true;
   let original = `${input}`;
 
   // $: {
@@ -96,14 +96,19 @@
     <slot />
   {/if}
   {#if editing}
-    <div class="flex-1 overflow-auto">
-      <Editor bind:html={input} bind:fullscreen bind:height={height}>
-        <slot {editing} />
-      </Editor>
+    <div class="flex-1 overflow-auto flex">
+      <div class="relative flex-1">
+        <Editor bind:html={input} bind:fullscreen bind:height={height}>
+          <slot {editing} />
+        </Editor>
+      </div>
+
+    
+    
     </div>
   {:else}
     <div
-      class="px-8 py-4 prose prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none"
+      class="px-8 py-4 prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none editor relative"
       on:click={() => (editable ? editing = true : null)}
     >
       {@html input}

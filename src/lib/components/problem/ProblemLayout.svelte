@@ -18,11 +18,11 @@
 
   onMount(reload);
   
-  function reload() {
-    if ($selectedProblem?.id?.toString() === $page.params.id ) {
+  export function reload(force: boolean = false) {
+    if ($selectedProblem?.id?.toString() === $page.params.id  && !force) {
       problem = $selectedProblem;
     } else {
-      api.problem.get($page.params.id, ["products", "sector", "user"]).then((res) => {
+      api.problem.get($page.params.id, ["products", "sector", "user", "followers"]).then((res) => {
         $selectedProblem = res.data;
         problem = res.data;
       });
@@ -49,7 +49,7 @@
         // TODO: Learn is $$$$
         {
           title: "Followers",
-          icon: "fa fa-user-plus text-red-400",
+          icon: "fa fa-user-plus text-yellow-400",
           href: `/problem/show/${problem.id}/followers`,
         },
         {
@@ -59,7 +59,7 @@
         },
 
         {
-          title: "Obstacles",
+          title: "Risks",
           icon: "fa fa-exclamation-triangle text-red-400",
           href: `/problem/show/${problem.id}/obstacles`,
         },

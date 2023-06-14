@@ -10,7 +10,7 @@
   function onUpdateDiscussion(e: CustomEvent<Discussion>): void {
     let question = e.detail;
     api.discussion.update(discussion.id, {question}).then((res) => {
-      discussion = res.data;
+      // discussion = res.data;
     });
   }
 </script>
@@ -26,7 +26,7 @@
   bind:input={discussion.question}
   on:save={onUpdateDiscussion}
   owner={discussion.user}
-  editable={$auth?.loggedInUser?.id == discussion.user.id}
+  editable={$auth?.loggedInUser?.id == discussion?.user?.id}
   let:editing
 >
 

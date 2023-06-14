@@ -196,11 +196,11 @@
         </div>
 
         <div class="">
-          <h1 class="mb-4 text-xl text-gray-800">Obstacles</h1>
+          <h1 class="mb-4 text-xl text-gray-800">Risks</h1>
           <ObstacleList api={api.problem.obstacles(problemId)} id={problemId} />
           <div class="flex justify-end m-2">
             <a href="./{problemId}/discussion" class="text-xs text-blue-500"
-              >All Obstacles</a
+              >All Risks</a
             >
           </div>
         </div>

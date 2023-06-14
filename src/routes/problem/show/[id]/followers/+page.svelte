@@ -1,15 +1,13 @@
 <script lang="ts">
   import { auth } from "$lib/store";
-  import { page } from "$app/stores";
   import api from "$lib/api";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
-  import { Breadcrumb, BreadcrumbItem, Button } from "flowbite-svelte";
-  import { onMount } from "svelte";
+  import { Button } from "flowbite-svelte";
   import UserList from "$lib/components/shared/UserList.svelte";
   import { goto } from "$app/navigation";
 
   let problem: any = null;
-  let reload: Function = () => {};
+  let reload: (force: boolean) => void;
   let loggedInUser = $auth.loggedInUser;
 
   $: following = problem?.followers?.some(
@@ -20,7 +18,7 @@
       goto("/login");
     } else {
       await api.problem.follow(problem.id);
-      reload();
+      reload(true);
     }
   }
 
@@ -29,7 +27,7 @@
       goto("/login");
     } else {
       await api.problem.unfollow(problem.id);
-      reload();
+      reload(true);
     }
   }
 </script>

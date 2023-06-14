@@ -22,7 +22,7 @@
 </script>
 
 {#if !obstacles || obstacles.total_entries == 0}
-  <div class="bg-white p-4 border rounded-md">No obstacles Started</div>
+  <div class="bg-white p-4 border rounded-md">No Risks</div>
 {:else}
   {#each obstacles.entries as obstacle}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -31,7 +31,7 @@
       on:click={() => goto(`${base}/obstacles/${obstacle.id}`)}
     >
       <div class="flex">
-        <i class="fas fa-exclamation-triangle text-yellow-500 mr-3 text-lg" />
+        <i class="fas fa-exclamation-triangle text-red-500 mr-3 text-lg" />
         {obstacle.description}
       </div>
     </div>

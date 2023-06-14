@@ -1,11 +1,14 @@
 <script lang="ts">
+	import { nodes } from './../../../../../.svelte-kit/generated/client-optimized/app.js';
   import type { Editor } from "@tiptap/core";
-  import { Card, Modal } from "flowbite-svelte";
+  import { Card, Modal, P } from "flowbite-svelte";
   import { Listgroup, ListgroupItem } from "flowbite-svelte";
   import axios from "axios";
+  import type { TextSelection } from "@tiptap/pm/state";
 
   export let element: HTMLDivElement;
   export let editor: Editor;
+  export let selection: TextSelection;
 
   let showAI = false;
   let aiSuggestion = "";
@@ -36,6 +39,9 @@
   let toggleAI = () => {
     showAI = !showAI;
   };
+
+  $: showTableOptions =  selection?.$head?.path?.map(p => p?.type?.name).filter(p => p).indexOf("table") > -1
+
 </script>
 
 <Card padding="none">
@@ -52,6 +58,22 @@
       class="flex-1 text-xs p-2 border-l-[1px] w-[50px] hover:bg-primary-600"
       on:click={() => editor.chain().focus().toggleItalic().run()}>U</button
     >
+
+    {#if showTableOptions}
+    <button
+    class="flex-1 text-xs p-2 border-l-[1px] w-[50px] hover:bg-primary-600"
+    on:click={() => editor.commands.deleteTable()}>
+    <i class="fa-solid fa-remove"></i>
+    </button
+  >
+    <button
+      class="flex-1 text-xs p-2 border-l-[1px] w-[50px] hover:bg-primary-600"
+      on:click={() => editor.commands.addColumnAfter()}>
+      <i class="fa-solid fa-table-col"></i>
+      </button
+    >
+    {/if}
+
     <button
       class="flex-1 text-xs p-2 border-l-[1px] hover:bg-primary-600 {showAI
         ? 'bg-primary-100'
@@ -79,5 +101,5 @@
       >
     </Listgroup>
   </div>
-{/if}
+{/if} 
 <Modal open={showAIModel}>Waiting for AI to respond...</Modal>
