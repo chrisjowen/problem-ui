@@ -3,7 +3,6 @@
   import { Editor } from "@tiptap/core";
   import StarterKit from "@tiptap/starter-kit";
   import { createEventDispatcher } from "svelte";
-  import { blur } from "svelte/transition";
   import Table from "@tiptap/extension-table";
   import TableRow from "@tiptap/extension-table-row";
   import TableCell from "@tiptap/extension-table-cell";
@@ -12,9 +11,7 @@
 
   import Image from "@tiptap/extension-image";
   import TopMenu from "./TopMenu.svelte";
-  import FloatingTextMenu from "./FloatingTextMenu.svelte";
-  import FloatingImageMenu from "./FloatingImageMenu.svelte";
-  export let showFullscreen = true;
+    export let showFullscreen = true;
   export let fullscreen = false;
   export let height = "full";
   export let html = `<h2>Who </h2><p>Software developers and other makers who have recently retrenched, as well as innovators in their respective industry who lack the technical skills to create solutions.  </p><h2>What </h2><p>Dunno </p><h2>Why </h2><p>Nonsense </p><h2>When </h2><p>The problem is currently ongoing and is increasingly becoming more difficult. </p><h2>Where </h2><p>This problem impacts businesses worldwide.</p>`;
@@ -22,8 +19,8 @@
 
   let element: HTMLDivElement;
   let editor: Editor;
-  let overlayTop = 0;
-  let overlayLeft = 0;
+  // let overlayTop = 0;
+  // let overlayLeft = 0;
   let selection: any;
   let selectedNode = "";
 
@@ -101,10 +98,6 @@
       editor.destroy();
     }
   });
-
-  export let refreshEditor = () => {
-    editor.commands.clearContent();
-  };
 </script>
 
 <div class={className}>

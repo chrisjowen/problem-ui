@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { nodes } from './../../../../../.svelte-kit/generated/client-optimized/app.js';
   import type { Editor } from "@tiptap/core";
-  import { Card, Modal, P } from "flowbite-svelte";
+  import { Card, Modal } from "flowbite-svelte";
   import { Listgroup, ListgroupItem } from "flowbite-svelte";
   import axios from "axios";
   import type { TextSelection } from "@tiptap/pm/state";
