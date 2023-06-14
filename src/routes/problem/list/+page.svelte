@@ -147,15 +147,3 @@
   </div>
 </div>
 
-
-
-<style lang="scss">
-  .hero {
-    background-image: url("/img/hero.png");
-    background-color: black;
-
-    background-repeat: no-repeat;
-    width: 100%;
-    background-size: cover;
-  }
-</style>
