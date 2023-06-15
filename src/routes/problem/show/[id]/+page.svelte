@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { classNames } from "classnames";
   import { onMount } from "svelte";
   import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
   import { page } from "$app/stores";

@@ -27,6 +27,19 @@ export const state = writable({
 export const selectedProblem = writable({})
 
 
+const defaultSettings = {
+    expandProductMenu: false
+}
+
+const settingsValue = browser ? JSON.parse(window.localStorage.getItem('settings') || JSON.stringify(defaultSettings)) : defaultSettings
+export const settings = writable(settingsValue);
+
+
+settings.subscribe((value) => {
+    if (browser) {
+        window.localStorage.setItem('settings', JSON.stringify(value))
+    }
+})
 
 
 
@@ -36,7 +49,7 @@ api.sector.list("", 100, 1).then((res) => {
     })
 });
 
-if(authValue.token) {
+if (authValue.token) {
     axios.defaults.headers.common['Authorization'] = `bearer ${authValue.token}`
     token.set(authValue.token)
 }

@@ -7,25 +7,26 @@
     Breadcrumb,
     BreadcrumbItem,
   } from "flowbite-svelte";
-  import { selectedProblem } from "$lib/store";
+  import { selectedProblem, settings } from "$lib/store";
   import api from "$lib/api";
   import { onMount } from "svelte";
 
   export let problem: any = null;
   export let menuItems: any[] = [];
-  export let small = true;
-
+  $: small = $settings.expandProductMenu;
 
   onMount(reload);
-  
+
   export function reload(force: boolean = false) {
-    if ($selectedProblem?.id?.toString() === $page.params.id  && !force) {
+    if ($selectedProblem?.id?.toString() === $page.params.id && !force) {
       problem = $selectedProblem;
     } else {
-      api.problem.get($page.params.id, ["products", "sector", "user", "followers"]).then((res) => {
-        $selectedProblem = res.data;
-        problem = res.data;
-      });
+      api.problem
+        .get($page.params.id, ["products", "sector", "user", "followers"])
+        .then((res) => {
+          $selectedProblem = res.data;
+          problem = res.data;
+        });
     }
   }
 
@@ -39,9 +40,13 @@
           icon: "fas fa-info-circle text-primary-400",
           href: `/problem/show/${problem.id}`,
         },
-
         {
-          title: "Discuss",
+          title: "Risks",
+          icon: "fa fa-exclamation-triangle text-red-400",
+          href: `/problem/show/${problem.id}/obstacles`,
+        },
+        {
+          title: "Discussions",
           icon: "fa-solid fa-comment text-green-400",
           href: `/problem/show/${problem.id}/discussion`,
         },
@@ -58,11 +63,6 @@
           href: `/problem/show/${problem.id}/links`,
         },
 
-        {
-          title: "Risks",
-          icon: "fa fa-exclamation-triangle text-red-400",
-          href: `/problem/show/${problem.id}/obstacles`,
-        },
         // {
         //   title: "Solutions",
         //   icon: "fa fa-lightbulb text-yellow-400",
@@ -72,17 +72,17 @@
     }
   }
 
-function inPath(item: any) {
-  let base = `/problem/show/${problem.id}`;
+  function inPath(item: any) {
+    let base = `/problem/show/${problem.id}`;
 
-  if(path == base && item.href == path) {
-    return true;
+    if (path == base && item.href == path) {
+      return true;
+    }
+    return item.href != base && path.indexOf(item.href) > -1;
   }
-  return item.href!=base && path.indexOf(item.href) > -1
-}
 
   function toggleWidth() {
-    small = !small;
+    $settings.expandProductMenu = !$settings.expandProductMenu
   }
 </script>
 
@@ -173,11 +173,11 @@ function inPath(item: any) {
           <slot name="innerMenu" />
         </div>
 
-        <div class="flex-1 overflow-auto ">
+        <div class="flex-1 overflow-auto">
           <div class="max-w-[2000px]">
-          <slot />
-          <div class=" mb-[100px]" />
-        </div>
+            <slot />
+            <div class=" mb-[100px]" />
+          </div>
         </div>
       </div>
     </div>
@@ -208,14 +208,14 @@ function inPath(item: any) {
     transition: width 2s;
     overflow: hidden;
   }
-    ::-webkit-scrollbar {
-      -webkit-appearance: none;
-      width: 7px;
-    }
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
 
-    ::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: rgba(0, 0, 0, 0.5);
-      box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
   }
 </style>

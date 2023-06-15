@@ -56,8 +56,10 @@ export interface Obstacle {
     id: null | string;
     description: string;
     hint: string;
+    state: string;
     questions: string[];
     tags: string[];
+    state_history: any[];
     problem_id: null | string;
     problem: null | any;
     updated_at: null | string;

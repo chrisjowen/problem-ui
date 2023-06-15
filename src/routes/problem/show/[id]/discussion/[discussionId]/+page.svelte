@@ -57,8 +57,9 @@
       <div class="border bg-white md:mb-4 pb-4">
         <DiscussionView {discussion} />
       </div>
-
-      <h1 class="text-lg mb-4  font-bold hidden md:block">Reponses</h1>
+      {#if discussion.answers.length > 0}
+      <h1 class="text-lg mb-4  font-bold hidden md:block">Responses</h1>
+      {/if}
       {#each discussion.answers as answer}
         <section class="bg-white border-t-[1px] border-x-[1px]">
           <EditableTextArea
@@ -70,8 +71,9 @@
         </section>
       {/each}
       {#if $auth?.loggedInUser}
-      <section id="your-answer" class="bg-gray-50 md:p-4 p-3 border">
-        <h1 class="text-sm md:text-lg mb-4  font-bold">Your Reponse</h1>
+      <h1 class="text-sm md:text-lg mb-4 mt-4 font-bold">Your Reponse</h1>
+
+      <section id="your-answer" class="bg-gray-50 md:p-4 p-3 border mt-4">
         <div class="border bg-white   h-[400px] ">
           <Editor bind:html={answer} bind:refreshEditor={refreshEditor}  />
         </div>

@@ -7,6 +7,7 @@
   export let title: null | String = null;
   export let input: String;
   export let owner: null | any = null;
+  export let focus: () => void;
   export let editable = false;
   export let height = "full";
 
@@ -35,6 +36,18 @@
     editing && fullscreen
       ? "absolute top-0 bottom-0 bg-white right-0 left-0 bg-white flex flex-col z-50 "
       : "flex flex-col  ";
+
+
+  function onStartEditingClick() {
+    if(editable) {
+      editing = true;
+      setTimeout(() => {
+        focus()
+      })
+    }
+  }
+
+
 </script>
 
 <div class={mainClass}>
@@ -76,7 +89,7 @@
     {#if editable}
       <div>
         {#if !editing}
-          <Button size="xs" color="light" on:click={() => (editing = true)}>
+          <Button size="xs" color="light" on:click={onStartEditingClick} >
             <i class="fa-solid fa-edit" />
           </Button>
         {:else}
@@ -98,7 +111,7 @@
   {#if editing}
     <div class="flex-1 overflow-auto flex">
       <div class="relative flex-1">
-        <Editor bind:html={input} bind:fullscreen bind:height={height}>
+        <Editor bind:html={input} bind:fullscreen bind:height={height} bind:focus={focus}>
           <slot {editing} />
         </Editor>
       </div>
@@ -109,7 +122,7 @@
   {:else}
     <div
       class="px-8 py-4 prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none editor relative"
-      on:click={() => (editable ? editing = true : null)}
+
     >
       {@html input}
     </div>

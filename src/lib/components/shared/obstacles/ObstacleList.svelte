@@ -31,8 +31,22 @@
       on:click={() => goto(`${base}/obstacles/${obstacle.id}`)}
     >
       <div class="flex">
-        <i class="fas fa-exclamation-triangle text-red-500 mr-3 text-lg" />
-        {obstacle.description}
+        <div class="flex-1">
+          <i
+            class="fas fa-exclamation-triangle text-primary-500 mr-3 text-lg"
+          />
+
+          {obstacle.description}
+          <span class="text-xs p-2 mr-1 ml-1 mb-1 inline-block text-gray-400">
+            <i class="fa-solid fa-exclamation-triangle mr-1" />
+
+            {obstacle.state}
+          </span>
+        </div>
+
+        <div class="flex justify-center items-center mr-2">  
+          <i class="fas fa-chevron-right text-gray-500" />
+        </div>
       </div>
     </div>
   {/each}

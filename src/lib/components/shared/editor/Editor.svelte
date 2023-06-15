@@ -98,11 +98,20 @@
       editor.destroy();
     }
   });
+  
+
+  export function focus() {
+    editor.commands.focus();
+  }
+
+  function onClickEditor() {
+    editor.commands.focus();
+  }
 </script>
 
 <div class={className}>
   <TopMenu {editor} bind:fullscreen bind:showFullscreen bind:selection={selection} />
-  <div class="flex-1 overflow-y-auto">
+  <div class="flex-1 overflow-y-auto" on:click={onClickEditor} on:keyup={focus}>
     <slot  />
     <div
       class="px-8 py-4 prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none editor relative"

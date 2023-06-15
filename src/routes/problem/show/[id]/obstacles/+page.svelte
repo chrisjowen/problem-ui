@@ -9,11 +9,17 @@
   import { each } from "svelte/internal";
 
   let problem: any = null;
-
 </script>
 
 <ProblemLayout bind:problem>
-  <div class="m-4 space-y-1" >
-    <ObstacleList api={api.problem.obstacles($page.params.id)} id={$page.params.id} pageSize={100} base="/problem/show/{problem.id}" />
+  <div class="m-4 space-y-1">
+    <h1 class="text-xl text-primary-600 mb-4">Risks</h1>
+
+    <ObstacleList
+      api={api.problem.obstacles($page.params.id)}
+      id={$page.params.id}
+      pageSize={100}
+      base="/problem/show/{problem.id}"
+    />
   </div>
 </ProblemLayout>

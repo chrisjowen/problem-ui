@@ -78,6 +78,9 @@
             <p class="text-xs">5 Mins ago</p>
 
           </div>
+          <div class="flex justify-center items-center mr-2">
+            <i class="fas fa-chevron-right text-gray-500" />
+          </div>
         </div>
       </div>
     {/each}

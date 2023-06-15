@@ -2,6 +2,7 @@
   import { page } from "$app/stores";
   import api from "$lib/api";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
+  import LargeLinksList from "$lib/components/shared/links/LargeLinksList.svelte";
   import LinksList from "$lib/components/shared/links/LinksList.svelte";
   import { Input } from "flowbite-svelte";
   import { onMount } from "svelte";
@@ -72,7 +73,7 @@
       </Input>
     </div>
     <div class="p-4">
-      <div class="grid grid-cols-3 gap-2 mb-4">
+      <!-- <div class="grid grid-cols-3 gap-2 mb-4">
         <div
           class="flex flex-col text-xs md:text-xl  p-4 border items-center justify-center {selected(
             'product'
@@ -100,8 +101,8 @@
           <i class="fa-solid fa-ellipsis-h mb-4" />
           Other
         </div>
-      </div>
-      <LinksList
+      </div> -->
+      <LargeLinksList
         api={api.problem.links(problemId)}
         pageSize={20}
         editable={true}
