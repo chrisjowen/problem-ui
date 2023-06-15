@@ -72,7 +72,7 @@
 <div class="flex justify-end mb-4">
   <Button size="xs" color="light" on:click={onShowLinkModal()}>
     <i class="fas fa-link mr-2" />
-    Add Link
+    Add Resource
   </Button>
 </div>
 {/if}
@@ -81,7 +81,7 @@
     <div class="bg-white border p-4">No Links</div>
   {/if}
 
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
     {#each links.entries as link}
       <div
         class="border p-3 relative w-full bg-white overflow-hidden rounded-xl hover:shadow-xl transition-shadow duration-[0.5s] ease-in-out"
