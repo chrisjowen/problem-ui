@@ -8,7 +8,11 @@
   import StatusIndicator from "$lib/components/problem/create/StatusIndicator.svelte";
   import type { Sector } from "$lib/types";
   import { StepIndicator, Button } from "flowbite-svelte";
+  import { onMount } from "svelte";
   
+  import {redirectIfNotLoggedIn}  from "$lib/util/authUtil";
+
+  onMount(redirectIfNotLoggedIn)
 
   let watch: Function;
   let sector: null | Sector;

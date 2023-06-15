@@ -16,6 +16,7 @@
     Textarea,
   } from "flowbite-svelte";
   import { onMount } from "svelte";
+  import { redirectIfNotLoggedIn } from "$lib/util/authUtil";
 
   let problem: any = null;
   let obstacle: null | Obstacle = null;
@@ -48,6 +49,7 @@
   }
 
   function onShowTransitionModal() {
+    redirectIfNotLoggedIn();
     stateChange = {
       state: "owned",
       notes: "",
