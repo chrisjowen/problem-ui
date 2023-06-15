@@ -12,7 +12,7 @@
       sectors = res.data.entries;
     });
 
-    api.problem.list("", 20, 1, ["sector"]).then((res) => {
+    api.problem.list("", 10, 1, ["sector"]).then((res) => {
       problems = res.data.entries;
     });
   });
@@ -47,11 +47,11 @@
 
 <div class="p-9 m-h-[500px]">
   <h1 class="mb-9 text-3xl text-primary-900 font-bold ">Trending Problems</h1>
-  <div class="flex overflow-auto w-full pb-9 ">
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 w-full gap-4 ">
     {#each problems as problem}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
-        class="inline-block flex !w-[300px] md:!w-[500px] mr-2 flex-shrink-0"
+        class="inline-block flex   mr-2 flex-shrink-0"
       >
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
@@ -89,13 +89,13 @@
   </div>
 </div>
 
-<div class="p-2 bg-primary-100">
+<div class="p-2 bg-primary-100 ">
   <h1 class="my-9 mx-4 text-2xl text-primary-900 font-bold">Sectors</h1>
-  <div class="flex mx-4 overflow-x-auto ">
+  <div class="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 w-full gap-4 ">
     {#each sectors.slice(0, 50) as sector}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
-        class="rounded-lg hover:bd-blue-900 bg-white hover:drop-shadow-xl drop-shadow-sm  relative mb-9 flex-shrink-0 !w-[300px] mr-4 border-primary-200 border"
+        class="rounded-lg hover:bd-blue-900 bg-white hover:drop-shadow-xl drop-shadow-sm  relative mb-9 flex-shrink-0  mr-4 border-primary-200 border"
         on:click={showSector(sector)}
       >
         <img
