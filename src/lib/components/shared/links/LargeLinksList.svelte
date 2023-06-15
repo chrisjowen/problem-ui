@@ -83,7 +83,7 @@
     <div class="bg-white border p-4">No Links</div>
   {/if}
 
-  <div class="grid grid-cols-1 grid-cols-4 gap-4">
+  <div class="grid grid-cols-1 grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
     {#each links.entries as link}
       <div
         class="border p-3 relative w-full bg-white overflow-hidden rounded-xl hover:shadow-xl transition-shadow duration-[0.5s] ease-in-out"
