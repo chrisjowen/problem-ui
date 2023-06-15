@@ -71,7 +71,7 @@ onMount(() => {
 </script>
 
 
-<div class="flex flex-col h-screen ">
+<div class="flex flex-col absolute inset-0">
   {#if showNavBar}
     <div class="w-full bg-primary-700 text-white">
       <div class="flex flex-row">
