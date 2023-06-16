@@ -70,12 +70,16 @@
           <div class="flex-1 flex items-center">
             <a
             href="/"
+            class="flex"
           >
             <img
               src="/img/logo.png"
-              class="w-[30px]"
+              class="w-[30px] mr-1"
               alt="Problems Worth Solving"
             />
+
+            <span class="hidden lg:block text-white font-bold lg:text-xl text-6xl bold">roblemsWorthSolving</span>
+
             </a>
           </div>
 
