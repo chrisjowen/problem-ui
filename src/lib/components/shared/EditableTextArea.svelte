@@ -16,11 +16,6 @@
   let editing = false;
   let fullscreen = true;
   let original = `${input}`;
-
-  // $: {
-  //   $overflow = !editing;
-  // }
-
   let onDiscard = () => {
     editing = false;
     fullscreen = false;
@@ -117,10 +112,7 @@
       </div>
     </div>
   {:else}
-    <div
-      class=" overflow-auto  px-8 py-4 prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none editor relative"
-
-    >
+    <div class=" overflow-auto  px-8 py-4 prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none editor relative">
       {@html input}
     </div>
   {/if}

@@ -65,7 +65,7 @@
     <div class="p-4 border bg-white">
       <Input
         type="search"
-        placeholder="Search links"
+        placeholder="Search Resources..."
         bind:value={q}
         on:keyup={onSearch}
       >

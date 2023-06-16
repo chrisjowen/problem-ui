@@ -12,7 +12,7 @@
 
   export let notifications = false;
 
-  $: url = browser ? `https://www.gravatar.com/avatar/${MD5(user?.email || email).toString()}` : "";
+  $: url = browser ? `https://www.gravatar.com/avatar/${MD5(user?.email || email).toString()}?d=robohash` : "";
 </script>
 
 {#if notifications }

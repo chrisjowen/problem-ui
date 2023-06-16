@@ -1,45 +1,32 @@
 <script lang="ts">
-  import { auth } from "$lib/store";
-  import api from "$lib/api";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
-  import { Button } from "flowbite-svelte";
   import UserList from "$lib/components/shared/UserList.svelte";
-  import { goto } from "$app/navigation";
   import UserDisplay from "$lib/components/shared/UserDisplay.svelte";
+  import UserDisplayLarge from "$lib/components/shared/UserDisplayLarge.svelte";
   import { isMember } from "$lib/util/authUtil";
+  import InviteContributor from "$lib/components/problem/InviteContributor.svelte";
+  import type { User } from "$lib/types";
+  import api from "$lib/api";
 
   let problem: any = null;
   let reload: (force: boolean) => void;
-  let loggedInUser = $auth.loggedInUser;
+  $: memberIds = problem?.problem_users?.map((m: any) => m.member_id) || [];
 
-  $: following = problem?.followers?.some(
-    (f: any) => f.id === loggedInUser?.id
-  );
-  async function onFollow() {
-    if (!loggedInUser) {
-      goto("/login");
-    } else {
-      await api.problem.follow(problem.id);
-      reload(true);
-    }
+  function exclude(u: User) {
+    return memberIds.concat(problem.user_id).indexOf(u.id) == -1;
   }
 
-  async function onUnFollow() {
-    if (!loggedInUser) {
-      goto("/login");
-    } else {
-      await api.problem.unfollow(problem.id);
-      reload(true);
-    }
-  }
-
-  async function addContributer() {
-    if (!loggedInUser) {
-      goto("/login");
-    } else {
-      await api.problem.addContributer(problem.id);
-      reload(true);
-    }
+  function onDeleteMember(e: CustomEvent<any>): void {
+    let user = e.detail;
+    let problem_user = problem.problem_users.find(
+      (pu: any) => pu.member_id == user.id
+    );
+    api.problem
+      .members(problem.id)
+      .delete(problem_user.id)
+      .then(() => {
+        reload(true);
+      });
   }
 </script>
 
@@ -50,27 +37,25 @@
         <h1 class="flex-1 items-end flex">Contributers</h1>
 
         {#if isMember(problem)}
-          <Button
-            class="items-end flex"
-            size="xs"
-            on:click={addContributer}
-            color="light"
-          >
-            <i class="fas fa-user-plus mr-2" />
-            Invite Contributor</Button
-          >
+          <InviteContributor {problem} on:add={() => reload(true)} {exclude} />
         {/if}
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
-        <UserDisplay user={problem.user} maxBio={50} />
+      <div class="border rounded-xl white">
+        <UserDisplayLarge user={problem.user} maxBio={50} />
         {#each problem.problem_users as problem_user}
-          <UserDisplay user={problem_user.member} role={problem_user.role} maxBio={50} />
+          <UserDisplayLarge
+            user={problem_user.member}
+            role={problem_user.role}
+            deletable={isMember(problem)}
+            on:delete={onDeleteMember}
+            maxBio={50}
+          />
         {/each}
       </div>
 
       <h1 class="flex-1 items-end flex">Followers</h1>
-      <UserList users={problem.followers} placeholder="No Followers"  />
+      <UserList users={problem.followers} placeholder="No Followers" />
     </div>
   {/if}
 </ProblemLayout>

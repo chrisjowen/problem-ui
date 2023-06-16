@@ -12,24 +12,22 @@
   import type { PaginationResults, Comment } from "$lib/types";
   import LinksList from "$lib/components/shared/links/LinksList.svelte";
   import LatestDiscussions from "$lib/components/shared/discussions/LatestDiscussions.svelte";
-  import {
-    PUBLIC_IMG_CDN_BASE,
-  } from "$env/static/public";
+  import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
   import ObstacleList from "$lib/components/shared/obstacles/ObstacleList.svelte";
   import { isMember } from "$lib/util/authUtil";
+  import InviteContributor from "$lib/components/problem/InviteContributor.svelte";
 
   let problem: any = null;
   let comments: PaginationResults<Comment>;
   let loggedInUser: any;
   let problemId = $page.params.id;
   let reload: (force: boolean) => void;
-  
+
   onMount(() => {
     loadComments();
     loggedInUser = $auth.loggedInUser;
   });
 
- 
   function onUpdateProblemStatement() {
     api.problem.update(problemId, { overview: problem.overview });
   }
@@ -62,9 +60,11 @@
         comments = res.data;
       });
   }
+
+  function onInviteContributer() {}
 </script>
 
-<ProblemLayout bind:problem bind:reload={reload}>
+<ProblemLayout bind:problem bind:reload>
   {#if problem}
     <div class="flex md:mt-4">
       <div class="xl:max-w-[940px] m-auto md:mx-4 md:rounded-t-lg">
@@ -121,13 +121,15 @@
                     />
                     {following ? "Following" : "Follow"}
                   </Button>
+
+                  <InviteContributor problem={problem} />
                 </div>
               </div>
             </div>
           </div>
           <EditableTextArea
             bind:input={problem.overview}
-            owner={problem}
+            owner={problem.user}
             editable={isMember(problem)}
             let:editing
             on:save={onUpdateProblemStatement}
@@ -179,7 +181,7 @@
           <h1 class="mb-4 text-xl text-gray-800">Risks</h1>
           <ObstacleList api={api.problem.obstacles(problemId)} id={problemId} />
           <div class="flex justify-end m-2">
-            <a href="./{problemId}/discussion" class="text-xs text-blue-500"
+            <a href="./{problemId}/obstacles" class="text-xs text-blue-500"
               >All Risks</a
             >
           </div>

@@ -7,7 +7,7 @@
   import type { AxiosResponse } from "axios";
 
 
-  export let discussions: PaginationResults<Discussion>;
+  let discussions: PaginationResults<Discussion>;
   export let api: RestApi;
   export let id: String;
 

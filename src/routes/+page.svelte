@@ -113,25 +113,3 @@
   </div>
 </div>
 
-<style lang="scss">
-  .hero {
-    width: 100%;
-  }
-
-  .hero {
-    position: relative;
-  }
-
-  .hero::before {
-    content: "";
-    background-image: url("/img/hero.png");
-    background-size: cover;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-    opacity: 0.1;
-    z-index: 1;
-  }
-</style>

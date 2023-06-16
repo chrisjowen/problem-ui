@@ -1,12 +1,13 @@
 <script lang="ts">
-  import { page } from "$app/stores";
-  import type { Discussion, Obstacle, PaginationResults } from "$lib/types";
-  import { onMount } from "svelte";
-  import { goto } from "$app/navigation";
+  import type { Obstacle, PaginationResults } from "$lib/types";
   import type RestApi from "$lib/api/common/restApi";
   import type { AxiosResponse } from "axios";
 
-  export let obstacles: PaginationResults<Obstacle>;
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+
+
+  let obstacles: PaginationResults<Obstacle>;
   export let api: RestApi;
   export let id: String = "";
   export let base: String = `${id}`;
