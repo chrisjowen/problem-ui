@@ -40,7 +40,7 @@
   </Modal>
 
   <div class="pb-4 flex justify-end">
-    <Button size="xs" class="bg-primary-400" on:click={showCreateDiscussion}>
+    <Button size="xs"  color="light" on:click={showCreateDiscussion}>
       <i class="fa fa-comment mr-2 text-xs" />
       Create Discussion
     </Button>

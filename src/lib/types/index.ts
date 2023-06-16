@@ -69,5 +69,34 @@ export interface Obstacle {
 
 
 
+export interface User {
+    nickname: string;
+    email: string;
+    name: string;
+    last_name: string;
+    updated_at: null | string;
+    inserted_at: null | string;
+}
+
+
+export interface Page {
+    id: null | string;
+    title: string;
+    body: string;
+    version: number;
+    tags: string[];
+    user_id: number;
+    user: User;
+    problem_id: null | string;
+    problem: null | Problem;
+    updated_at: null | string;
+    inserted_at: null | string;
+}
+
+
+
+
+
+
 
 

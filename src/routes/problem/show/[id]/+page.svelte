@@ -8,40 +8,28 @@
   import { goto } from "$app/navigation";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import api from "$lib/api";
-  import Products from "$lib/components/problem/Products.svelte";
   import LatestComments from "$lib/components/shared/comments/LatestComments.svelte";
   import type { PaginationResults, Comment } from "$lib/types";
   import LinksList from "$lib/components/shared/links/LinksList.svelte";
   import LatestDiscussions from "$lib/components/shared/discussions/LatestDiscussions.svelte";
-  import Stakeholders from "$lib/components/showproblem/research/stakeholders.svelte";
   import {
     PUBLIC_IMG_CDN_BASE,
-    PUBLIC_PROBLEM_API_PATH,
   } from "$env/static/public";
   import ObstacleList from "$lib/components/shared/obstacles/ObstacleList.svelte";
+  import { isMember } from "$lib/util/authUtil";
 
   let problem: any = null;
   let comments: PaginationResults<Comment>;
-  let solution: any = null;
   let loggedInUser: any;
   let problemId = $page.params.id;
-
+  let reload: (force: boolean) => void;
+  
   onMount(() => {
-    loadProblem();
     loadComments();
     loggedInUser = $auth.loggedInUser;
   });
 
-  async function loadProblem() {
-    let response = await api.problem.get(problemId, [
-      "sector",
-      "user",
-      "followers",
-      "products",
-    ]);
-    problem = response.data;
-  }
-
+ 
   function onUpdateProblemStatement() {
     api.problem.update(problemId, { overview: problem.overview });
   }
@@ -53,7 +41,7 @@
       goto("/login");
     } else {
       await api.problem.follow(problem.id);
-      loadProblem();
+      reload(true);
     }
   }
 
@@ -62,7 +50,7 @@
       goto("/login");
     } else {
       await api.problem.unfollow(problem.id);
-      loadProblem();
+      reload(true);
     }
   }
 
@@ -76,14 +64,7 @@
   }
 </script>
 
-<ProblemLayout bind:problem>
-  <!-- <div slot="innerMenu" class="  p-4">
-    <Button size="xs" class="bg-primary-700">
-      <i class="fas fa-check mr-2" />
-      Publish
-    </Button>
-  </div> -->
-
+<ProblemLayout bind:problem bind:reload={reload}>
   {#if problem}
     <div class="flex md:mt-4">
       <div class="xl:max-w-[940px] m-auto md:mx-4 md:rounded-t-lg">
@@ -146,8 +127,8 @@
           </div>
           <EditableTextArea
             bind:input={problem.overview}
-            owner={problem.user}
-            editable={loggedInUser?.id == problem.user.id}
+            owner={problem}
+            editable={isMember(problem)}
             let:editing
             on:save={onUpdateProblemStatement}
             height="350px"
@@ -166,7 +147,7 @@
           <h1 class="mb-4 text-xl text-gray-800">Followers</h1>
           <UserList placeholder="No Followers" users={problem.followers} />
           <div class="flex justify-end m-2">
-            <a href="./{problemId}/followers" class="text-xs text-blue-500"
+            <a href="./{problemId}/users" class="text-xs text-blue-500"
               >All Followers</a
             >
           </div>

@@ -27,7 +27,7 @@
   {#each obstacles.entries as obstacle}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
-      class="bg-white hover:drop-shadow-lg p-4 border"
+      class="bg-white hover:drop-shadow-lg p-4 border rounded-xl mb-2"
       on:click={() => goto(`${base}/obstacles/${obstacle.id}`)}
     >
       <div class="flex">

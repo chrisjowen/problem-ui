@@ -105,7 +105,7 @@
   </Modal>
 
   {#if obstacle}
-    <div class="m-8 space-y-6">
+    <div class="m-4 space-y-6">
       <h1 class="text-2xl text-primary-500 font-bold">
         {obstacle.description}
       </h1>

@@ -9,17 +9,18 @@ export const flags = writable({
 const authValue = browser ? JSON.parse(window.localStorage.getItem('auth') || '{}') : {};
 
 
-
 export const token = writable(authValue.token)
 
 export const overflow = writable(true)
 
 export const auth = writable(authValue)
 
+export const notifications = writable(null)
+
+
 export const suggestions = writable({
     features: [],
 });
-
 
 export const state = writable({
     sectors: null,

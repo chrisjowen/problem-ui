@@ -38,6 +38,9 @@ class ProblemApi extends RestApi {
     sectors(id: String) {
         return new RestApi(`/api/problem/${id}/sector`);
     }
+    pages(id: string) {
+        return new RestApi(`/api/problem/${id}/page`);
+    }
 
     precheck(statement: string, sector: string) {
         return this.client.post(`/precheck`, { statement,  sector })
@@ -45,7 +48,7 @@ class ProblemApi extends RestApi {
     solutions(id: string, preloads: string[]) {
         return this.client.get(`/${id}/solution?preloads=${preloads.join(',')}`)
     }
- 
+   
 
     submit(problemStatement: string, traceId: string, sectorId: number) {
         return this.client.post(`/submit`, {
@@ -66,7 +69,7 @@ class ProblemApi extends RestApi {
     template(args: any) {
         return this.client.post(`/template`, args)
     }
-
+   
 
 }
 

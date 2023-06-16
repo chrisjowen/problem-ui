@@ -8,77 +8,72 @@
   } from "flowbite-svelte";
   import "../app.postcss";
   import { page } from "$app/stores";
-  import { auth, overflow } from "$lib/store";
+  import { auth, overflow, notifications } from "$lib/store";
   import Gravitar from "$lib/components/shared/Gravitars.svelte";
-  import { Listgroup } from "flowbite-svelte";
   import { onMount } from "svelte";
-
-
+  import UserMenuItem from "$lib/components/user/UserMenuItem.svelte";
+  import api from "$lib/api";
 
   let loggedInUser: any = null;
   let hideSideBar = true;
-  let showUserMenu = false;
-
-  let userLinks = [
-    { name: "Profile", href: "/profile/me" },
-    { name: "Logout", href: "/logout" },
-  ];
 
   auth.subscribe((value) => {
     loggedInUser = value.loggedInUser;
     console.log("loggedInUser", loggedInUser);
   });
 
-
-  
-
-onMount(() => {
-  showUserMenu = false;
-
-  const report_error = (msg: string = 'unknown error') => {
-
-    console.error("Caught unhandled rejection:", msg)
-
-    // toasts.push({
-    //   message: `Unhandled error: ${msg}`,
-    //   type: 'error',
-    // })
+  $: {
+    if (loggedInUser) {
+      api.notifications.list("", 50, 1).then((res) => {
+        $notifications = res.data;
+      });
+    }
   }
 
-  const handle_rejection = (e: PromiseRejectionEvent) => {
-    e.preventDefault()
-    report_error(e?.reason)
-  }
+  onMount(() => {
+    const report_error = (msg: string = "unknown error") => {
+      console.error("Caught unhandled rejection:", msg);
 
-  const handle_error = (e: ErrorEvent) => {
-    e.preventDefault()
-    report_error(e?.message)
-  }
+      // toasts.push({
+      //   message: `Unhandled error: ${msg}`,
+      //   type: 'error',
+      // })
+    };
 
-  window.addEventListener('unhandledrejection', handle_rejection)
-  window.addEventListener('error', handle_error)
+    const handle_rejection = (e: PromiseRejectionEvent) => {
+      e.preventDefault();
+      report_error(e?.reason);
+    };
 
-  return () => {
-    window.removeEventListener('unhandledrejection', handle_rejection)
-    window.removeEventListener('error', handle_error)
-  }
-})
+    const handle_error = (e: ErrorEvent) => {
+      e.preventDefault();
+      report_error(e?.message);
+    };
 
+    window.addEventListener("unhandledrejection", handle_rejection);
+    window.addEventListener("error", handle_error);
 
-
+    return () => {
+      window.removeEventListener("unhandledrejection", handle_rejection);
+      window.removeEventListener("error", handle_error);
+    };
+  });
 
   $: showNavBar = $page.route.id != "/login";
 </script>
 
-
-<div class="flex flex-col absolute inset-0">
+<div class="flex flex-col absolute inset-0 h-full">
   {#if showNavBar}
     <div class="w-full bg-primary-700 text-white">
       <div class="flex flex-row">
         <div class="flex-1 p-3 md:p-6">
-          <span on:click={() => (hideSideBar = false)} class="md:hidden">
+          <a
+            href="#stay"
+            on:click={() => (hideSideBar = false)}
+            class="md:hidden"
+          >
             <i class="fas fa-bars mr-4" />
-          </span>
+          </a>
           <span
             class="self-center whitespace-nowrap text-sm md:text-lg font-semibold dark:text-white"
           >
@@ -144,22 +139,9 @@ onMount(() => {
               <i class="fa-solid fa-industry text-xs mr-1" />
               Sectors
             </a>
+
             {#if loggedInUser}
-              <div class="relative">
-                <div on:click={() => (showUserMenu = true)}>
-                  <Gravitar email={loggedInUser.email} size="xs" />
-                </div>
-                {#if showUserMenu}
-                  <div
-                    on:mouseleave={() => (showUserMenu = false)}
-                    class="w-48 top-[35px] absolute left-[-160px] z-50"
-                  >
-                    <Listgroup color="gray" active items={userLinks} let:item>
-                      {item.name}
-                    </Listgroup>
-                  </div>
-                {/if}
-              </div>
+              <UserMenuItem user={loggedInUser} />
             {:else}
               <a href="/login">
                 <i class="fas fa-sign-in-alt text-xs mr-1" />
@@ -172,8 +154,9 @@ onMount(() => {
     </div>
   {/if}
 
-  <div class="flex-1  {$overflow ? 'overflow-auto' : 'overflow-hidden'}  ">
+  <div
+    class="flex-1 h-full {$overflow ? 'overflow-auto' : 'overflow-hidden'}  "
+  >
     <slot />
   </div>
 </div>
-

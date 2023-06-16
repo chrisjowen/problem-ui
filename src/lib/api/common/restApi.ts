@@ -21,9 +21,7 @@ class Client {
     }
 }
 
-export default class RestApi {
-
-    
+export default class RestApi {    
     protected client: Client;
     protected baseUrl : string;
 

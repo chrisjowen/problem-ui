@@ -112,16 +112,15 @@
         <div class="inline-block flex w-full" >
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
-            class=" bg-white border hover:border-primary-500 hover:drop-shadow-lg drop-shadow-sm w-full md:flex flex-row"
+            class=" bg-white rounded-xl border hover:drop-shadow-lg drop-shadow-sm w-full {listView ? 'flex' : 'md:flex'}  flex-row"
             on:click={showProblem(problem)}
             size="full"
           >
             <div class="p-4">
               <img
-                class="w-full md:w-auto object-cover object-center border"
+                class=" {listView ? 'w-auto h-[120px]' : 'w-full h-[200px]'} md:w-auto object-cover object-center border "
                 src="{PUBLIC_IMG_CDN_BASE}/{problem.img}"
                 alt="content"
-                style="height: {listView ? '120px' : '200px'};"
               />
             </div>
             <div class="flex-1 mb-4 m-4 space-y-4">

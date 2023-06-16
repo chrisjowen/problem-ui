@@ -19,5 +19,6 @@ export default {
     workflow: workflowApi,
     suggestion: new RestApi('/api/problem_suggestion'),
     follower: new RestApi('/api/follower'),
+    notifications: new RestApi('/api/notification'),
     aiProblem: aiProblemApi
 }

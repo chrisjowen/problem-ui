@@ -9,10 +9,11 @@
   import type { Sector } from "$lib/types";
   import { StepIndicator, Button } from "flowbite-svelte";
   import { onMount } from "svelte";
-  
-  import {redirectIfNotLoggedIn}  from "$lib/util/authUtil";
 
-  onMount(redirectIfNotLoggedIn)
+  import { redirectIfNotLoggedIn } from "$lib/util/authUtil";
+  import AiHelper from "$lib/components/shared/AiHelper.svelte";
+
+  onMount(redirectIfNotLoggedIn);
 
   let watch: Function;
   let sector: null | Sector;
@@ -63,7 +64,7 @@
 
   function buildTemplate() {
     currentStep = 3;
-    debugger
+    debugger;
     api.workflow
       .template({
         sector_id: sector!.id,
@@ -137,7 +138,7 @@
 
       {#if currentStep == 3}
         <section class=" p-4">
-         <ProblemCreateSteps bind:watch={watch} />
+          <ProblemCreateSteps bind:watch />
         </section>
       {/if}
     </div>
@@ -147,34 +148,27 @@
     class="bg-gray-100 flex justify-center items-top col-span-1 min-h-[150px]"
   >
     <div class="flex-1 m-8">
-      <div class="speech-bubble drop-shadow-lg">
-        <div
-          class="prose prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-h3:text-gray-500 prose-h3:mt-0 prose-md max-w-none"
-        >
-          {#if currentStep == 1 || !sector}
-            <h2>Select Your Sector</h2>
-            <p>
-              Select the sector that is most affected by this problem, dont
-              worry you can change this later
-            </p>
-          {:else if currentStep == 2}
-            <StatementTip {check} bind:checking={isChecking} bind:sector />
-          {:else if currentStep == 3}
-            <h2>
-              <i class="fa fa-smile mr-2" />
-              Thanks For The Problem Suggestion
-            </h2>
-            <p>
-              Ok, let me generate a problem statement template for you to use... <strong
-                >This may take a little while</strong
-              >
-            </p>
-          {/if}
-        </div>
-      </div>
-      <div class="flex justify-end">
-        <img src="/img/ai.png" width="150px" alt="robot" />
-      </div>
+      <AiHelper>
+        {#if currentStep == 1 || !sector}
+          <h2>Select Your Sector</h2>
+          <p>
+            Select the sector that is most affected by this problem, dont worry
+            you can change this later
+          </p>
+        {:else if currentStep == 2}
+          <StatementTip {check} bind:checking={isChecking} bind:sector />
+        {:else if currentStep == 3}
+          <h2>
+            <i class="fa fa-smile mr-2" />
+            Thanks For The Problem Suggestion
+          </h2>
+          <p>
+            Ok, let me generate a problem statement template for you to use... <strong
+              >This may take a little while</strong
+            >
+          </p>
+        {/if}
+      </AiHelper>
     </div>
   </seciton>
 </div>

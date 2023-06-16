@@ -7,7 +7,7 @@
   export let title: null | String = null;
   export let input: String;
   export let owner: null | any = null;
-  export let focus: () => void;
+  export let focus: () => void = () => {};
   export let editable = false;
   export let height = "full";
 
@@ -115,13 +115,10 @@
           <slot {editing} />
         </Editor>
       </div>
-
-    
-    
     </div>
   {:else}
     <div
-      class="px-8 py-4 prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none editor relative"
+      class=" overflow-auto  px-8 py-4 prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none editor relative"
 
     >
       {@html input}
