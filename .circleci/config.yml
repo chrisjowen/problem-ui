@@ -44,5 +44,8 @@ jobs:
           command: |
             docker login -u chrisjowen -p "$DOCKERHUB_PASSWORD"
             docker push chrisjowen/problem_ui:latest
-            
+      # - run:
+      #     name: SSH run docker pull & docker-compose up
+      #     command: |
+      #       ssh chris@chrisjowen.net "bash -c 'cd /apps/problemsworthsolving && docker-compose pull && docker-compose up -d'"
       
