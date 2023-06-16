@@ -18,7 +18,7 @@
 
 <div class="relative">
   <a href="#stay" on:click={() => (showUserMenu = true)} class="flex">
-    <Gravitar {user} size="xs" bind:notifications={showNotifications} />
+    <Gravitar {user} size="xs" bind:notifications={showNotifications} className="hover:rounded-sm rounded-xl " />
   </a>
   {#if showUserMenu}
     <div

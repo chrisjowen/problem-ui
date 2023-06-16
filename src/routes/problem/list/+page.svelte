@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Input, Modal } from "flowbite-svelte";
+  import { Breadcrumb, BreadcrumbItem, Button, Input, Modal } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { slide } from "svelte/transition";
@@ -45,7 +45,14 @@
 </script>
 
 <div class="bg-gray-50 flex flex-col h-full">
-  <div class="bg-primary-100 p-3  flex  z-40">
+  <div class="bg-gray-800 p-4 flex flex-row space-x-2 hidden md:block">
+    <Breadcrumb>
+      <BreadcrumbItem href="/sector" linkClass="text-white text-xs"
+        >Problems</BreadcrumbItem
+      >
+    </Breadcrumb>
+  </div>
+  <div class="bg-gray-200 border-b-[1px] p-3  flex  z-40">
     <div class="flex-1 mr-4">
     <Input
       bind:value={q}

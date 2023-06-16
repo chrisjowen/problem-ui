@@ -32,7 +32,7 @@
 </script>
 
 <div class="bg-gray-50 flex flex-col h-full">
-  <div class="bg-primary-500 p-4 flex flex-row space-x-2 hidden md:block">
+  <div class="bg-gray-800 p-4 flex flex-row space-x-2 hidden md:block">
     <Breadcrumb>
       <BreadcrumbItem href="/sector" linkClass="text-white text-xs"
         >Sectors</BreadcrumbItem

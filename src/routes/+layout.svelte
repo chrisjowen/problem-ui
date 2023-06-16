@@ -64,9 +64,21 @@
 
 <div class="flex flex-col absolute inset-0 h-full">
   {#if showNavBar}
-    <div class="w-full bg-primary-700 text-white">
+    <div class="w-full bg-primary-700 text-white drop-shadow-md z-10">
       <div class="flex flex-row">
-        <div class="flex-1 p-3 md:p-6">
+        <div class="flex-1 flex p-3">
+          <div class="flex-1 flex items-center">
+            <a
+            href="/"
+          >
+            <img
+              src="/img/logo.png"
+              class="w-[30px]"
+              alt="Problems Worth Solving"
+            />
+            </a>
+          </div>
+
           <a
             href="#stay"
             on:click={() => (hideSideBar = false)}
@@ -74,14 +86,9 @@
           >
             <i class="fas fa-bars mr-4" />
           </a>
-          <span
-            class="self-center whitespace-nowrap text-sm md:text-lg font-semibold dark:text-white"
-          >
-            PWSolving
-          </span>
         </div>
 
-        <Drawer bind:hidden={hideSideBar} id="sidebar2">
+        <Drawer placement="right" bind:hidden={hideSideBar} id="sidebar2">
           <Sidebar>
             <SidebarWrapper divClass="overflow-y-auto p-2">
               <SidebarGroup>
@@ -129,21 +136,25 @@
         </Drawer>
 
         <div class="hidden md:block">
-          <div class="justify-end p-7 space-x-6 flex text-xs">
-            <a href="/"><i class="fas fa-home text-xs mr-1" /> Home </a>
-            <a href="/problem/list">
+          <div class="justify-end p-5 px-7 space-x-6 flex text-xs">
+            <a
+              href="/problem/list"
+              class="hover:bg-primary-600 rounded-xl p-2 px-3"
+            >
               <i class="fa-solid fa-magnifying-glass text-xs mr-1" />
               Problems
             </a>
-            <a href="/sector">
+            <a href="/sector" class="hover:bg-primary-600 rounded-xl p-2 px-3">
               <i class="fa-solid fa-industry text-xs mr-1" />
               Sectors
             </a>
 
             {#if loggedInUser}
-              <UserMenuItem user={loggedInUser} />
+              <div class=" m-1 mx-3">
+                <UserMenuItem user={loggedInUser} />
+              </div>
             {:else}
-              <a href="/login">
+              <a href="/login" class="hover:bg-primary-600 rounded-xl p-2 px-3">
                 <i class="fas fa-sign-in-alt text-xs mr-1" />
                 Login
               </a>

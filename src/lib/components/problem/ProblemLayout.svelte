@@ -133,7 +133,7 @@
 {:else}
 
   <div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40 h-full">
-    <div class="bg-primary-500 drop-shadow-sm p-4 ">
+    <div class="bg-gray-800 drop-shadow-sm p-4 ">
       <div class="hidden md:block">
         <Breadcrumb>
           <BreadcrumbItem href="/sector" linkClass="text-white text-xs ">
@@ -186,17 +186,21 @@
                 class="block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm
                   {small ? 'text-center' : ''} 
                       {inPath(item)
-                  ? '!text-gray-600 bg-gray-100'
+                  ? '!text-gray-600 bg-gray-50'
                   : ' hover:text-gray-600  hover:bg-gray-100 '}"
               >
                 {#if item.icon}
                   <i
                     class="{item.icon} {small ? 'text-xl' : ''} {inPath(item)
-                      ? 'text-primary-400'
+                      ? 'text-gray-800'
                       : 'text-gray-400'}  {small ? '' : 'lg:mr-2'} "
                   />
                 {/if}
-                <div class=" {small ? 'hidden' : 'lg:inline'} ">
+                <div class=" {small ? 'hidden' : 'lg:inline'} 
+                {inPath(item)
+                  ? 'text-gray-800'
+                  : 'text-gray-400'}
+                ">
                   {item.title}
                 </div>
               </a>

@@ -48,7 +48,7 @@
   </div>
 {:else}
   <div class="flex flex-col h-full">
-    <div class="bg-primary-500 p-2 flex flex-row space-x-2">
+    <div class="bg-gray-800 p-2 flex flex-row space-x-2">
       <div class="flex-1 p-2">
         <Breadcrumb aria-label="Default breadcrumb example">
           <BreadcrumbItem href="/sector" linkClass="text-white text-xs"
