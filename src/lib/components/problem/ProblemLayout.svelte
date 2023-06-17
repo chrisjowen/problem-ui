@@ -1,10 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import {
-    Breadcrumb,
-    BreadcrumbItem,
-  } from "flowbite-svelte";
+  import { Breadcrumb, BreadcrumbItem, Button } from "flowbite-svelte";
   import { selectedProblem, settings } from "$lib/store";
   import api from "$lib/api";
   import { onMount } from "svelte";
@@ -100,8 +97,7 @@
   }
 
   $: selected = menuItems.find(inPath);
-  $: unselected = menuItems.filter(i => i!=selected);
-
+  $: unselected = menuItems.filter((i) => i != selected);
 
   function inPath(item: any) {
     let base = `/problem/show/${problem.id}`;
@@ -116,8 +112,9 @@
     $settings.expandProductMenu = !$settings.expandProductMenu;
   }
 
-
-  function toggleMobileMenu(event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement; }) {
+  function toggleMobileMenu(
+    event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement }
+  ) {
     showMobileMenu = !showMobileMenu;
   }
 </script>
@@ -131,10 +128,9 @@
     </h2>
   </div>
 {:else}
-
   <div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40 h-full">
-    <div class="bg-gray-800 drop-shadow-sm p-4 ">
-      <div class="hidden md:block">
+    <div class="bg-primary-700 drop-shadow-sm">
+      <div class="hidden">
         <Breadcrumb>
           <BreadcrumbItem href="/sector" linkClass="text-white text-xs ">
             Sectors
@@ -151,22 +147,33 @@
         </Breadcrumb>
       </div>
 
-      <div class="block md:hidden relative ">
-        <div class="bg-white border p-2 border flex flex-row " on:click={toggleMobileMenu} on:keypress={toggleMobileMenu}>
-        <i class="{selected.icon} text-primary-400  flex items-center mr-2"/>
-        <p class="flex-1 flex items-center ">{selected.title}</p>
-        <i class="fas fa-chevron-down text-gray-400 mr-2 flex items-center" />
+      <div class="block md:hidden text-xs p-2">
+        <div
+          class="bg-white border p-2 border rounded-lg flex flex-row"
+          on:click={toggleMobileMenu}
+          on:keypress={toggleMobileMenu}
+        >
+          <i class="{selected.icon} text-primary-400 flex items-center mr-2" />
+          <p class="flex-1 flex items-center">{selected.title}</p>
+          <i class="fas fa-chevron-down text-gray-400 mr-2 flex items-center" />
         </div>
-        <div class="border bg-white p-2  w-full  {showMobileMenu ? "" : "hidden"}">
+        <div
+          class="border bg-white p-2 rounded-xl mt-2 w-full {showMobileMenu
+            ? ''
+            : 'hidden'}"
+        >
           {#each unselected as item}
-              <a href={item.href} class="flex flex-row w-full p-2 hover:bg-gray-50 text-gray-400 hover:text-primary-400">
-                {#if item.icon}
-                  <i class="{item.icon} flex items-center mr-2 " />
-                {/if}
-                <p class="flex items-center ">
-                  {item.title}
-                </p>
-              </a>
+            <a
+              href={item.href}
+              class="flex flex-row w-full p-2 hover:bg-gray-50 text-gray-600 hover:text-primary-400"
+            >
+              {#if item.icon}
+                <i class="{item.icon} flex items-center mr-2" />
+              {/if}
+              <p class="flex items-center">
+                {item.title}
+              </p>
+            </a>
           {/each}
         </div>
       </div>
@@ -196,11 +203,11 @@
                       : 'text-gray-400'}  {small ? '' : 'lg:mr-2'} "
                   />
                 {/if}
-                <div class=" {small ? 'hidden' : 'lg:inline'} 
-                {inPath(item)
-                  ? 'text-gray-800'
-                  : 'text-gray-400'}
-                ">
+                <div
+                  class=" {small ? 'hidden' : 'lg:inline'} 
+                {inPath(item) ? 'text-gray-800' : 'text-gray-400'}
+                "
+                >
                   {item.title}
                 </div>
               </a>
@@ -228,10 +235,14 @@
         </ul>
       </div>
       <div class="overflow-auto flex-1 h-full flex flex-col">
-        <div
-          class="border-v-[1px] flex justify-end bg-primary-50 border-b-[1px]"
-        >
-          <slot name="innerMenu" />
+        <div class="border-b-[1px] p-4 text-center bg-primary-50 ">
+          <h1 class="mb-4 text-xl text-gray-600 hidden md:block">
+            Want To Help Solve This Problem?
+          </h1>
+          <Button size="xs" class="w-full md:w-auto " color="primary">
+            <i class="fas fa-user-plus mr-2" />
+           Join & Contribute
+          </Button>
         </div>
 
         <div class="flex-1 overflow-auto h-full">

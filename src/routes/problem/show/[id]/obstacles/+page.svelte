@@ -6,6 +6,8 @@
   import ObstacleList from "$lib/components/shared/obstacles/ObstacleList.svelte";
   import { selectedProblem } from "$lib/store";
   import type { Obstacle } from "$lib/types";
+  import { isMember } from "$lib/util/authUtil";
+  import { Button } from "flowbite-svelte";
   import { each } from "svelte/internal";
 
   let problem: any = null;
@@ -13,7 +15,23 @@
 
 <ProblemLayout bind:problem>
   <div class="m-4 space-y-1">
-    <h1 class="text-xl text-primary-600 mb-4">Risks</h1>
+    <div class="flex mb-5">
+      <h1 class="flex-1 items-end flex text-xl text-primary-600">Risks</h1>
+      {#if isMember(problem)}
+        <div>
+          <Button
+            class=" text-xs"
+            size="xs"
+            on:click={() =>
+              goto("/problem/show/" + problem.id + "/page/create")}
+            color="light"
+          >
+            <i class="fas fa-exclamation-triangle mr-2" />
+            Create Risk</Button
+          >
+        </div>
+      {/if}
+    </div>
 
     <ObstacleList
       api={api.problem.obstacles($page.params.id)}

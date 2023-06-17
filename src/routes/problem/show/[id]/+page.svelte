@@ -66,6 +66,7 @@
 
 <ProblemLayout bind:problem bind:reload>
   {#if problem}
+
     <div class="flex md:mt-4">
       <div class="xl:max-w-[940px] m-auto md:mx-4 md:rounded-t-lg">
         <div class="md:border md:rounded-lg bg-white md:mb-4">
@@ -121,8 +122,6 @@
                     />
                     {following ? "Following" : "Follow"}
                   </Button>
-
-                  <InviteContributor problem={problem} />
                 </div>
               </div>
             </div>
@@ -144,7 +143,9 @@
           />
         </div>
       </div>
-      <div class="flex-1 hidden xl:block mr-4">
+      <div class="flex-1 hidden xl:block mr-4 ">
+      
+
         <div class="mb-4">
           <h1 class="mb-4 text-xl text-gray-800">Followers</h1>
           <UserList placeholder="No Followers" users={problem.followers} />

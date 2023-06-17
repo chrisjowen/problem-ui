@@ -29,7 +29,6 @@
     <div class="m-4">
       <div class="flex mb-5">
         <h1 class="flex-1 items-end flex text-xl text-primary-600">Notes</h1>
-
         {#if isMember(problem)}
           <div>
             <Button
@@ -52,8 +51,8 @@
             <tr class="bg-gray-100 text-xs">
               <td class="text-left p-2 text-gray-400">Note</td>
               <td class="text-left p-2 text-gray-400">Owner</td>
-              <td class="text-center p-2 text-gray-400">Version</td>
-              <td class="text-center p-2 text-gray-400">Status</td>
+              <!-- <td class="text-center p-2 text-gray-400">Version</td> -->
+              <!-- <td class="text-center p-2 text-gray-400">Status</td> -->
             </tr>
             {#each pages.entries as page}
               <tr
@@ -75,14 +74,14 @@
                     >
                   </div>
                 </td>
-                <td class="p-2 text-center">
+                <!-- <td class="p-2 text-center">
                   {page.version}
                 </td>
                 <td class="text-center">
                   <span class="bg-primary-100 p-2 text-xs rounded-xl border"
                     >{page.status}</span
                   >
-                </td>
+                </td> -->
               </tr>
             {/each}
           </table>

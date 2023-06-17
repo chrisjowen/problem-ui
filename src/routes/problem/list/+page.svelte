@@ -63,9 +63,10 @@
       <i class="fas fa-search" slot="left" />
     </Input>
   </div>
-    <div>
+    <div class="flex items-center">
       <Button class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600"  on:click={() => goto("/problem/create") }>
-        <i class="fas fa-plus mr-2" /> Create Problem
+        <i class="fas fa-plus " /> 
+        <span class="hidden md:block ml-2">Create Problem</span>
       </Button>
     </div>
     <!-- <div class="my-4">
@@ -105,8 +106,8 @@
     <div
       transition:slide="{{  duration: 250 }}"
       class="grid gap-4 grid-cols-1 {listView
-        ? 'md:grid-cols-1'
-        : 'xl:grid-cols-3'}  sm:grid-cols-1 px-4"
+        ? 'lg:grid-cols-1'
+        : 'lg:grid-cols-2 xl:grid-cols-3'}  sm:grid-cols-1 px-4"
     >
         
 
@@ -125,17 +126,17 @@
           >
             <div class="p-4">
               <img
-                class=" {listView ? 'w-auto h-[120px]' : 'w-full h-[200px]'} md:w-auto object-cover object-center border "
+                class=" {listView ? 'w-auto h-[70px] md:h-[80px]  ' : 'w-full h-[200px]'} md:w-auto object-cover object-center border "
                 src="{PUBLIC_IMG_CDN_BASE}/{problem.img}"
                 alt="content"
               />
             </div>
-            <div class="flex-1 mb-4 m-4 space-y-4">
-              <h5 class="text-2xl font-bold text-gray-500">
+            <div class="flex-1  m-4 space-y-4">
+              <h5 class="text-lg md:text-2xl font-bold text-gray-500">
                 {@html highlight(problem.title)}
               </h5>
               <!-- {#if !listView} -->
-              <p class="">
+              <p class="text-xs md:text-md">
                 {problem.blurb.slice(0, 100)}...
               </p>
               <!-- {/if} -->
