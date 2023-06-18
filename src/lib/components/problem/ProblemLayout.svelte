@@ -5,6 +5,7 @@
   import { selectedProblem, settings } from "$lib/store";
   import api from "$lib/api";
   import { onMount } from "svelte";
+  import ConttributeBanner from "./ConttributeBanner.svelte";
 
   export let problem: any = null;
   export let menuItems: any[] = [];
@@ -26,6 +27,7 @@
           "followers",
           "problem_users",
           "problem_users.member",
+          "users"
         ])
         .then((res) => {
           $selectedProblem = res.data;
@@ -43,6 +45,11 @@
           title: "Overview",
           icon: "fas fa-info-circle ",
           href: `/problem/show/${problem.id}`,
+        },
+        {
+          title: "Activity",
+          icon: "fas fa-rss ",
+          href: `/problem/show/${problem.id}/feed`,
         },
         {
           title: "Notes",
@@ -235,16 +242,7 @@
         </ul>
       </div>
       <div class="overflow-auto flex-1 h-full flex flex-col">
-        <div class="border-b-[1px] p-4 text-center bg-primary-50 ">
-          <h1 class="mb-4 text-xl text-gray-600 hidden md:block">
-            Want To Help Solve This Problem?
-          </h1>
-          <Button size="xs" class="w-full md:w-auto " color="primary">
-            <i class="fas fa-user-plus mr-2" />
-           Join & Contribute
-          </Button>
-        </div>
-
+        <ConttributeBanner on:requesed={() => reload(true)} problem={problem} />
         <div class="flex-1 overflow-auto h-full">
           <div class="max-w-[2000px] h-full">
             <slot />

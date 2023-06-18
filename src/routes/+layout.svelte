@@ -9,7 +9,7 @@
   import "../app.postcss";
   import { page } from "$app/stores";
   import { auth, overflow, notifications } from "$lib/store";
-  import Gravitar from "$lib/components/shared/Gravitars.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { onMount } from "svelte";
   import UserMenuItem from "$lib/components/user/UserMenuItem.svelte";
   import api from "$lib/api";
@@ -29,6 +29,8 @@
       });
     }
   }
+
+  $: unread  = $notifications?.entries?.filter((n) => !n.read)?.length;
 
   onMount(() => {
     const report_error = (msg: string = "unknown error") => {
@@ -61,7 +63,6 @@
 
   $: showNavBar = $page.route.id != "/login";
 </script>
-
 
 <Drawer placement="right" bind:hidden={hideSideBar} id="sidebar2">
   <Sidebar>
@@ -112,22 +113,21 @@
 
 <div class="flex flex-col absolute inset-0 h-full">
   {#if showNavBar}
-    <div class="w-full bg-primary-700 text-white drop-shadow-md ">
+    <div class="w-full bg-primary-700 text-white drop-shadow-md z-40">
       <div class="flex flex-row">
         <div class="flex-1 flex p-3">
           <div class="flex-1 flex items-center">
-            <a
-            href="/"
-            class="flex"
-          >
-            <img
-              src="/img/logo.png"
-              class="w-[30px] mr-1"
-              alt="Problems Worth Solving"
-            />
+            <a href="/" class="flex">
+              <img
+                src="/img/logo.png"
+                class="w-[30px] mr-1"
+                alt="Problems Worth Solving"
+              />
 
-            <span class="hidden lg:block text-white font-bold lg:text-xl text-6xl bold">roblemsWorthSolving</span>
-
+              <span
+                class="hidden lg:block text-white font-bold lg:text-xl text-6xl bold"
+                >roblemsWorthSolving</span
+              >
             </a>
           </div>
 
@@ -142,6 +142,14 @@
 
         <div class="hidden md:block">
           <div class="justify-end p-5 px-7 space-x-6 flex text-xs">
+            <a
+              href="/notificaitons"
+              class="hover:bg-primary-600 rounded-xl p-2 px-3 {unread ? "text-yellow-200" : ""}"
+            >
+              <i class="fa-solid fa-bell   text-xs mr-1" />
+               Notifications
+            </a>
+
             <a
               href="/problem/list"
               class="hover:bg-primary-600 rounded-xl p-2 px-3"

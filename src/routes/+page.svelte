@@ -32,8 +32,8 @@
 >
   <div class="lg:mt-[100px] mt-[50px] w-[80%] lg:w-[45%] md:w-[50%] z-20">
     <h1 class="text-white font-bold lg:text-7xl text-6xl bold">
-      <span class="text-primary-200">1000's of Startup Problems </span> Just Dying
-      To Be Solved
+      <span class="text-primary-200">Awesome Startup Ideas</span> Just Dying
+      To Be Built!
     </h1>
     <p class="mt-9 mb-[50px] text-red-50 text-2xl lg:text-3xl xl:text-4xl">
       Join a global community of innovators, creators and investors to resolve

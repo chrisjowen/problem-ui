@@ -6,6 +6,7 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
 
+  export let length = 200;
 
   let obstacles: PaginationResults<Obstacle>;
   export let api: RestApi;
@@ -25,16 +26,16 @@
 {#if !obstacles || obstacles.total_entries == 0}
   <div class="bg-white p-4 border rounded-md">No Risks</div>
 {:else}
-  {#each obstacles.entries as obstacle}
+  {#each obstacles.entries.slice(0, length) as obstacle}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
-      class="bg-white hover:drop-shadow-lg p-4 border rounded-xl mb-2"
+      class="bg-white hover:drop-shadow-lg p-4 border rounded-xl mb-1"
       on:click={() => goto(`${base}/obstacles/${obstacle.id}`)}
     >
       <div class="flex">
-        <div class="flex-1">
+        <div class="flex-1 text-sm">
           <i
-            class="fas fa-exclamation-triangle text-primary-500 mr-3 text-lg"
+            class="fas fa-exclamation-triangle text-primary-500 mr-3 "
           />
 
           {obstacle.description}

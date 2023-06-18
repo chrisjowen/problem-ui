@@ -44,6 +44,7 @@
     "@tiptap/extension-text-align": "^2.0.3",
     "@tiptap/pm": "^2.0.3",
     "@tiptap/starter-kit": "^2.0.3",
+    "@types/moment": "^2.13.0",
     "axios": "^1.4.0",
     "blueimp-md5": "^2.19.0",
     "classnames": "^2.3.2",
@@ -52,6 +53,7 @@
     "flowbite-svelte": "^0.34.10",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
+    "moment": "^2.29.4",
     "phoenix": "^1.7.2",
     "phoenix-channels": "^1.0.0",
     "uuid": "^9.0.0"

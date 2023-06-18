@@ -3,7 +3,7 @@
   import { Avatar } from "flowbite-svelte";
   import { MD5 } from 'crypto-js';
   
-  export let email = "chris.j.owen@hotmail.co.uk";
+  export let email = "system@problemworthsolving.com";
   export let user;
 
   export let size = "xs";

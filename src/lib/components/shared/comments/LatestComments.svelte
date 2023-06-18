@@ -3,7 +3,7 @@
   import api from "$lib/api";
   import type { PaginationResults, Comment } from "$lib/types/index";
   import { createEventDispatcher } from "svelte";
-  import Gravitar from "../Gravitars.svelte";
+  import Gravitar from "../Gravitar.svelte";
   import CommentForm from "./CommentForm.svelte";
 
   export let pagination: PaginationResults<Comment>;

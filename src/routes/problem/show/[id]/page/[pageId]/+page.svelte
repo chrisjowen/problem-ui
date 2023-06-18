@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Gravitar from "$lib/components/shared/Gravitars.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import api from "$lib/api";
@@ -11,6 +11,7 @@
   let problem: Problem;
   let pageDoc: Page;
   let pages: PaginationResults<Page>;
+  $: currentPageId = $page.params.pageId
 
   onMount(() => {
     loadPages();
@@ -70,15 +71,15 @@
               </p>
               <!-- <p class="text-xs text-gray-400">Last Updated: Today at 1:42 pm</p> -->
               {#if isMember(problem)}
-              <div class="absolute top-5 right-5">
-                <Button
-                  color="light"
-                  size="xs"
-                  on:click={() => goto(`${$page.params.pageId}/update`)}
-                >
-                  <i class="fas fa-edit" />
-                </Button>
-              </div>
+                <div class="absolute top-5 right-5">
+                  <Button
+                    color="light"
+                    size="xs"
+                    on:click={() => goto(`${$page.params.pageId}/update`)}
+                  >
+                    <i class="fas fa-edit" />
+                  </Button>
+                </div>
               {/if}
             </div>
           </div>
@@ -86,9 +87,9 @@
           <div
             class="px-8 pb-8 prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none editor relative"
           >
-              <h1 class="py-4 my-4 font-bold text-gray-700">
-                {pageDoc.title}
-              </h1>
+            <h1 class="py-4 my-4 font-bold text-gray-700">
+              {pageDoc.title}
+            </h1>
 
             <div>
               {@html pageDoc.body}
@@ -96,19 +97,21 @@
           </div>
         </div>
       </div>
-      <div class="hidden items-end justify-end md:block flex-1">
+      <div class="hidden items-end justify-end md:block flex-1 relative w-full">
         {#if pages}
-          <div class=" bg-white m-4 border rounded-lg">
+          <div class=" bg-white m-4 border rounded-lg fixed ">
             <ul>
               {#each pages.entries as page}
-                <li class="p-2 border-b-[1px] hover:bg-gray-50 p-4 flex">
-                  <i
-                    class="fas fa-file text-gray-400 flex text-xl items-center mr-4"
-                  />
+                <li class="border-b-[1px] pr-9 hover:bg-gray-50 hover:text-primary-500 flex {currentPageId==page.id ? "text-primary-500" : "text-gray-400" }">
                   <a
                     href="/problem/show/189/page/{page.id}"
-                    class="flex-1 flex text-xs items-center"
-                    >{page.title.slice(0, 50)}</a
+                    class="flex-1 flex text-xs items-center p-3  "
+                  >
+                    <i
+                      class="fas fa-file  flex text-xl items-center mr-4"
+                    />
+
+                    {page.title.slice(0, 50)}</a
                   >
                 </li>
               {/each}

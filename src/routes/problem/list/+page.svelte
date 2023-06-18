@@ -14,7 +14,7 @@
     PUBLIC_IMG_CDN_BASE,
     PUBLIC_PROBLEM_API_PATH,
   } from "$env/static/public";
-  import Gravitar from "$lib/components/shared/Gravitars.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
 
   let timer;
   let listView = false;
@@ -67,7 +67,7 @@
       >
     </Breadcrumb>
   </div>
-  <div class="bg-gray-200 border-b-[1px] p-3 flex z-40">
+  <div class="bg-gray-200 border-b-[1px] p-3 flex z-30">
     <div class="flex-1 mr-4">
       <Input
         bind:value={q}

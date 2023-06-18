@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { User } from "$lib/types";
   import { Listgroup } from "flowbite-svelte";
-  import Gravitar from "$lib/components/shared/Gravitars.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { notifications } from "$lib/store";
   export let user: User;
 
@@ -18,7 +18,7 @@
 
 <div class="relative">
   <a href="#stay" on:click={() => (showUserMenu = true)} class="flex">
-    <Gravitar {user} size="xs" bind:notifications={showNotifications} className="hover:rounded-sm rounded-xl " />
+    <Gravitar {user} size="xs" bind:notifications={showNotifications} className="rounded-xl " />
   </a>
   {#if showUserMenu}
     <div

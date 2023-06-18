@@ -3,7 +3,7 @@
   import DiscussionForm from "$lib/components/shared/discussions/DiscussionForm.svelte";
   import { Button, Modal } from "flowbite-svelte";
   import { createEventDispatcher } from "svelte";
-  import Gravitar from "$lib/components/shared/Gravitars.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { auth } from "$lib/store";
   import { goto } from "$app/navigation";
 
@@ -39,12 +39,15 @@
     <DiscussionForm on:submit={onCreateDiscussion} />
   </Modal>
 
-  <div class="pb-4 flex justify-end">
+
+  <div class="flex mb-5">
+    <h1 class="flex-1 items-end flex text-xl text-primary-600">Discussions</h1>
     <Button size="xs"  color="light" on:click={showCreateDiscussion}>
       <i class="fa fa-comment mr-2 text-xs" />
       Create Discussion
     </Button>
   </div>
+  
 
   {#if discussions}
     {#if discussions.total_entries == 0}

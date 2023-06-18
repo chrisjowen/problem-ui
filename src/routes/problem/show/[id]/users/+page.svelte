@@ -2,7 +2,7 @@
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import UserList from "$lib/components/shared/UserList.svelte";
   import UserDisplay from "$lib/components/shared/UserDisplay.svelte";
-  import UserDisplayLarge from "$lib/components/shared/UserDisplayLarge.svelte";
+  import MemberDisplayLarge from "$lib/components/shared/MemberDisplayLarge.svelte";
   import { isMember } from "$lib/util/authUtil";
   import InviteContributor from "$lib/components/problem/InviteContributor.svelte";
   import type { User } from "$lib/types";
@@ -34,7 +34,7 @@
   {#if problem}
     <div class="p-4 space-y-4">
       <div class="flex">
-        <h1 class="flex-1 items-end flex">Contributers</h1>
+        <h1 class="flex-1 items-end flex text-xl text-primary-600">Contributers</h1>
 
         {#if isMember(problem)}
           <InviteContributor {problem} on:add={() => reload(true)} {exclude} />
@@ -42,19 +42,21 @@
       </div>
 
       <div class="border rounded-xl white">
-        <UserDisplayLarge user={problem.user} maxBio={50} />
-        {#each problem.problem_users as problem_user}
-          <UserDisplayLarge
-            user={problem_user.member}
-            role={problem_user.role}
-            deletable={isMember(problem)}
+        <MemberDisplayLarge problem={problem}  />
+        {#each problem.problem_users as membership}
+          <MemberDisplayLarge
+            problem={problem} 
+            membership={membership}
+            
             on:delete={onDeleteMember}
-            maxBio={50}
+            on:accept={() => reload(true)}
           />
         {/each}
       </div>
 
-      <h1 class="flex-1 items-end flex">Followers</h1>
+      <h1 class="flex-1 items-end flex text-xl text-primary-600">Followers</h1>
+
+
       <UserList users={problem.followers} placeholder="No Followers" />
     </div>
   {/if}

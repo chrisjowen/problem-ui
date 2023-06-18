@@ -70,14 +70,19 @@
 <Modal bind:open={showModal} title="Add Link" class="w-full" size="lg">
   <LinkForm on:update={onUpdateLink} link={selectedLink} />
 </Modal>
-{#if editable}
-<div class="flex justify-end mb-4">
+
+<div class="flex mb-5">
+  <h1 class="flex-1 items-end flex text-xl text-primary-600">Resources</h1>
+  {#if editable}
   <Button size="xs" color="light" on:click={onShowLinkModal()}>
     <i class="fas fa-link mr-2" />
     Add Resource
   </Button>
-</div>
 {/if}
+</div>
+
+
+
 {#if links}
   {#if links.total_entries == 0}
     <div class="bg-white border p-4">No Links</div>

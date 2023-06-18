@@ -19,12 +19,22 @@
     showModal = true;
   };
 
-  async function readNotification(notification : any) {
-    await api.notifications.update(notification.id, {read: true}).then(() => {
+  let deleteNotification = (notification: any) => () => {
+     api.notifications.delete(notification.id).then(() => {
+      api.notifications.list().then((res) => {
+        console.log($notifications)
+        $notifications.entries = $notifications!.entries.filter((n : any) => n.id !== notification.id);
+      });
+    });
+  };
+
+
+  async function readNotification(notification: any) {
+    await api.notifications.update(notification.id, { read: true }).then(() => {
       api.notifications.list().then((res) => {
         notifications.set(res.data);
-      })
-    })
+      });
+    });
   }
 </script>
 
@@ -35,35 +45,41 @@
     class="w-full"
     bind:title={selected.title}
   >
-    {selected.content}
+    {@html selected.content}
 
     <svelte:fragment slot="footer">
       {#each selected.actions as action}
-      <Button on:click={() => goto(`${action.href}`)}>{action.title}</Button>
+        <Button on:click={() => goto(`${action.href}`)}>{action.title}</Button>
       {/each}
     </svelte:fragment>
   </Modal>
 {/if}
 
 <div class="p-4">
+  <h1>Notifications</h1>
   {#if $notifications?.entries}
     {#each $notifications.entries as notification}
-      <div class="{notification.read ? "bg-gray-100" : "bg-white"} border p-4 mb-2 flex">
-        <div class="mr-4">
-          <i class="fa fa-bell text-4xl text-primary-600" />
-        </div>
-        <div class="flex-1">
-          <h1>{notification.title}</h1>
-          <p class="text-xs">{notification.content}</p>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <div class="bg-white border flex  hover:drop-shadow-md rounded-lg mb-2">
+        <div
+          class="flex-1 flex p-5"
+          on:click={viewNotification(notification)}
+        >
+          <div class="mr-4 flex items-center">
+            <i
+              class="fa fa-bell text-4xl {notification.read
+                ? 'text-gray-200'
+                : 'text-primary-600'} "
+            />
+          </div>
+          <div class="flex-1 flex items-center {notification.read ? 'text-gray-400' : ''}">
+            <h1>{notification.title}</h1>
+          </div>
         </div>
 
-        <div>
-          <Button
-            size="xs"
-            color="light"
-            on:click={viewNotification(notification)}>View</Button
-          >
-        </div>
+        <button class="hover:bg-red-500  bg-gray-500 p-2 px-4 rounded-r-lg  flex items-center" on:click={deleteNotification(notification)}>
+          <i class="fa fa-trash text-white" />
+        </button>
       </div>
     {/each}
   {:else}

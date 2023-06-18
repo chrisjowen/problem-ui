@@ -20,5 +20,20 @@ export function isLoggedIn() {
 
 
 export function isMember(problem: Problem) {
-    return loggedInUser != null && (loggedInUser.id  == problem.user_id || problem.problem_users.find((pu: any) => pu.member_id == loggedInUser.id) !=null);
+    let member = membership(problem)
+    return  loggedInUser?.id  == problem.user_id || member?.status == "active";
+}
+
+export function isAnyMember(problem: Problem) {
+    let member = membership(problem)
+    return  loggedInUser?.id  == problem.user_id || member != null;
+}
+
+export function isAdminMember(problem: Problem) {
+    let member = membership(problem)
+    return  loggedInUser?.id  == problem.user_id || member?.role == "admin" && member?.status == "active";
+}
+
+function membership(problem: Problem) {
+    return problem?.problem_users?.find((pu: any) => pu.member_id == loggedInUser?.id);
 }

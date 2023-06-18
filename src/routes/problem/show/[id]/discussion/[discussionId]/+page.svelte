@@ -61,7 +61,7 @@
       <h1 class="text-lg mb-4  font-bold hidden md:block">Responses</h1>
       {/if}
       {#each discussion.answers as answer}
-        <section class="bg-white border-t-[1px] border-x-[1px]">
+        <section id="answer-{answer.id}" class="bg-white border-t-[1px] border-x-[1px]">
           <EditableTextArea
             bind:input={answer.answer}
             editable={$auth?.loggedInUser?.id == answer.user.id}

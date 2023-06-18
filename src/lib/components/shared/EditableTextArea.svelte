@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Gravitar from "$lib/components/shared/Gravitars.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import Editor from "$lib/components/shared/editor/Editor.svelte";
   import { Button } from "flowbite-svelte";
   import { createEventDispatcher } from "svelte";

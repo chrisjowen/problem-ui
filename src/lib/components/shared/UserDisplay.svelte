@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Gravitar from "$lib/components/shared/Gravitars.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { Button } from "flowbite-svelte";
   import { createEventDispatcher } from "svelte";
   export let deletable = false;

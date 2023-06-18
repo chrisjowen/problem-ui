@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Gravitar from "$lib/components/shared/Gravitars.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import api from "$lib/api";

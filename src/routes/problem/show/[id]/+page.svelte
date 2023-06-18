@@ -16,6 +16,7 @@
   import ObstacleList from "$lib/components/shared/obstacles/ObstacleList.svelte";
   import { isMember } from "$lib/util/authUtil";
   import InviteContributor from "$lib/components/problem/InviteContributor.svelte";
+  import FeedList from "$lib/components/problem/FeedList.svelte";
 
   let problem: any = null;
   let comments: PaginationResults<Comment>;
@@ -67,8 +68,8 @@
 <ProblemLayout bind:problem bind:reload>
   {#if problem}
 
-    <div class="flex md:mt-4">
-      <div class="xl:max-w-[940px] m-auto md:mx-4 md:rounded-t-lg">
+    <div class="flex md:mt-4 items-start">
+      <section class="xl:max-w-[940px] mx-auto md:mx-4 md:rounded-t-lg ">
         <div class="md:border md:rounded-lg bg-white md:mb-4">
           <div class="relative text-gray-400 sm:flex md:rounded-t-lg">
             <div
@@ -142,15 +143,33 @@
             type="problem"
           />
         </div>
-      </div>
-      <div class="flex-1 hidden xl:block mr-4 ">
-      
+      </section>
+      <section class="flex-1 hidden xl:block mr-4 ">
+        <div class="mb-4">
+          <h1 class="mb-4 text-xl text-gray-800">Contributers</h1>
+          <UserList placeholder="No Followers" users={problem.users} />
+          <div class="flex justify-end m-2">
+            <a href="./{problemId}/users" class="text-xs text-blue-500"
+              >All Contributers</a
+            >
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h1 class="mb-4 text-xl text-gray-800">Activity</h1>
+          <FeedList problem={problem} length={4} />
+          <div class="flex justify-end m-2">
+            <a href="./{problemId}/users" class="text-xs text-blue-500"
+              >All Activity</a
+            >
+          </div>
+        </div>
 
         <div class="mb-4">
           <h1 class="mb-4 text-xl text-gray-800">Followers</h1>
           <UserList placeholder="No Followers" users={problem.followers} />
           <div class="flex justify-end m-2">
-            <a href="./{problemId}/users" class="text-xs text-blue-500"
+            <a href="/problem/show/{problemId}/users" class="text-xs text-blue-500"
               >All Followers</a
             >
           </div>
@@ -180,14 +199,14 @@
 
         <div class="">
           <h1 class="mb-4 text-xl text-gray-800">Risks</h1>
-          <ObstacleList api={api.problem.obstacles(problemId)} id={problemId} />
+          <ObstacleList api={api.problem.obstacles(problemId)} id={problemId} length={4} />
           <div class="flex justify-end m-2">
             <a href="./{problemId}/obstacles" class="text-xs text-blue-500"
               >All Risks</a
             >
           </div>
         </div>
-      </div>
+      </section>
     </div>
   {/if}
 </ProblemLayout>

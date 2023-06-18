@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Discussion, PaginationResults } from "$lib/types";
   import { onMount } from "svelte";
-  import Gravitar from "$lib/components/shared/Gravitars.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { goto } from "$app/navigation";
   import type RestApi from "$lib/api/common/restApi";
   import type { AxiosResponse } from "axios";

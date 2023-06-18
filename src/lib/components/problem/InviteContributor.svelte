@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Problem, User, PaginationResults } from "$lib/types";
-  import { isMember } from "$lib/util/authUtil";
+  import { isAdminMember, isMember } from "$lib/util/authUtil";
   import { Button, Input, Modal } from "flowbite-svelte";
-  import Gravitar from "$lib/components/shared/Gravitars.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import api from "$lib/api";
   import { debounce } from "lodash";
   import { createEventDispatcher } from "svelte";
@@ -81,7 +81,7 @@
   </div>
 </Modal>
 
-{#if isMember(problem)}
+{#if isAdminMember(problem)}
   <Button
     class="items-end flex"
     size="xs"
@@ -89,6 +89,6 @@
     color="light"
   >
     <i class="fas fa-user-plus mr-2" />
-    Add Contributor</Button
+    Invite Contributor</Button
   >
 {/if}

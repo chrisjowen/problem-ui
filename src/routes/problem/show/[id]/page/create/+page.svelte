@@ -7,7 +7,7 @@
   
   let problem: Problem;
   let page = {
-    title: "New Page",
+    title: "New Note",
     body: "Lorum ipsum....",
     tags: [],
   };

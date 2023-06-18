@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button, Textarea, Input } from "flowbite-svelte";
-  import Gravitar from "$lib/components/shared/Gravitars.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { auth } from "$lib/store";
   import { createEventDispatcher } from "svelte";
   import Editor from "../editor/Editor.svelte";
