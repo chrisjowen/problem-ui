@@ -1,11 +1,10 @@
 <script lang="ts">
   import { auth } from "$lib/store";
-  import { Breadcrumb, BreadcrumbItem } from "flowbite-svelte";
   import { onMount } from "svelte";
   import api from "$lib/api";
   import type { Problem } from "$lib/types";
   import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
-  import { PUBLIC_IMG_CDN_BASE, PUBLIC_PROBLEM_API_PATH } from "$env/static/public";
+  import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
 
   let me = $auth.loggedInUser;
@@ -49,13 +48,7 @@
   `;
 </script>
 
-<div class="bg-primary-500 p-4 flex flex-row space-x-2 hidden md:block">
-  <Breadcrumb aria-label="Default breadcrumb example">
-    <BreadcrumbItem href="/" linkClass="text-white text-xs">Home</BreadcrumbItem
-    >
-    <BreadcrumbItem spanClass="text-white text-xs">Profile</BreadcrumbItem>
-  </Breadcrumb>
-</div>
+
 
 {#if me}
   <div class="m-9">

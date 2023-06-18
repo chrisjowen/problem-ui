@@ -8,11 +8,11 @@
   } from "flowbite-svelte";
   import "../app.postcss";
   import { page } from "$app/stores";
-  import { auth, overflow, notifications } from "$lib/store";
+  import { auth, overflow } from "$lib/store";
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { onMount } from "svelte";
   import UserMenuItem from "$lib/components/user/UserMenuItem.svelte";
-  import api from "$lib/api";
+  import NotificationMenu from "$lib/components/NotificationMenu.svelte";
 
   let loggedInUser: any = null;
   let hideSideBar = true;
@@ -22,20 +22,9 @@
     console.log("loggedInUser", loggedInUser);
   });
 
-  $: {
-    if (loggedInUser) {
-      api.notifications.list("", 50, 1).then((res) => {
-        $notifications = res.data;
-      });
-    }
-  }
-
-  $: unread  = $notifications?.entries?.filter((n) => !n.read)?.length;
-
   onMount(() => {
     const report_error = (msg: string = "unknown error") => {
       console.error("Caught unhandled rejection:", msg);
-
       // toasts.push({
       //   message: `Unhandled error: ${msg}`,
       //   type: 'error',
@@ -64,9 +53,9 @@
   $: showNavBar = $page.route.id != "/login";
 </script>
 
-<Drawer placement="right" bind:hidden={hideSideBar} id="sidebar2">
+<Drawer placement="right" bind:hidden={hideSideBar} id="sidebar2" >
   <Sidebar>
-    <SidebarWrapper divClass="overflow-y-auto p-2">
+    <SidebarWrapper divClass="overflow-y-auto p-2 text-gray-700">
       <SidebarGroup>
         <SidebarItem
           label="Home"
@@ -83,7 +72,7 @@
           on:click={() => (hideSideBar = true)}
         >
           <svelte:fragment slot="icon">
-            <i class="fa-solid fa-magnifying-glass text-xs" />
+            <i class="fa-solid fa-magnifying-glass" />
           </svelte:fragment>
         </SidebarItem>
         <SidebarItem
@@ -92,10 +81,19 @@
           on:click={() => (hideSideBar = true)}
         >
           <svelte:fragment slot="icon">
-            <i class="fa-solid fa-industry text-xs" />
+            <i class="fa-solid fa-industry" />
           </svelte:fragment>
         </SidebarItem>
         {#if loggedInUser}
+          <SidebarItem
+            label="Notifications"
+            href="/notifications"
+            on:click={() => (hideSideBar = true)}
+          >
+            <svelte:fragment slot="icon">
+              <i class="fa-solid fa-bell" />
+            </svelte:fragment>
+          </SidebarItem>
           <SidebarItem
             label="Profile"
             href="/profile/me"
@@ -141,14 +139,8 @@
         </div>
 
         <div class="hidden md:block">
-          <div class="justify-end p-5 px-7 space-x-6 flex text-xs">
-            <a
-              href="/notificaitons"
-              class="hover:bg-primary-600 rounded-xl p-2 px-3 {unread ? "text-yellow-200" : ""}"
-            >
-              <i class="fa-solid fa-bell   text-xs mr-1" />
-               Notifications
-            </a>
+          <div class="justify-end p-5 px-7 space-x-2 flex text-xs">
+            <NotificationMenu />
 
             <a
               href="/problem/list"

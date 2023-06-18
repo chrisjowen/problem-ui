@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Breadcrumb, BreadcrumbItem, Card } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import api from "$lib/api";
@@ -32,13 +31,6 @@
 </script>
 
 <div class="bg-gray-50 flex flex-col h-full">
-  <div class="bg-gray-800 p-4 flex flex-row space-x-2 hidden md:block">
-    <Breadcrumb>
-      <BreadcrumbItem href="/sector" linkClass="text-white text-xs"
-        >Sectors</BreadcrumbItem
-      >
-    </Breadcrumb>
-  </div>
   <!-- HERO -->
   <div
     class="flex-1 overflow-auto py-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 overflow-x-auto pl-6 pr-6 pb-6"

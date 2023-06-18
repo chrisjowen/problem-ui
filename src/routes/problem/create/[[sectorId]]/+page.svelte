@@ -64,7 +64,6 @@
 
   function buildTemplate() {
     currentStep = 3;
-    debugger;
     api.workflow
       .template({
         sector_id: sector!.id,

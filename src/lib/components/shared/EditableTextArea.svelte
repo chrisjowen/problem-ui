@@ -106,14 +106,15 @@
   {#if editing}
     <div class="flex-1 overflow-auto flex">
       <div class="relative flex-1">
-        <Editor bind:html={input} bind:fullscreen bind:height={height} bind:focus={focus}>
+        <Editor  bind:html={input} bind:fullscreen bind:height={height} bind:focus={focus}>
           <slot {editing} />
         </Editor>
       </div>
     </div>
   {:else}
-    <div class=" overflow-auto  px-8 py-4 prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none editor relative">
-      {@html input}
-    </div>
+    <Editor bind:html={input} editable={false}>
+      <slot {editing} />
+    </Editor>
+  
   {/if}
 </div>

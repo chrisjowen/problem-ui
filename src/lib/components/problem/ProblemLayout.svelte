@@ -1,7 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { Breadcrumb, BreadcrumbItem, Button } from "flowbite-svelte";
   import { selectedProblem, settings } from "$lib/store";
   import api from "$lib/api";
   import { onMount } from "svelte";
@@ -137,23 +136,6 @@
 {:else}
   <div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40 h-full">
     <div class="bg-primary-700 drop-shadow-sm">
-      <div class="hidden">
-        <Breadcrumb>
-          <BreadcrumbItem href="/sector" linkClass="text-white text-xs ">
-            Sectors
-          </BreadcrumbItem>
-          <BreadcrumbItem
-            href="/sector/{problem.sector.id}"
-            linkClass="text-white text-xs"
-          >
-            {problem.sector.name}
-          </BreadcrumbItem>
-          <BreadcrumbItem spanClass="text-white text-xs">
-            {problem.title}
-          </BreadcrumbItem>
-        </Breadcrumb>
-      </div>
-
       <div class="block md:hidden text-xs p-2">
         <div
           class="bg-white border p-2 border rounded-lg flex flex-row"

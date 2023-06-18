@@ -1,10 +1,7 @@
 <script lang="ts">
   import {
-    Breadcrumb,
-    BreadcrumbItem,
     Button,
     Input,
-    Modal,
   } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
@@ -12,7 +9,6 @@
   import api from "$lib/api";
   import {
     PUBLIC_IMG_CDN_BASE,
-    PUBLIC_PROBLEM_API_PATH,
   } from "$env/static/public";
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
 
@@ -60,13 +56,7 @@
 </script>
 
 <div class="bg-gray-50 flex flex-col h-full">
-  <div class="bg-gray-800 p-4 flex flex-row space-x-2 hidden md:block">
-    <Breadcrumb>
-      <BreadcrumbItem href="/sector" linkClass="text-white text-xs"
-        >Problems</BreadcrumbItem
-      >
-    </Breadcrumb>
-  </div>
+
   <div class="bg-gray-200 border-b-[1px] p-3 flex z-30">
     <div class="flex-1 mr-4">
       <Input
@@ -89,7 +79,7 @@
     </div>
   </div>
   <section
-    class="px-9 py-3 mb-3 text-xs flex flex-row drop-shadow-sm z-40 border-b-[1px]"
+    class="px-9 py-3 mb-3 text-xs flex flex-row drop-shadow-sm  border-b-[1px]"
   >
     <div class="flex-1">
       <i class="fas fa-info-circle m-2" />

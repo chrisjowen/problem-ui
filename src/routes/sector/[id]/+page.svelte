@@ -2,19 +2,13 @@
   import { onMount } from "svelte";
   import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
   import { page } from "$app/stores";
-  import { Breadcrumb, BreadcrumbItem, Button } from "flowbite-svelte";
+  import { Button } from "flowbite-svelte";
   import { goto } from "$app/navigation";
-  import UserList from "$lib/components/shared/UserList.svelte";
   import { auth } from "$lib/store";
   import api from "$lib/api";
-  import {
-    PUBLIC_IMG_CDN_BASE,
-    PUBLIC_PROBLEM_API_PATH,
-  } from "$env/static/public";
   import { imageUrl } from "$lib/util/imageutil";
   let sector: any = null;
   let loggedInUser: any = null;
-  let showProblemModal = false;
   let sectorId = $page.params.id;
 
   onMount(() => {
@@ -35,9 +29,6 @@
   let showProblem = (problem: any) => () => {
     goto(`/problem/show/${problem.id}`);
   };
-
-
-
 </script>
 
 {#if !sector}
@@ -48,21 +39,6 @@
   </div>
 {:else}
   <div class="flex flex-col h-full">
-    <div class="bg-gray-800 p-2 flex flex-row space-x-2">
-      <div class="flex-1 p-2">
-        <Breadcrumb aria-label="Default breadcrumb example">
-          <BreadcrumbItem href="/sector" linkClass="text-white text-xs"
-            >Sectors</BreadcrumbItem
-          >
-          <BreadcrumbItem
-            href="/sector/{sector.id}"
-            linkClass="text-white text-xs">{sector.name}</BreadcrumbItem
-          >
-        </Breadcrumb>
-      </div>
-      <div />
-    </div>
-
     <div class=" flex-1 overflow-auto ">
       <div class="xl:flex max-w-[2000px]">
         <section class="max-w-[940px] md:m-4">

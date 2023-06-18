@@ -185,7 +185,7 @@
         </div>
 
         <div class="">
-          <h1 class="mb-4 text-xl text-gray-800">Discssions</h1>
+          <h1 class="mb-4 text-xl text-gray-800">Discussions</h1>
           <LatestDiscussions
             api={api.problem.discussion(problemId)}
             id={problemId}
