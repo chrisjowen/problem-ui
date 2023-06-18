@@ -43,7 +43,7 @@
 
     class="p-2 px-3 rounded-t-lg
     {showMenu ? 'bg-white text-black' : ''}
-    {unread ? 'text-yellow-200' : ''}"
+    "
   >
     <i class="fa-solid fa-bell text-xs mr-1" />
     Notifications

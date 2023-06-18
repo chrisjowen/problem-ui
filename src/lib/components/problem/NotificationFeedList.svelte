@@ -54,7 +54,7 @@
         external: true,
       };
     }
-  });
+  }).filter(i => i != null);
 
   function fromNow(when: any) {
     return moment.utc(when).fromNow();
@@ -67,13 +67,14 @@
 
 {#if items}
   {#each items as item}
-    <div   on:click={dispatchOnClick(item)} class="{item.read ? "bg-white" : "bg-primary-200 " }   text-gray-700 border-b-[1px] p-3 flex hover:bg-primary-50 ">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div on:click={dispatchOnClick(item)} class="{item.read ? "bg-gray-50 " : "bg-white" }   text-gray-700 border-b-[1px] p-3 flex hover:bg-primary-50 ">
       <div class="m-2 mr-4">
         <Gravitar user={item.by} size="md" />
       </div>
       <div class="m-2 text-xs flex items-center flex-1">
         <div>
-          <p class="text-gray-500">{fromNow(item.created_on)}</p>
+          <p class="text-gray-500">{fromNow(item?.created_on)}</p>
           <p>
             <strong class="mr-1">
               {#if item.by}
