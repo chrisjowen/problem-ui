@@ -29,7 +29,7 @@
 
   async function readNotification(notification: any) {
     await api.notifications.update(notification.id, { read: true }).then(() => {
-      api.notifications.list("",1,100, ["user"]).then((res) => {
+      api.notifications.list("",1,100, ["to", "by"]).then((res) => {
         $notifications = res.data;
       });
     });

@@ -22,7 +22,7 @@
 
   let deleteNotification = (notification: any) => () => {
      api.notifications.delete(notification.id).then(() => {
-      api.notifications.list().then((res) => {
+      api.notifications.list("",1,100, ["to", "by"]).then((res) => {
         console.log($notifications)
         $notifications.entries = $notifications!.entries.filter((n : any) => n.id !== notification.id);
       });
@@ -32,7 +32,7 @@
 
   async function readNotification(notification: any) {
     await api.notifications.update(notification.id, { read: true }).then(() => {
-      api.notifications.list().then((res) => {
+      api.notifications.list("",1,100, ["to", "by"]).then((res) => {
         notifications.set(res.data);
       });
     });
