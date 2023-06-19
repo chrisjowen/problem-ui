@@ -30,6 +30,7 @@
     goto(`/problem/show/${problem.id}`);
   };
 </script>
+<div class="max-w-[2000px] w-full m-auto">
 
 {#if !sector}
   <div class="bg-gray-50 p-9">
@@ -41,7 +42,7 @@
   <div class="flex flex-col h-full">
     <div class=" flex-1 overflow-auto ">
       <div class="xl:flex max-w-[2000px]">
-        <section class="max-w-[940px] md:m-4">
+        <section class="flex-1  md:m-4">
           <div class="bg-white md:border rounded-xl">
             <div class="relative p-8">
               <div
@@ -118,3 +119,4 @@
     </div>
   </div>
 {/if}
+</div>

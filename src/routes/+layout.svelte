@@ -108,7 +108,8 @@
   </Sidebar>
 </Drawer>
 
-<div class="flex flex-col absolute inset-0 h-full">
+
+<div class="flex flex-col absolute inset-0 h-full bg-gray-100 ">
   {#if showNavBar}
     <div class="w-full bg-primary-700 text-white drop-shadow-md z-40">
       <div class="flex flex-row">
@@ -117,14 +118,16 @@
             <a href="/" class="flex">
               <img
                 src="/img/logo.png"
-                class="w-[30px] mr-1"
+                class="w-[40px] mr-1"
                 alt="Problems Worth Solving"
               />
 
-              <span
-                class="hidden lg:block text-white font-bold lg:text-xl text-6xl bold"
-                >roblemsWorthSolving</span
-              >
+              <div class="flex items-center">
+                <span
+                class="hidden lg:block text-white font-bold lg:text-xl  bold"
+                >rowdSolve</span><span class="hidden lg:block font-bold lg:text-xs relative left-[1px] top-[2px]">.ai</span>
+              </div>
+              
             </a>
           </div>
 
@@ -169,9 +172,13 @@
     </div>
   {/if}
 
+
+
   <div
     class="flex-1 h-full {$overflow ? 'overflow-auto' : 'overflow-hidden'}  "
   >
     <slot />
   </div>
+
+
 </div>

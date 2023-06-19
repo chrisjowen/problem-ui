@@ -2,21 +2,19 @@
   import { page } from "$app/stores";
   import api from "$lib/api";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
-  import Products from "$lib/components/problem/Products.svelte";
   import ObstacleList from "$lib/components/shared/obstacles/ObstacleList.svelte";
-  import { selectedProblem } from "$lib/store";
-  import type { Obstacle } from "$lib/types";
   import { isMember } from "$lib/util/authUtil";
   import { Button } from "flowbite-svelte";
-  import { each } from "svelte/internal";
-
-  let problem: any = null;
+  
+  let problem: any;
 </script>
 
 <ProblemLayout bind:problem>
+  {#if problem}
   <div class="m-4 space-y-1">
     <div class="flex mb-5">
       <h1 class="flex-1 items-end flex text-xl text-primary-600">Risks</h1>
+      {problem}
       {#if isMember(problem)}
         <div>
           <Button
@@ -40,4 +38,5 @@
       base="/problem/show/{problem.id}"
     />
   </div>
+  {/if}
 </ProblemLayout>

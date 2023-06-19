@@ -7,13 +7,18 @@
 
   $: {
     if ($auth.loggedInUser) {
-      api.notifications.list("", 50, 1, ["to", "by"]).then((res) => {
-        $notifications = res.data;
-      });
+      reloadNotifications()
     }
   }
 
   $: unread = $notifications?.entries?.filter((n: any) => !n.read)?.length;
+
+
+  function reloadNotifications() {
+    api.notifications.list("", 50, 1, ["to", "by"]).then((res) => {
+        $notifications = res.data;
+      });
+  }
 
   function toggleMenu() {
     showMenu = !showMenu;
@@ -29,9 +34,7 @@
 
   async function readNotification(notification: any) {
     await api.notifications.update(notification.id, { read: true }).then(() => {
-      api.notifications.list("",1,100, ["to", "by"]).then((res) => {
-        $notifications = res.data;
-      });
+      reloadNotifications()
     });
   }
 

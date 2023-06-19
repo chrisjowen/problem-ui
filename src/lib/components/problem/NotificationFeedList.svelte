@@ -4,77 +4,88 @@
   import moment from "moment";
   import { createEventDispatcher } from "svelte";
   import { goto } from "$app/navigation";
+  import { browser } from "$app/environment";
   export let length = 200;
 
   let dispatch = createEventDispatcher();
 
   $: feed = $notifications?.entries;
-  $: items = feed?.map((feedItem: any) => {
-    if (feedItem.type == "problem") {
-      return {
-        ...feedItem,
-        icon: "fas fa-info-circle ",
-        link: `/problem/show/${feedItem.item.id}`,
-        linkText: feedItem.item.title,
-        prefix: "",
-      };
-    } else if (feedItem.type == "discussion") {
-      return {
-        ...feedItem,
-        icon: "fa-solid fa-comment",
-        link: `/problem/show/${feedItem.item.problem_id}/discussion/${feedItem.item.id}`,
-        linkText: feedItem.item.title,
-        prefix: "",
-      };
-    } else if (feedItem.type == "link") {
-      return {
-        ...feedItem,
-        icon: "fa-solid fa-comment",
-        link: feedItem.item.url,
-        linkText: feedItem.item.text,
-        prefix: "",
-        external: true,
-      };
-    } else if (feedItem.type == "page") {
-      return {
-        ...feedItem,
-        icon: "fas fa-file",
-        link: `/problem/show/${feedItem.item.problem_id}/page/${feedItem.item.id}`,
-        linkText: feedItem.item.title,
-        prefix: "",
-        external: true,
-      };
-    } else if (feedItem.type == "answer") {
-      return {
-        ...feedItem,
-        icon: "fas fa-file",
-        link: `/problem/show/${feedItem.item.discussion.problem_id}/discussion/${feedItem.item.discussion_id}#answer-${feedItem.item.id}`,
-        linkText: feedItem.item.discussion.title,
-        prefix: "On discussion:",
-        external: true,
-      };
-    }
-  }).filter(i => i != null);
+  $: items = feed
+    ?.map((feedItem: any) => {
+      if (feedItem.type == "problem") {
+        return {
+          ...feedItem,
+          icon: "fas fa-info-circle ",
+          link: `/problem/show/${feedItem.item.id}`,
+          linkText: feedItem.item.title,
+          prefix: "",
+        };
+      } else if (feedItem.type == "discussion") {
+        return {
+          ...feedItem,
+          icon: "fa-solid fa-comment",
+          link: `/problem/show/${feedItem.item.problem_id}/discussion/${feedItem.item.id}`,
+          linkText: feedItem.item.title,
+          prefix: "",
+        };
+      } else if (feedItem.type == "link") {
+        return {
+          ...feedItem,
+          icon: "fa-solid fa-link",
+          link: feedItem.item.url,
+          linkText: feedItem.item.text,
+          prefix: "",
+          external: true,
+        };
+      } else if (feedItem.type == "page") {
+        return {
+          ...feedItem,
+          icon: "fas fa-file",
+          link: `/problem/show/${feedItem.item.problem_id}/page/${feedItem.item.id}`,
+          linkText: feedItem.item.title,
+          prefix: "",
+        };
+      } else if (feedItem.type == "answer") {
+        return {
+          ...feedItem,
+          icon: "fas fa-file",
+          link: `/problem/show/${feedItem.item.discussion.problem_id}/discussion/${feedItem.item.discussion_id}#answer-${feedItem.item.id}`,
+          linkText: feedItem.item.discussion.title,
+          prefix: "On discussion:",
+        };
+      }
+    })
+    .filter((i) => i != null);
 
   function fromNow(when: any) {
     return moment.utc(when).fromNow();
   }
 
   let dispatchOnClick = (notification: any) => (e: Event) => {
-    dispatch("click", notification)
-  }
+    if (notification.external) {
+      open(notification.link, "_blank");
+    } else {
+      goto(notification.link);
+    }
+    dispatch("click", notification);
+  };
 </script>
 
 {#if items}
   {#each items as item}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div on:click={dispatchOnClick(item)} class="{item.read ? "bg-gray-50 " : "bg-white" }   text-gray-700 border-b-[1px] p-3 flex hover:bg-primary-50 ">
+    <div
+      on:click={dispatchOnClick(item)}
+      class="{item.read
+        ? 'bg-gray-50 '
+        : 'bg-white'}   text-gray-700 border-b-[1px] p-3 flex hover:bg-primary-50"
+    >
       <div class="m-2 mr-4">
         <Gravitar user={item.by} size="md" />
       </div>
       <div class="m-2 text-xs flex items-center flex-1">
         <div>
-          <p class="text-gray-500">{fromNow(item?.created_on)}</p>
+          <p class="text-gray-500">{fromNow(item?.inserted_at)}</p>
           <p>
             <strong class="mr-1">
               {#if item.by}

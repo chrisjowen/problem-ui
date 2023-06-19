@@ -67,7 +67,6 @@
 
 <ProblemLayout bind:problem bind:reload>
   {#if problem}
-
     <div class="flex md:mt-4 items-start">
       <section class="xl:max-w-[940px] mx-auto md:mx-4 md:rounded-t-lg ">
         <div class="md:border md:rounded-lg bg-white md:mb-4">

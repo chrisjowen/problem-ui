@@ -30,11 +30,13 @@
   };
 </script>
 
-<div class="bg-gray-50 flex flex-col h-full">
+<div class="max-w-[2000px] w-full m-auto">
+  
   <!-- HERO -->
   <div
-    class="flex-1 overflow-auto py-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 overflow-x-auto pl-6 pr-6 pb-6"
+    class=" py-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 overflow-x-auto pl-6 pr-6 pb-6"
   >
+  
     {#each sorted as sector, idx}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
@@ -54,4 +56,4 @@
       </div>
     {/each}
   </div>
-</div>
+  </div>

@@ -104,10 +104,13 @@
       </div>
     </div>
   </section> -->
+
   <div class="flex-1 overflow-auto">
+  <div class="max-w-[2000px] w-full m-auto">
+    
     <div
       transition:slide={{ duration: 250 }}
-      class="grid gap-4 grid-cols-1 {listView
+      class="grid gap-2 grid-cols-1 {listView
         ? 'lg:grid-cols-1'
         : 'lg:grid-cols-2 xl:grid-cols-3'}  sm:grid-cols-1 px-4"
     >
@@ -145,14 +148,9 @@
                 {@html highlight(problem.title)}
               </h5>
 
-              {#if listView}
-              <div class=" flex  rounded-xl ">
-                <Gravitar user={problem.user} size="xs" className="rounded-sm"  />
-                <p class="flex items-center mx-2 text-xs">{problem.user.name} {problem.user.last_name}</p>
-              </div>
-              {/if}
+            
               <p class="text-xs md:text-md">
-                {problem.blurb.slice(0, 100)}...
+                {problem.blurb.slice(0, 150)}...
               </p>
               <p
                 class=" text-primary-500 p-1 pl-2 pr-2 bg-gray-200 text-xs inline-block"
@@ -164,6 +162,7 @@
           </div>
         </div>
       {/each}
+    </div>
     </div>
   </div>
 </div>

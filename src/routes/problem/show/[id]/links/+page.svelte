@@ -61,7 +61,6 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
 <ProblemLayout bind:problem bind:reload>
-  {#if problem}
     <div class="p-4 border bg-white">
       <Input
         type="search"
@@ -110,5 +109,4 @@
         bind:search
       />
     </div>
-  {/if}
 </ProblemLayout>

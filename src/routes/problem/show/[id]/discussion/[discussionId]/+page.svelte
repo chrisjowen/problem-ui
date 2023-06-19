@@ -18,13 +18,7 @@
 
   onMount(() => {
     loadDiscussion();
-    loadProblem();
   });
-
-  async function loadProblem() {
-    let response = await api.problem.get(problemId, ["sector", "user"]);
-    problem = response.data;
-  }
 
   async function loadDiscussion() {
     answer = "";

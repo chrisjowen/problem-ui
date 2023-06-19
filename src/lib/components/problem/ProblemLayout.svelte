@@ -3,7 +3,6 @@
   import { goto } from "$app/navigation";
   import { selectedProblem, settings } from "$lib/store";
   import api from "$lib/api";
-  import { onMount } from "svelte";
   import ConttributeBanner from "./ConttributeBanner.svelte";
 
   export let problem: any = null;
@@ -12,7 +11,9 @@
 
   $: small = $settings.expandProductMenu;
 
-  onMount(reload);
+  $: {
+    $page.params.id && reload();
+  }
 
   export function reload(force: boolean = false) {
     if ($selectedProblem?.id?.toString() === $page.params.id && !force) {
@@ -26,7 +27,7 @@
           "followers",
           "problem_users",
           "problem_users.member",
-          "users"
+          "users",
         ])
         .then((res) => {
           $selectedProblem = res.data;
@@ -58,11 +59,6 @@
         // {
         //   title: "Research",
         //   icon: "fas fa-book",
-        //   href: `/problem/show/${problem.id}`,
-        // },
-        // {
-        //   title: "Todos",
-        //   icon: "fas fa-check ",
         //   href: `/problem/show/${problem.id}`,
         // },
         // {
@@ -106,6 +102,7 @@
   $: unselected = menuItems.filter((i) => i != selected);
 
   function inPath(item: any) {
+    if(!problem) return false;
     let base = `/problem/show/${problem.id}`;
 
     if (path == base && item.href == path) {
@@ -224,9 +221,9 @@
         </ul>
       </div>
       <div class="overflow-auto flex-1 h-full flex flex-col">
-        <ConttributeBanner on:requesed={() => reload(true)} problem={problem} />
+        <ConttributeBanner on:requesed={() => reload(true)} {problem} />
         <div class="flex-1 overflow-auto h-full">
-          <div class="max-w-[2000px] h-full">
+          <div class="max-w-[2000px] m-auto h-full">
             <slot />
             <div class=" mb-[100px]" />
           </div>
