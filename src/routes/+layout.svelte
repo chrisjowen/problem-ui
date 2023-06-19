@@ -19,7 +19,6 @@
 
   auth.subscribe((value) => {
     loggedInUser = value.loggedInUser;
-    console.log("loggedInUser", loggedInUser);
   });
 
   onMount(() => {
