@@ -1,6 +1,5 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { goto } from "$app/navigation";
   import api from "$lib/api";
   import { auth } from "$lib/store";
   import type { Problem } from "$lib/types";
@@ -19,32 +18,32 @@
         status: "requested",
       })
       .then((res) => {
-        dispatch("requesed", null);
+        dispatch("requested", null);
       });
   }
 </script>
 
+
+  
 {#if !isAnyMember(problem)}
-  <div class="border-b-[1px] p-4 text-center bg-primary-50">
-    <h1 class="mb-4 text-xl text-gray-600 hidden md:block">
-      Want To Help Solve This Problem?
-    </h1>
     <Button
       size="xs"
       class="w-full md:w-auto "
-      color="primary"
+      color="light"
       on:click={onJoinClicked}
     >
-      <i class="fas fa-user-plus mr-2" />
-      Join & Contribute
+      Request To Contribute
     </Button>
-  </div>
 
 {:else if !isMember(problem)}
-<div class="border-b-[1px] p-4 text-center bg-primary-50">
-    <h1 class="text-xl text-gray-600 hidden md:block">
-        <i class="fas fa-info-circle  mr-2" />
-      Request Sent Awaiting Approval
-    </h1>
-  </div>
+
+    <Button
+      size="xs"
+      class="w-full md:w-auto " 
+      color="light"
+      disabled={true}
+    >
+      <i class="fa fa-info-circle mr-2 " />
+      Request Sent
+    </Button>
 {/if}

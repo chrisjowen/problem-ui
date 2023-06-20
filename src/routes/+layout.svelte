@@ -124,7 +124,7 @@
 
               <div class="flex items-center">
                 <span
-                class="hidden lg:block text-white font-bold lg:text-xl  bold"
+                class="text-white font-bold lg:text-xl  bold"
                 >rowdSolve</span><span class="hidden lg:block font-bold lg:text-xs relative left-[1px] top-[2px]">.ai</span>
               </div>
               

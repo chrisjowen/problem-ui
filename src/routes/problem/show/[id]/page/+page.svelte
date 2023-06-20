@@ -28,7 +28,7 @@
   {#if pages}
     <div class="m-4">
       <div class="flex mb-5">
-        <h1 class="flex-1 items-end flex text-xl text-primary-600">Notes</h1>
+        <h1 class="flex-1 items-end flex text-xl text-primary-600">Pages</h1>
         {#if isMember(problem)}
           <div>
             <Button
@@ -39,7 +39,7 @@
               color="light"
             >
               <i class="fas fa-file mr-2" />
-              Create Note</Button
+              Create Page</Button
             >
           </div>
         {/if}
@@ -49,7 +49,7 @@
         <div class="bg-white rounded-xl p-4 border">
           <table class="w-full table border text-gray-400">
             <tr class="bg-gray-100 text-xs">
-              <td class="text-left p-2 text-gray-400">Note</td>
+              <td class="text-left p-2 text-gray-400">Page</td>
               <td class="text-left p-2 text-gray-400">Owner</td>
               <!-- <td class="text-center p-2 text-gray-400">Version</td> -->
               <!-- <td class="text-center p-2 text-gray-400">Status</td> -->
@@ -87,7 +87,7 @@
           </table>
         </div>
       {:else}
-        <div class="bg-white border p-4 flex mb-2">No Notes</div>
+        <div class="bg-white border p-4 flex mb-2">No Pages</div>
       {/if}
     </div>
   {/if}

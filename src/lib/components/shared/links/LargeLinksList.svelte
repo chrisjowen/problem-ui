@@ -74,11 +74,11 @@
 <div class="flex mb-5">
   <h1 class="flex-1 items-end flex text-xl text-primary-600">Resources</h1>
   {#if editable}
-  <Button size="xs" color="light" on:click={onShowLinkModal()}>
-    <i class="fas fa-link mr-2" />
-    Add Resource
-  </Button>
-{/if}
+    <Button size="xs" color="light" on:click={onShowLinkModal()}>
+      <i class="fas fa-link mr-2" />
+      Add Resource
+    </Button>
+  {/if}
 </div>
 
 

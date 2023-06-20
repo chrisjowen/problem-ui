@@ -22,7 +22,7 @@
     sector = response.data;
   }
   async function loadProblems() {
-    let response = await api.problem.list(`sector_id=${sectorId}`, 5, 1);
+    let response = await api.problem.list(`sector_id=${sectorId}`, 5, 1, ["user"]);
     sector.problems = response.data.entries;
   }
 
@@ -42,7 +42,7 @@
   <div class="flex flex-col h-full">
     <div class=" flex-1 overflow-auto ">
       <div class="xl:flex max-w-[2000px]">
-        <section class="flex-1  md:m-4">
+        <section class="flex-1 md:m-4">
           <div class="bg-white md:border rounded-xl">
             <div class="relative p-8">
               <div
@@ -79,9 +79,9 @@
             <EditableTextArea bind:input={sector.description} />
           </div>
         </section>
-        <section class="flex-1 md:my-3 md:m-0  mx-4">
+        <section class="md:my-3 md:m-0  mx-4">
           <div class="grid grid-cols-1 md:grid-cols-1 overflow-x-auto">
-            <h1 class="text-xl m-2 text-gray-600 mb-4">Active Problems</h1>
+            <h1 class="text-xl m-2 text-gray-600 mb-4">Latest Problems</h1>
 
             {#each sector.problems as problem, idx}
               <div class="inline-block flex w-full mb-2">
@@ -98,8 +98,8 @@
                     />
                   </div>
                   <div class="flex-1 mb-4 m-4 space-y-4">
-                    <h5 class="text-md font-bold text-gray-800">
-                      {problem.title}
+                    <h5 class="text-sm text-gray-800">
+                      {problem.user.username} / {problem.title}
                     </h5>
                   </div>
                 </div>

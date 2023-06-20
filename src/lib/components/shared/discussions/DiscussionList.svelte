@@ -11,6 +11,7 @@
   let showModal = false;
 
   export let discussions: PaginationResults<any>;
+  export let editable = false;
 
   function showCreateDiscussion() {
     if (!$auth.loggedInUser) {
@@ -42,10 +43,12 @@
 
   <div class="flex mb-5">
     <h1 class="flex-1 items-end flex text-xl text-primary-600">Discussions</h1>
+    {#if editable}
     <Button size="xs"  color="light" on:click={showCreateDiscussion}>
       <i class="fa fa-comment mr-2 text-xs" />
       Create Discussion
     </Button>
+    {/if}
   </div>
   
 

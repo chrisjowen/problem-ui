@@ -71,7 +71,7 @@
   };
 </script>
 
-{#if items}
+{#if items && items.length > 0}
   {#each items as item}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
@@ -116,4 +116,7 @@
       </div>
     </div>
   {/each}
+
+  {:else}
+    <p class="text-md p-4 text-black">No Notifications</p>
 {/if}

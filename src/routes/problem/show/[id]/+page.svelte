@@ -32,26 +32,6 @@
   function onUpdateProblemStatement() {
     api.problem.update(problemId, { overview: problem.overview });
   }
-  $: following = problem?.followers?.some(
-    (f: any) => f.id === loggedInUser?.id
-  );
-  async function onFollow() {
-    if (!loggedInUser) {
-      goto("/login");
-    } else {
-      await api.problem.follow(problem.id);
-      reload(true);
-    }
-  }
-
-  async function onUnFollow() {
-    if (!loggedInUser) {
-      goto("/login");
-    } else {
-      await api.problem.unfollow(problem.id);
-      reload(true);
-    }
-  }
 
   function loadComments() {
     api.problem
@@ -108,21 +88,6 @@
                   {problem.blurb.slice(0, 200)}...
                 </p>
 
-                <div class="flex space-x-2 justify-end mt-4">
-                  <Button
-                    size="xs"
-                    class="w-full md:w-auto "
-                    on:click={following ? onUnFollow : onFollow}
-                    color="light"
-                  >
-                    <i
-                      class="  {!following
-                        ? 'fas fa-user-plus '
-                        : 'fa fa-check text-green-500'} mr-2"
-                    />
-                    {following ? "Following" : "Follow"}
-                  </Button>
-                </div>
               </div>
             </div>
           </div>

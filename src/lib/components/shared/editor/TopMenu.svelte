@@ -29,7 +29,7 @@ import PictureUploadComand from "./commands/pictureUploadComand.svelte";
 </script>
 
 {#if editor}
-  <div class="flex flex-row p-1 border {fullscreen ? 'z-50' : 'z-40'} rounded-xl  m-4">
+  <div class="flex flex-row p-1 border {fullscreen ? 'z-50' : 'z-40'}">
     <button
       class="text-xs p-1 w-[40px] hover:bg-gray-50"
       on:click={() => editor.chain().focus().setParagraph().run()}

@@ -12,6 +12,7 @@
     passwordConfirm: "",
     name: "",
     last_name: "",
+    username: ""
   };
 
   function registerMode() {
@@ -55,9 +56,7 @@
     <div class="w-full">
       {#if error}
         <div class="m-9">
-          <Alert color="red"
-            >{@html error}
-          </Alert>
+          <Alert color="red">{@html error}</Alert>
         </div>
       {/if}
       {#if mode === "login"}
@@ -120,6 +119,11 @@
             size="lg"
             placeholder="Email"
             bind:value={registration.email}
+          />
+          <Input
+            size="lg"
+            placeholder="Username"
+            bind:value={registration.username}
           />
           <Input
             type="password"

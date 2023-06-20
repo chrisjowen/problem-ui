@@ -4,6 +4,7 @@
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import LargeLinksList from "$lib/components/shared/links/LargeLinksList.svelte";
   import LinksList from "$lib/components/shared/links/LinksList.svelte";
+  import { isMember } from "$lib/util/authUtil";
   import { Input } from "flowbite-svelte";
   import { onMount } from "svelte";
 
@@ -61,7 +62,8 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
 <ProblemLayout bind:problem bind:reload>
-    <div class="p-4 border bg-white">
+  {#if problem}
+    <div class="p-4 ">
       <Input
         type="search"
         placeholder="Search Resources..."
@@ -104,9 +106,10 @@
       <LargeLinksList
         api={api.problem.links(problemId)}
         pageSize={20}
-        editable={true}
+        editable={isMember(problem)}
         bind:query
         bind:search
       />
     </div>
+    {/if}
 </ProblemLayout>

@@ -15,7 +15,7 @@
       sectors = res.data.entries;
     });
 
-    api.problem.list("", 12, 1, ["sector"]).then((res) => {
+    api.problem.list("", 6, 1, ["sector", "user"]).then((res) => {
       problems = res.data.entries;
     });
   });
@@ -55,7 +55,7 @@
   <div class="max-w-[2000px] w-full m-auto">
     <h1 class="mb-9 text-3xl text-primary-900 font-bold">Trending Problems</h1>
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 w-full gap-2"
+      class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3  w-full gap-2"
     >
       {#each problems as problem}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -74,11 +74,11 @@
                 style="height: 150px"
               />
             </div>
-            <div class="flex-1 mb-4 m-4 flex flex-col">
-              <h5 class="text-xl font-bold text-primary-900">
-                {problem.title.slice(0, 25)}
+            <div class="flex-1 mb-4 m-4 flex flex-col space-y-2">
+              <h5 class="text-md font-bold text-primary-900">
+               {problem.user.username} / {problem.title.slice(0, 25)}
               </h5>
-              <p class="flex-1">
+              <p class="flex-1 text-sm">
                 {problem.blurb.slice(0, 90)}...
               </p>
               <div>
@@ -97,13 +97,13 @@
   </div>
 </div>
 
-<div class="p-2 md:px-9 md:py-2 bg-primary-100">
+<div class="md:px-9 md:py-2 bg-gray-200">
   <div class="max-w-[2000px] w-full m-auto">
     <h1 class="my-4 mx-4 md:mx-0 text-2xl text-primary-900 font-bold">
       Sectors
     </h1>
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 w-full gap-2"
+      class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-4 2xl:grid-cols-7 w-full gap-2"
     >
       {#each sectors.slice(0, 50) as sector}
         <!-- svelte-ignore a11y-click-events-have-key-events -->

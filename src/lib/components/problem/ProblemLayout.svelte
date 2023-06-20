@@ -3,7 +3,8 @@
   import { goto } from "$app/navigation";
   import { selectedProblem, settings } from "$lib/store";
   import api from "$lib/api";
-  import ConttributeBanner from "./ConttributeBanner.svelte";
+  import FollowButton from "./FollowButton.svelte";
+  import ContributeButton from "./ContributeButton.svelte";
 
   export let problem: any = null;
   export let menuItems: any[] = [];
@@ -47,12 +48,18 @@
           href: `/problem/show/${problem.id}`,
         },
         {
-          title: "Activity",
-          icon: "fas fa-rss ",
-          href: `/problem/show/${problem.id}/feed`,
+          title: "Contributors",
+          icon: "fa fa-user-plus",
+          href: `/problem/show/${problem.id}/users`,
+        },
+
+        {
+          title: "Discussions",
+          icon: "fa-solid fa-comment ",
+          href: `/problem/show/${problem.id}/discussion`,
         },
         {
-          title: "Notes",
+          title: "Pages",
           icon: "fas fa-file ",
           href: `/problem/show/${problem.id}/page`,
         },
@@ -66,29 +73,24 @@
         //   icon: "fa fa-lightbulb ",
         //   href: `/problem/show/${problem.id}`,
         // },
-        {
-          title: "Risks",
-          icon: "fa fa-exclamation-triangle ",
-          href: `/problem/show/${problem.id}/obstacles`,
-        },
-        {
-          title: "Discussions",
-          icon: "fa-solid fa-comment ",
-          href: `/problem/show/${problem.id}/discussion`,
-        },
 
-        // TODO: Learn is $$$$
-        {
-          title: "Users",
-          icon: "fa fa-user-plus",
-          href: `/problem/show/${problem.id}/users`,
-        },
         {
           title: "Resources",
           icon: "fa fa-link ",
           href: `/problem/show/${problem.id}/links`,
         },
 
+        {
+          title: "Risks",
+          icon: "fa fa-exclamation-triangle ",
+          href: `/problem/show/${problem.id}/obstacles`,
+        },
+
+        {
+          title: "Activity",
+          icon: "fas fa-rss ",
+          href: `/problem/show/${problem.id}/feed`,
+        },
         // {
         //   title: "Solutions",
         //   icon: "fa fa-lightbulb ",
@@ -102,7 +104,7 @@
   $: unselected = menuItems.filter((i) => i != selected);
 
   function inPath(item: any) {
-    if(!problem) return false;
+    if (!problem) return false;
     let base = `/problem/show/${problem.id}`;
 
     if (path == base && item.href == path) {
@@ -221,7 +223,28 @@
         </ul>
       </div>
       <div class="overflow-auto flex-1 h-full flex flex-col">
-        <ConttributeBanner on:requesed={() => reload(true)} {problem} />
+        <div class="flex border-b-[1px]">
+          <div
+            class="flex-1 p-4 text-sm text-gray-500  font-bold"
+          >
+            <span
+              ><a href="/users/{problem.user.username}"
+                >{problem.user.username}</a
+              ></span
+            >
+            <span>/</span>
+            <span>{problem.title}</span>
+            <span
+              class=" p-1 px-2 rounded-2xl ml-2 bg-gray-300 text-gray-600 text-xs"
+              >{problem.public ? "Public" : "Private"}</span
+            >
+          </div>
+          <div class="space-x-1 p-2">
+            <FollowButton on:change={() => reload(true)} {problem} />
+            <ContributeButton on:requested={() => reload(true)} {problem} />
+          </div>
+        </div>
+
         <div class="flex-1 overflow-auto h-full">
           <div class="max-w-[2000px] m-auto h-full">
             <slot />

@@ -14,7 +14,6 @@
   <div class="m-4 space-y-1">
     <div class="flex mb-5">
       <h1 class="flex-1 items-end flex text-xl text-primary-600">Risks</h1>
-      {problem}
       {#if isMember(problem)}
         <div>
           <Button

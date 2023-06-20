@@ -6,6 +6,7 @@
   import DiscussionList from "$lib/components/shared/discussions/DiscussionList.svelte";
   import { goto } from "$app/navigation";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
+  import { isMember } from "$lib/util/authUtil";
 
   let problem: any = null;
   let problemId = $page.params.id;
@@ -37,7 +38,9 @@
 </script>
 
 <ProblemLayout bind:problem>
+  {#if problem}
   <div class="p-4">
-    <DiscussionList {discussions} on:create={createDiscussion} on:click={onClick} />
+    <DiscussionList {discussions} on:create={createDiscussion} on:click={onClick} editable={isMember(problem)} />
   </div>
+  {/if}
 </ProblemLayout>
