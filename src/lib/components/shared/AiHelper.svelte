@@ -1,7 +1,7 @@
 
 
 
-<div class=" m-8 ">
+<div class=" m-8 w-full">
     <div class="speech-bubble drop-shadow-lg">
       <div
         class="prose prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-h3:text-gray-500 prose-h3:mt-0 prose-md max-w-none"

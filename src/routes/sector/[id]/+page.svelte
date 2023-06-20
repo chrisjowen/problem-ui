@@ -17,15 +17,14 @@
   });
 
   async function loadSector() {
-    let response = await api.sector.get(sectorId, []);
-    loadProblems();
+    let response = await api.sector.get(sectorId, ["problems", "problems.user"]);
+    // loadProblems();
     sector = response.data;
   }
-  async function loadProblems() {
-    let response = await api.problem.list(`sector_id=${sectorId}`, 5, 1, ["user"]);
-    sector.problems = response.data.entries;
-  }
-
+  // async function loadProblems() {
+  //   let response = await api.problem.list(`sector_id=${sectorId}`, 50, 1, ["user"]);
+  //   sector.problems = response.data.entries;
+  // }
   let showProblem = (problem: any) => () => {
     goto(`/problem/show/${problem.id}`);
   };
@@ -82,7 +81,6 @@
         <section class="md:my-3 md:m-0  mx-4">
           <div class="grid grid-cols-1 md:grid-cols-1 overflow-x-auto">
             <h1 class="text-xl m-2 text-gray-600 mb-4">Latest Problems</h1>
-
             {#each sector.problems as problem, idx}
               <div class="inline-block flex w-full mb-2">
                 <!-- svelte-ignore a11y-click-events-have-key-events -->

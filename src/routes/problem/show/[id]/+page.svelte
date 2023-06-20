@@ -42,7 +42,6 @@
       });
   }
 
-  function onInviteContributer() {}
 </script>
 
 <ProblemLayout bind:problem bind:reload>

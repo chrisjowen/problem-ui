@@ -8,11 +8,12 @@
   } from "flowbite-svelte";
   import "../app.postcss";
   import { page } from "$app/stores";
-  import { auth, overflow } from "$lib/store";
+  import { auth, overflow, state } from "$lib/store";
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { onMount } from "svelte";
   import UserMenuItem from "$lib/components/user/UserMenuItem.svelte";
   import NotificationMenu from "$lib/components/NotificationMenu.svelte";
+  import api from "$lib/api";
 
   let loggedInUser: any = null;
   let hideSideBar = true;
@@ -22,6 +23,12 @@
   });
 
   onMount(() => {
+    if ($state?.sectors == null) {
+      api.sector.list("", 100, 1).then((r) => {
+        $state.sectors = r.data;
+      });
+    }
+
     const report_error = (msg: string = "unknown error") => {
       console.error("Caught unhandled rejection:", msg);
       // toasts.push({
@@ -169,7 +176,7 @@
               <div>
                 <a
                   href="/login"
-                  class="hover:bg-primary-600 rounded-xl p-2 px-3 "
+                  class="hover:bg-primary-600 rounded-xl p-2 px-3"
                 >
                   <i class="fas fa-sign-in-alt text-xs mr-1" />
                   Login
