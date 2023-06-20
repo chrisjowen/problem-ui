@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { beforeUpdate, onMount } from "svelte";
   import { goto } from "$app/navigation";
   import api from "$lib/api";
-  import {
-    PUBLIC_IMG_CDN_BASE,
-    PUBLIC_PROBLEM_API_PATH,
-  } from "$env/static/public";
+  import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
+  import { auth } from "$lib/store";
 
   let sectors: any = [];
   let problems: any = [];
@@ -54,9 +52,7 @@
 <div class="p-2 md:p-9 m-h-[500px]">
   <div class="max-w-[2000px] w-full m-auto">
     <h1 class="mb-9 text-3xl text-primary-900 font-bold">Trending Problems</h1>
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3  w-full gap-2"
-    >
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 w-full gap-2">
       {#each problems as problem}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div class="inline-block flex flex-shrink-0">
@@ -76,7 +72,7 @@
             </div>
             <div class="flex-1 mb-4 m-4 flex flex-col space-y-2">
               <h5 class="text-md font-bold text-primary-900">
-               {problem.user.username} / {problem.title.slice(0, 25)}
+                {problem.user.username} / {problem.title.slice(0, 25)}
               </h5>
               <p class="flex-1 text-sm">
                 {problem.blurb.slice(0, 90)}...

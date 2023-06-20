@@ -9,7 +9,7 @@
 
   let dispatch = createEventDispatcher();
 
-  $: feed = $notifications?.entries;
+  $: feed = $notifications?.entries.slice(0, length);
   $: items = feed
     ?.map((feedItem: any) => {
       if (feedItem.type == "problem") {
@@ -80,7 +80,7 @@
         ? 'bg-gray-50 '
         : 'bg-white'}   text-gray-700 border-b-[1px] p-3 flex hover:bg-primary-50"
     >
-      <div class="m-2 mr-4">
+      <div class="m-2">
         <Gravitar user={item.by} size="md" />
       </div>
       <div class="m-2 text-xs flex items-center flex-1">

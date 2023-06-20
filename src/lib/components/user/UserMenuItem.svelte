@@ -10,15 +10,15 @@
   let userLinks = [
     { name: "Profile", href: "/profile/me" },
     { name: "Logout", href: "/logout" },
-    { name: "Notifications", href: "/notificaitons" },
+    { name: "Notifications", href: "/notifications" },
   ];
 
   $: showNotifications = $notifications?.entries?.filter(n => !n.read).length > 0;
 </script>
 
-<div class="relative">
+<div class="relative top-[-2px]">
   <a href="#stay" on:click={() => (showUserMenu = true)} class="flex">
-    <Gravitar {user} size="xs" bind:notifications={showNotifications} className="rounded-xl " />
+    <Gravitar {user} size="md" bind:notifications={showNotifications} className="hover:rounded-sm rounded-xl h-[32px] w-[32px] " />
   </a>
   {#if showUserMenu}
     <div

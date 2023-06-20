@@ -20,8 +20,20 @@
       });
   }
 
-  function toggleMenu() {
+  function toggleMenu(event: null | MouseEvent = null) {
+    if(containsInParent(event?.toElement, "notification-menu")) {
+      return;
+    }
     showMenu = !showMenu;
+  }
+
+  function containsInParent(element: any, id: string) {
+
+    if(element == null) {
+      return false;
+    }
+
+    return element.id == id || element.parentElement?.id == id  || element.parentElement?.parentElement?.id == id ;
   }
 
   function markAsRead(event: any) {
@@ -43,17 +55,18 @@
 <div class="flex items-center relative">
   <div
     on:mouseenter={toggleMenu}
-
+    on:mouseleave={toggleMenu}
     class="p-2 px-3 rounded-t-lg
     {showMenu ? 'bg-white text-black' : ''}
     "
   >
-    <i class="fa-solid fa-bell text-xs mr-1" />
-    Notifications
+    <i class="fa-solid fa-bell text-lg " />
+    
   </div>
   <div
+    id="notification-menu"
     on:mouseleave={toggleMenu}
-    class="absolute top-[32px] w-[550px] left-[-408px] max-h-[700px] overflow-auto  z-50 bg-white  rounded-xl border
+    class="absolute top-[32px] w-[550px] left-[-458px] max-h-[700px] overflow-auto  z-50 bg-white  rounded-xl border
     {showMenu
       ? 'block'
       : 'hidden'}"

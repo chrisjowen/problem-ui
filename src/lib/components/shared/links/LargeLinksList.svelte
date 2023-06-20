@@ -95,9 +95,10 @@
       >
         <a target="_blank" href={link.url}>
           <div class="w-full h-[200px] overflow-hidden border mb-4 rounded-xl justify-center text-center flex items-center">
+           
             <object
               title={link.text}
-              data={imageUrl(link.screenshot)}
+              data="https://image.thum.io/get/{link.url}"
               type="image/png"
               class="w-full"
             >

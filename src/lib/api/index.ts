@@ -20,5 +20,6 @@ export default {
     suggestion: new RestApi('/api/problem_suggestion'),
     follower: new RestApi('/api/follower'),
     notifications: new RestApi('/api/notification'),
+    membership: new RestApi('/api/membership'),
     aiProblem: aiProblemApi
 }

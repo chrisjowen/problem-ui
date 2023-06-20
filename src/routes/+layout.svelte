@@ -52,7 +52,7 @@
   $: showNavBar = $page.route.id != "/login";
 </script>
 
-<Drawer placement="right" bind:hidden={hideSideBar} id="sidebar2" >
+<Drawer placement="right" bind:hidden={hideSideBar} id="sidebar2">
   <Sidebar>
     <SidebarWrapper divClass="overflow-y-auto p-2 text-gray-700">
       <SidebarGroup>
@@ -108,14 +108,13 @@
   </Sidebar>
 </Drawer>
 
-
-<div class="flex flex-col absolute inset-0 h-full bg-gray-100 ">
+<div class="flex flex-col absolute inset-0 h-full bg-gray-100">
   {#if showNavBar}
     <div class="w-full bg-primary-700 text-white drop-shadow-md z-40">
       <div class="flex flex-row">
-        <div class="flex-1 flex p-3">
+        <div class="flex-1 flex">
           <div class="flex-1 flex items-center">
-            <a href="/" class="flex">
+            <a href={$auth.loggedInUser ? "/profile/me" : "/"} class="flex p-3">
               <img
                 src="/img/logo.png"
                 class="w-[40px] mr-1"
@@ -123,48 +122,59 @@
               />
 
               <div class="flex items-center">
-                <span
-                class="text-white font-bold lg:text-xl  bold"
-                >rowdSolve</span><span class="hidden lg:block font-bold lg:text-xs relative left-[1px] top-[2px]">.ai</span>
+                <span class="text-white font-bold lg:text-xl bold"
+                  >rowdSolve</span
+                ><span
+                  class="hidden lg:block font-bold lg:text-xs relative left-[1px] top-[2px]"
+                  >.ai</span
+                >
               </div>
-              
             </a>
+
+            <div class="p-5 px-7 space-x-2 flex text-xs hidden md:block">
+              <a
+                href="/problem/list"
+                class="hover:bg-primary-600 rounded-xl p-2 px-3"
+              >
+                <i class="fa-solid fa-magnifying-glass text-xs mr-1" />
+                Problems
+              </a>
+              <a
+                href="/sector"
+                class="hover:bg-primary-600 rounded-xl p-2 px-3"
+              >
+                <i class="fa-solid fa-industry text-xs mr-1" />
+                Sectors
+              </a>
+            </div>
           </div>
 
           <a
             href="#stay"
             on:click={() => (hideSideBar = false)}
-            class="md:hidden"
+            class="md:hidden p-4"
           >
-            <i class="fas fa-bars mr-4" />
+            <i class="fas fa-bars text-lg" />
           </a>
         </div>
 
         <div class="hidden md:block">
-          <div class="justify-end p-5 px-7 space-x-2 flex text-xs">
-            <NotificationMenu />
-
-            <a
-              href="/problem/list"
-              class="hover:bg-primary-600 rounded-xl p-2 px-3"
-            >
-              <i class="fa-solid fa-magnifying-glass text-xs mr-1" />
-              Problems
-            </a>
-            <a href="/sector" class="hover:bg-primary-600 rounded-xl p-2 px-3">
-              <i class="fa-solid fa-industry text-xs mr-1" />
-              Sectors
-            </a>
-
+          <div class="justify-end p-5 px-7 space-x-4 flex text-xs">
             {#if loggedInUser}
+              <NotificationMenu />
               <div class=" m-1 mx-3">
                 <UserMenuItem user={loggedInUser} />
               </div>
             {:else}
-              <a href="/login" class="hover:bg-primary-600 rounded-xl p-2 px-3">
-                <i class="fas fa-sign-in-alt text-xs mr-1" />
-                Login
-              </a>
+              <div>
+                <a
+                  href="/login"
+                  class="hover:bg-primary-600 rounded-xl p-2 px-3 "
+                >
+                  <i class="fas fa-sign-in-alt text-xs mr-1" />
+                  Login
+                </a>
+              </div>
             {/if}
           </div>
         </div>
@@ -172,13 +182,9 @@
     </div>
   {/if}
 
-
-
   <div
     class="flex-1 h-full {$overflow ? 'overflow-auto' : 'overflow-hidden'}  "
   >
     <slot />
   </div>
-
-
 </div>

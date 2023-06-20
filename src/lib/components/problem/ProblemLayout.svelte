@@ -23,7 +23,7 @@
       api.problem
         .get($page.params.id, [
           "products",
-          "sector",
+          "sectors",
           "user",
           "followers",
           "problem_users",
@@ -44,7 +44,7 @@
       menuItems = [
         {
           title: "Overview",
-          icon: "fas fa-info-circle ",
+          icon: "fa-solid fa-atom ",
           href: `/problem/show/${problem.id}`,
         },
         {
@@ -134,7 +134,7 @@
   </div>
 {:else}
   <div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40 h-full">
-    <div class="bg-primary-700 drop-shadow-sm">
+    <section id="MobileMenu" class="bg-primary-700 drop-shadow-sm">
       <div class="block md:hidden text-xs p-2">
         <div
           class="bg-white border p-2 border rounded-lg flex flex-row"
@@ -165,9 +165,9 @@
           {/each}
         </div>
       </div>
-    </div>
+    </section>
     <div class="flex flex-1 flex-row overflow-hidden slide h-full">
-      <div
+      <section id="LeftMenu"
         class="bg-gray-200 text-xs {small
           ? ''
           : 'lg:w-[200px]'}  hidden md:block"
@@ -221,7 +221,7 @@
             </a>
           </li>
         </ul>
-      </div>
+      </section>
       <div class="overflow-auto flex-1 h-full flex flex-col">
         <div class="flex border-b-[1px]">
           <div

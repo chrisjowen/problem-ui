@@ -77,10 +77,11 @@
     {#each links.entries as link}
       <div class="border-b-[1px] p-3 relative w-full">
         <div class="flex">
+
           <div class="mr-3 mt-1">
             <object
               title={link.text}
-              data={icon(link.url)}
+              data="https://image.thum.io/get/https://www.google.com/"
               type="image/png"
               width="20"
               height="20"

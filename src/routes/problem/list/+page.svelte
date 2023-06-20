@@ -143,11 +143,13 @@
               </div>
               {/if}
             </div>
-            <div class="flex-1 m-4 space-y-4">
-              <h5 class="text-lg md:text-2xl font-bold text-gray-500">
+            <div class="flex-1 m-4 ">
+              <h5 class="text-lg md:text-lg font-bold text-gray-500 ">
                 {@html highlight(problem.title)}
               </h5>
-
+              <p class="text-xs mb-3 font-bold text-gray-400">
+                @{problem.user.username} 
+              </p>
             
               <p class="text-xs md:text-md">
                 {problem.blurb.slice(0, 150)}...
