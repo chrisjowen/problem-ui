@@ -3,8 +3,9 @@
   import api from "$lib/api";
   import { connect } from "$lib/channel/socket";
   import { auth } from "$lib/store";
-  import { onDestroy } from "svelte";
+  import { createEventDispatcher, onDestroy } from "svelte";
 
+  let dispatch = createEventDispatcher();
   let channel: any;
   let problemId: null;
 
@@ -36,16 +37,18 @@
 
     resources: {
       state: "idle",
+      hiddenOnIdle: true,
       message: {
-        loading: "Generating resources",
+        loading: "Finding website resources",
         done: "Resources generated",
       },
     },
 
     obstacles: {
       state: "idle",
+      hiddenOnIdle: true,
       message: {
-        loading: "Generating obstacles",
+        loading: "Analysing risks",
         done: "Obstacles generated",
       },
     },
@@ -70,6 +73,7 @@
       steps.meta.state = "done";
       steps.image.state = "done";
       problemId = res.id;
+      dispatch("created", problemId)
       watchProblem();
     });
   }
@@ -102,19 +106,12 @@
   }
 </script>
 
-{#if problemId}
-  <div class="bg-yellow-50 prose border p-4 m-8">
-    <h1 class="text-3xl font-bold">Problem Created</h1>
-    <p class="text-gray-500">
-      <a href="/problem/show/{problemId}">View Problem</a>
-    </p>
-  </div>
-{/if}
+
 
 <div>
   <ul class="space-y-9">
     {#each Object.entries(steps) as [stepName, step]}
-      <li class="flex">
+      <li class="flex {step.state == "idle" ? "hidden" : ""} ">
         <span class="mr-9">
           {#if step.state == "done"}
             <i class="fa fa-check-circle text-green-400 text-4xl" />
@@ -131,3 +128,6 @@
     {/each}
   </ul>
 </div>
+
+
+
