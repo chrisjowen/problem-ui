@@ -1,7 +1,6 @@
 import axios from "axios";
 import { PUBLIC_PROBLEM_API_PATH } from '$env/static/public'
 
-
 class Client {
     protected baseUrl: string = "";
     constructor(baseUrl: string) {
@@ -27,6 +26,7 @@ export default class RestApi {
     protected only: string[];
 
     constructor(baseUrl: string, only: string[] = ["get", "create", "update", "delete", "list"]) {
+
         this.only = only;
         this.baseUrl = `${PUBLIC_PROBLEM_API_PATH}${baseUrl}`;
         // this.baseUrl = `${baseUrl}`;
