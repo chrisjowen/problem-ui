@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { imageUrl } from '$lib/util/imageutil';
   import type { NodeViewProps } from "@tiptap/core";
   import cx from "classnames";
   import { NodeViewWrapper, draggable } from "svelte-tiptap";

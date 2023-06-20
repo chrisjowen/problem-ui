@@ -2,13 +2,13 @@
   import { auth } from "$lib/store";
   import { onMount } from "svelte";
   import api from "$lib/api";
-  import type { Problem } from "$lib/types";
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
-  import { imageUrl } from "$lib/util/imageUtil";
   import { Button } from "flowbite-svelte";
   import { goto } from "$app/navigation";
   import NotificationFeedList from "$lib/components/problem/NotificationFeedList.svelte";
   import _ from "lodash";
+  import { imageUrl } from "$lib/util/imageutil";
+
 
   let me = $auth.loggedInUser;
   let problems: any[] = [];
