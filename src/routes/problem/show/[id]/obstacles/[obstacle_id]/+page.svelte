@@ -17,6 +17,7 @@
   } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { redirectIfNotLoggedIn } from "$lib/util/authUtil";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
 
   let problem: any = null;
   let obstacle: null | Obstacle = null;
@@ -41,7 +42,7 @@
   function loadObstacle() {
     api.problem
       .obstacles($page.params.id)
-      .get($page.params.obstacle_id)
+      .get($page.params.obstacle_id, ["state_history.user"])
       .then((res) => {
         obstacle = res.data;
         modalVisible = false;
@@ -69,16 +70,13 @@
 
 <ProblemLayout bind:problem>
   <Modal
-    title="Update State"
+    title="Update Risk"
     bind:open={modalVisible}
     size="xl"
     autoclose={false}
     class="w-full"
   >
     <form class="flex flex-col space-y-6" action="#">
-      <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-        Sign in to our platform
-      </h3>
       <Label class="space-y-2">
         <span>State</span>
         <Select
@@ -99,8 +97,8 @@
       </Label>
 
       <Button type="submit" class="w-full" on:click={onUpdateState}
-        >Update State</Button
-      >
+        >Update
+      </Button>
     </form>
   </Modal>
 
@@ -121,11 +119,11 @@
       </div>
 
       <div class="border bg-white p-4 space-y-4">
-        <h2 class="text-xl text-gray-500 font-bold">Questions To Resolve</h2>
+        <h2 class="text-xl text-gray-500 font-bold">Steps To Resolve</h2>
         <ul>
           {#each obstacle.questions as question}
             <li class="px-4 py-1">
-              <i class="fa-solid fa-circle-question mr-2" />
+              <i class="fa-sharp fa-regular fa-square-check mr-2"></i>
               {question}
             </li>
           {/each}
@@ -135,57 +133,51 @@
       <div class="border bg-white p-4 space-y-4">
         <h2 class="text-xl text-gray-500 font-bold">Risk History</h2>
 
-        <div class="flex">
-          <span
-            class="text-xs p-2 mr-1 ml-1 mb-1 inline-block text-gray-400 "
-          >
-
-            NEW
-          </span>
-
-          <span class="mt-1 mx-3">
-            <i class="fas fa-chevron-right text-gray-500" />
-          </span>
-
-          {#each obstacle.state_history as state}
-            <span
-              class="text-xs  p-2 mr-1 ml-1 mb-1 inline-block text-gray-400 "
-            >
-              <i class="fa-solid fa-exclamation-triangle mr-1" />
-
-              {state.state.toUpperCase()}
-            </span>
-
-            <Popover class="w-96 text-sm font-light" defaultClass="" title="notes">
-              <div class="p-4 prose">
-                {@html state.notes}
+        {#each obstacle.state_history as state}
+          <div>
+            <div class="flex items-center">
+              <div class="ml-2">
+                <Gravitar user={state?.user} />
               </div>
-            </Popover>
-
-            {#if state.state !== "resolved"}
-              <span class="mt-1 mx-3">
-                <i class="fas fa-chevron-right text-gray-500" />
-              </span>
-            {/if}
-          {/each}
-
-          {#if obstacle.state !== "resolved"}
-            <div>
-              <Button size="xs" color="light" on:click={onShowTransitionModal}>
-                <i class="fa-sharp fa-solid fa-wrench mr-2" />
-                Transition
-              </Button>
+              <div class="flex items-center text-xs ml-4 text-gray-400">
+                <span class="font-bold mr-2"
+                  >@{state.user?.username || "unknown"}</span
+                >
+                transitioned risk to <i class="fas fa-arrow-right mx-4" />
+              </div>
+              <div class="text-xs inline-block text-gray-400 flex items-center">
+                {#if state.state == "resolved"}
+                  <i class="fa-solid fa-check-circle text-green-500 mx-1" />
+                {:else}
+                  <i class="fa-solid fa-exclamation-triangle text-orange-500  mr-1" />
+                {/if}
+                {state.state.toUpperCase()}
+              </div>
             </div>
-          {/if}
-        </div>
+            <div class="p-4 text-sm prose text-gray-500 ">
+              <blockquote>
+                {@html state.notes}
+              </blockquote>
+            </div>
+          </div>
+        {/each}
+
+        {#if obstacle.state !== "resolved"}
+          <div>
+            <Button
+              size="xs"
+              class="w-full"
+              color="light"
+              on:click={onShowTransitionModal}
+            >
+              <i class="fa-sharp fa-solid fa-wrench mr-2" />
+              Transition
+            </Button>
+          </div>
+        {/if}
       </div>
 
-      <div class="bg-yellow-50 p-8 border">
-        <div class="flex mb-4">
-          <h2 class="text-xl text-gray-500 font-bold">Suggestion</h2>
-        </div>
-        <p>{obstacle.hint}</p>
-      </div>
+    
     </div>
   {/if}
 </ProblemLayout>

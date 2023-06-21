@@ -21,5 +21,6 @@ export default {
     follower: new RestApi('/api/follower'),
     notifications: new RestApi('/api/notification'),
     membership: new RestApi('/api/membership'),
+    obstacle: new RestApi('/api/obstacle'),
     aiProblem: aiProblemApi
 }

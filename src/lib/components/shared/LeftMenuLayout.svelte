@@ -1,54 +1,157 @@
 <script lang="ts">
-  import { page } from "$app/stores";
   import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
+  import { settings } from "$lib/store";
 
   export let menuItems: any[] = [
-      {
-        title: "Test",
-        icon: "fas fa-info-circle text-primary-400",
-      },
-    ];
+    {
+      title: "Overview",
+      icon: "fa-solid fa-atom ",
+      href: `/`,
+    },
+  ];
 
-  let path = $page.url.pathname;
+  export let showTopMenu = false;
+  export function inPath(item: any) {
+    return $page.url.pathname.includes(item.href);
+  }
 
+  let showMobileMenu = false;
+
+  $: selected = menuItems.find(inPath);
+  $: unselected = menuItems.filter((i) => i != selected);
+  $: small = $settings.expandProductMenu;
+
+  function toggleWidth() {
+    $settings.expandProductMenu = !$settings.expandProductMenu;
+  }
+
+  function toggleMobileMenu(
+    event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement }
+  ) {
+    showMobileMenu = !showMobileMenu;
+  }
 </script>
-
-<div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40">
- 
-  <div class="flex flex-1 flex-row overflow-hidden slide">
-    <div class="bg-gray-200 text-xs lg:w-[200px]">
-      <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-      <ul class="flex flex-col h-full">
+{#if selected}
+<div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40 h-full">
+  <section id="MobileMenu" class="bg-primary-700 drop-shadow-sm">
+    <div class="block md:hidden text-xs p-2">
+      <div
+        class="bg-white border p-2 border rounded-lg flex flex-row"
+        on:click={toggleMobileMenu}
+        on:keypress={toggleMobileMenu}
+      >
+        <i class="{selected.icon} text-primary-400 flex items-center mr-2" />
+        <p class="flex-1 flex items-center">{selected.title}</p>
+        <i class="fas fa-chevron-down text-gray-400 mr-2 flex items-center" />
+      </div>
+      <div
+        class="border bg-white p-2 rounded-xl mt-2 w-full {showMobileMenu
+          ? ''
+          : 'hidden'}"
+      >
+        {#each unselected as item}
+          <a
+            href={item.href}
+            class="flex flex-row w-full p-2 hover:bg-gray-50 text-gray-600 hover:text-primary-400"
+          >
+            {#if item.icon}
+              <i class="{item.icon} flex items-center mr-2" />
+            {/if}
+            <p class="flex items-center">
+              {item.title}
+            </p>
+          </a>
+        {/each}
+      </div>
+    </div>
+  </section>
+  <div class="flex flex-1 flex-row overflow-hidden slide h-full">
+    <section
+      id="LeftMenu"
+      class="bg-gray-200 text-xs {small ? '' : 'lg:w-[200px]'}  hidden md:block"
+    >
+      <ul class={small ? "" : "flex flex-col"}>
         {#each menuItems as item}
           <li>
             <a
-              href="{item.href}"
+              href="#stay"
+              on:click={() => goto(item.href)}
               class="block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm
-                      {path == item.href
-                ? '!text-gray-600 bg-gray-100'
+                  {small ? 'text-center' : ''} 
+                      {inPath(item)
+                ? '!text-gray-600 bg-gray-50'
                 : ' hover:text-gray-600  hover:bg-gray-100 '}"
             >
               {#if item.icon}
-                <i class="{item.icon}  lg:mr-2" />
+                <i
+                  class="{item.icon} {small ? 'text-xl' : ''} {inPath(item)
+                    ? 'text-gray-800'
+                    : 'text-gray-400'}  {small ? '' : 'lg:mr-2'} "
+                />
               {/if}
-              <div class="hidden lg:inline">{item.title}</div>
+              <div
+                class=" {small ? 'hidden' : 'lg:inline'} 
+                {inPath(item) ? 'text-gray-800' : 'text-gray-400'}
+                "
+              >
+                {item.title}
+              </div>
             </a>
           </li>
         {/each}
+        <li>
+          <a
+            href="#stay"
+            on:click={toggleWidth}
+            class="{small
+              ? 'text-center'
+              : ''} block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm hover:text-gray-600 hover:bg-gray-100"
+          >
+            <i
+              class="fas {small
+                ? 'fa-chevron-right'
+                : 'fa-chevron-left lg:mr-2'} "
+            />
+
+            {#if !small}
+              Hide
+            {/if}
+          </a>
+        </li>
       </ul>
-    </div>
-    <div class="border-v-[1px] flex justify-end bg-primary-50 border-b-[1px]">
-      <slot name="innerMenu" />
-    </div>
-    <div class="overflow-auto flex-1 md:p-4">
-      <slot />
+    </section>
+    <div class="overflow-auto flex-1 h-full flex flex-col">
+      {#if showTopMenu}
+        <div class="border-b-[1px]">
+            <slot name="topmenu" />
+        </div>
+      {/if}
+
+      <div class="flex-1 overflow-auto h-full">
+        <div class="max-w-[2000px] m-auto h-full">
+          <slot />
+          <div class=" mb-[100px]" />
+        </div>
+      </div>
     </div>
   </div>
 </div>
+{/if}
 
 <style lang="scss">
   .slide {
     transition: width 2s;
     overflow: hidden;
+  }
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
   }
 </style>

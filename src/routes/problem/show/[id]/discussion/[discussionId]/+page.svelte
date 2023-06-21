@@ -46,7 +46,7 @@
 </script>
 
 <ProblemLayout bind:problem>
-  <div class="md:p-4 ">
+  <div class="max-w-[1000px] m-4">
     {#if discussion}
       <div class="border bg-white md:mb-4 pb-4">
         <DiscussionView {discussion} />

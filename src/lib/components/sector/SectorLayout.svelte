@@ -7,6 +7,8 @@
   import { page } from "$app/stores";
   import { auth } from "$lib/store";
   import api from "$lib/api";
+  import { Button } from "flowbite-svelte";
+  import { goto } from "$app/navigation";
 
   let sectorId = $page.params.id;
   let menuItems: any[] = [];
@@ -16,11 +18,7 @@
   });
 
   async function loadSector() {
-    let response = await api.sector.get(sectorId, [
-      "problems",
-      "problems.user",
-    ]);
-    // loadProblems();
+    let response = await api.sector.get(sectorId);
     sector = response.data;
   }
 
@@ -29,33 +27,44 @@
       menuItems = [
         {
           title: "Sector Overview",
-          icon: "fas fa-lightbulb",
+          icon: "fas fa-info-circle",
           href: `/sector/${sector.id}`,
         },
         {
-          title: "Problems",
-          icon: "fas fa-lightbulb",
-          href: `/sector/${sector.id}/problems`,
+          title: "News (Coming Soon)",
+          icon: "fas fa-book",
+          href: `/sector/${sector.id}/#stay`,
+        },
+        {
+          title: "Insights (Coming Soon)",
+          icon: "fas fa-chalkboard-user text-color-red",
+          href: `/sector/${sector.id}/#stay`,
         },
       ];
     }
   }
 </script>
 
-<LeftMenuLayout {menuItems}>
-  <div class="max-w-[2000px] w-full m-auto">
-    {#if !sector}
-      <p>
-        News
-        <i class="fas fa-news" />
-      </p>
-      <div class="bg-gray-50 p-9">
-        <h2 class="mb-3 text-2xl font-bold tracking-tight text-primary-600">
-          Loading...
-        </h2>
-      </div>
-    {:else}
-      <slot />
-    {/if}
+<LeftMenuLayout {menuItems} showTopMenu={true}>
+  <div class="lg:flex justify-end p-2" slot="topmenu">
+    <Button
+      class=" text-xs w-full md:w-auto"
+      size="xs"
+      on:click={() => goto("/problem/create")}
+      color="light"
+    >
+      <i class="fa-solid fa-atom mr-2" />
+      Create New Problem</Button
+    >
   </div>
+
+  {#if !sector}
+    <div class="bg-gray-50 p-9">
+      <h2 class="mb-3 text-2xl font-bold tracking-tight text-primary-600">
+        Loading...
+      </h2>
+    </div>
+  {:else}
+    <slot />
+  {/if}
 </LeftMenuLayout>
