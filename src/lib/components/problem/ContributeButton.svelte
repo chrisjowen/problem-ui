@@ -26,7 +26,7 @@
 {#if !isAnyMember(problem)}
   <Button
     size="xs"
-    class="flex-1 md:w-auto "
+    class="flex-1 md:flex-none md:w-auto "
     color="light"
     on:click={onJoinClicked}
   >
@@ -34,7 +34,7 @@
     Contribute
   </Button>
 {:else if !isMember(problem)}
-  <Button size="xs" class="flex-1 md:w-auto " color="light" disabled={true}>
+  <Button size="xs" class="flex-1 md:flex-none md:w-auto " color="light" disabled={true}>
     <i class="fa fa-info-circle mr-2" />
     Request Sent
   </Button>
