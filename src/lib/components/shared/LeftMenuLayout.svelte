@@ -12,9 +12,11 @@
   ];
 
   export let showTopMenu = false;
-  export function inPath(item: any) {
+ function defaultInPath(item: any) {
     return $page.url.pathname.includes(item.href);
   }
+
+  export let inPath: (item: any) => boolean = defaultInPath;
 
   let showMobileMenu = false;
 
@@ -128,7 +130,7 @@
         </div>
       {/if}
 
-      <div class="flex-1 overflow-auto h-full">
+      <div class="flex-1 md:overflow-auto h-full">
         <div class="max-w-[2000px] m-auto h-full">
           <slot />
           <div class=" mb-[100px]" />

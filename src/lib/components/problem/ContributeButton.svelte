@@ -23,27 +23,19 @@
   }
 </script>
 
-
-  
 {#if !isAnyMember(problem)}
-    <Button
-      size="xs"
-      class="w-full md:w-auto "
-      color="light"
-      on:click={onJoinClicked}
-    >
-      Request To Contribute
-    </Button>
-
+  <Button
+    size="xs"
+    class="flex-1 md:w-auto "
+    color="light"
+    on:click={onJoinClicked}
+  >
+    <i class="fa-solid fa-user-group mr-2" />
+    Contribute
+  </Button>
 {:else if !isMember(problem)}
-
-    <Button
-      size="xs"
-      class="w-full md:w-auto " 
-      color="light"
-      disabled={true}
-    >
-      <i class="fa fa-info-circle mr-2 " />
-      Request Sent
-    </Button>
+  <Button size="xs" class="w-full md:w-auto " color="light" disabled={true}>
+    <i class="fa fa-info-circle mr-2" />
+    Request Sent
+  </Button>
 {/if}

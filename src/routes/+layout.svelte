@@ -60,8 +60,23 @@
 </script>
 
 <Drawer placement="right" bind:hidden={hideSideBar} id="sidebar2">
+  <div>
+    <div class="flex items-center mb-4">
+      <img
+        src="/img/logo.png"
+        class="w-[40px] mr-1"
+        alt="Problems Worth Solving"
+      />
+      <span class="text-black font-bold lg:text-xl bold">rowdSolve</span><span
+        class="hidden lg:block font-bold lg:text-xs relative left-[1px] top-[2px]"
+        >.ai</span
+      >
+    </div>
+  </div>
+
+
   <Sidebar>
-    <SidebarWrapper divClass="overflow-y-auto p-2 text-gray-700">
+    <SidebarWrapper divClass="overflow-y-auto p-2 text-gray-700 ">
       <SidebarGroup>
         <SidebarItem
           label="Home"
@@ -121,7 +136,7 @@
       <div class="flex flex-row">
         <div class="flex-1 flex">
           <div class="flex-1 flex items-center">
-            <a href={$auth.loggedInUser ? "/profile/me" : "/"} class="flex p-3">
+            <a href="/" class="flex p-3">
               <img
                 src="/img/logo.png"
                 class="w-[40px] mr-1"

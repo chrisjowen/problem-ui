@@ -5,6 +5,7 @@
   import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
   import { auth } from "$lib/store";
   import ScreenOverview from "$lib/components/home/ScreenOverview.svelte";
+  import ScreenOverviewSimple from "$lib/components/home/ScreenOverviewSimple.svelte";
 
   let sectors: any = [];
   let problems: any = [];
@@ -51,7 +52,7 @@
 <!-- Features  -->
 <div class="bg-white">
   <div class="max-w-[2000px] w-full m-auto">
-    <ScreenOverview />
+    <ScreenOverviewSimple />
   </div>
 </div>
 

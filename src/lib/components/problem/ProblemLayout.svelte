@@ -95,7 +95,7 @@
     }
   }
 
-  function inPath(item: any) {
+  function chekPath(item: any) {
     if (!problem) return false;
     let base = `/problem/show/${problem.id}`;
 
@@ -106,24 +106,26 @@
   }
 </script>
 
+
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-<LeftMenuLayout {inPath} {menuItems} showTopMenu={true}>
-  <div class="lg:flex" slot="topmenu">
+<LeftMenuLayout inPath={chekPath} {menuItems} showTopMenu={true}>
+  <div class="md:flex" slot="topmenu">
     {#if problem}
-      <div class="flex-1 p-4 text-sm text-gray-500 font-bold">
+      <div class="flex-1 p-4  text-xs text-gray-500 font-bold">
         <span
-          ><a href="/users/{problem.user.username}">{problem.user.username}</a
+        class=" p-1 px-2  mr-2 bg-gray-300 text-gray-600 text-xs"
+        >{problem.public ? "Public" : "Private"}</span
+      >
+        <span
+          >@<a href="/users/{problem.user.username}">{problem.user.username}</a
           ></span
         >
         <span>/</span>
         <span>{problem.title}</span>
-        <span
-          class=" p-1 px-2 rounded-2xl ml-2 bg-gray-300 text-gray-600 text-xs"
-          >{problem.public ? "Public" : "Private"}</span
-        >
+       
       </div>
       {#if !$auth.loggedInUser || !isMember(problem)}
-        <div class="lg:space-x-1 spacy-y-1chr p-2">
+        <div class="lg:space-x-1 flex spacy-y-1chr p-2 ">
           <FollowButton on:change={() => reload(true)} {problem} />
           <ContributeButton on:requested={() => reload(true)} {problem} />
         </div>

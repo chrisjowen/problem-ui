@@ -17,6 +17,9 @@
   import { isMember } from "$lib/util/authUtil";
   import InviteContributor from "$lib/components/problem/InviteContributor.svelte";
   import FeedList from "$lib/components/problem/FeedList.svelte";
+  import Editor from "$lib/components/shared/editor/Editor.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
+  import { imageUrl } from "$lib/util/imageutil";
 
   let problem: any = null;
   let comments: PaginationResults<Comment>;
@@ -41,14 +44,13 @@
         comments = res.data;
       });
   }
-
 </script>
 
 <ProblemLayout bind:problem bind:reload>
   {#if problem}
     <div class="flex md:mt-4 items-start">
-      <section class="xl:max-w-[940px] mx-auto md:mx-4 md:rounded-t-lg ">
-        <div class="md:border md:rounded-lg bg-white md:mb-4">
+      <section class="xl:max-w-[940px] mx-auto md:mx-4 md:rounded-t-lg">
+        <div class="md:border md:rounded-lg bg-white">
           <div class="relative text-gray-400 sm:flex md:rounded-t-lg">
             <div
               class=" md:rounded-t-lg"
@@ -67,29 +69,46 @@
             "
             />
 
-            <div class="md:p-4 p-2 z-30 md:mb-8">
+            <div class="flex items-center flex-row w-full md:m-9">
               <img
                 src="{PUBLIC_IMG_CDN_BASE}{problem.img}"
                 alt={problem.title}
-                class="sm:w-[150px] w-[70%] border md:rounded-xl block md:inline-block md:mb-5 md:mb-0 m-auto md:float-left drop-shadow-xl"
+                class="sm:w-[250px] w-[70%] border block md:inline-block m-auto md:float-left drop-shadow-xl"
               />
             </div>
-            <div class="flex-1">
-              <div
-                class=" sm:m-4 p-4 relative z-30 bg-white md:rounded-xl drop-shadow-lg"
-              >
-                <h1
-                  class="text-3xl text-primary-900 font-bold mb-4 bg-blue-100 inline-block p-2 relative"
-                >
-                  {problem.title}
-                </h1>
-                <p class="mb-4 text-gray-700">
-                  {problem.blurb.slice(0, 200)}...
-                </p>
-
-              </div>
+          </div>
+          <div class="flex px-9 my-9">
+            <div class="rounded flex-shrink-0">
+              <Gravitar user={problem.user} size="md" className="rounded-md" />
+            </div>
+            <div class="px-4">
+              <p class="font-bold text-gray-600 md:text-lg text-sm">
+                {problem.user.name}
+                {problem.user.last_name}
+              </p>
+              <p class="text-xs text-gray-500 font-bold mb-1">
+                <span class="mr-1 mb-1 text-xs"
+                  >Problem Solver | Design Thinker | Experience Creator | Author
+                  of the
+                </span>
+              </p>
+              <p class="text-gray-400 text-xs">
+                @{problem.user.username}
+              </p>
             </div>
           </div>
+
+          <div
+            class="px-8 prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none"
+          >
+            <h1>{problem.title}</h1>
+            <p class="text-gray-700">
+              {problem.blurb}
+            </p>
+          </div>
+
+          <Editor editable={false} html={problem.overview} />
+
           <EditableTextArea
             bind:input={problem.overview}
             owner={problem.user}
@@ -107,7 +126,7 @@
           />
         </div>
       </section>
-      <section class="flex-1 hidden xl:block mr-4 ">
+      <section class="flex-1 hidden xl:block mr-4">
         <div class="mb-4">
           <h1 class="mb-4 text-xl text-gray-800">Contributers</h1>
           <UserList placeholder="No Followers" users={problem.users} />
@@ -120,7 +139,7 @@
 
         <div class="mb-4">
           <h1 class="mb-4 text-xl text-gray-800">Activity</h1>
-          <FeedList problem={problem} length={4} />
+          <FeedList {problem} length={4} />
           <div class="flex justify-end m-2">
             <a href="./{problemId}/users" class="text-xs text-blue-500"
               >All Activity</a
@@ -132,8 +151,9 @@
           <h1 class="mb-4 text-xl text-gray-800">Followers</h1>
           <UserList placeholder="No Followers" users={problem.followers} />
           <div class="flex justify-end m-2">
-            <a href="/problem/show/{problemId}/users" class="text-xs text-blue-500"
-              >All Followers</a
+            <a
+              href="/problem/show/{problemId}/users"
+              class="text-xs text-blue-500">All Followers</a
             >
           </div>
         </div>
@@ -162,7 +182,11 @@
 
         <div class="">
           <h1 class="mb-4 text-xl text-gray-800">Risks</h1>
-          <ObstacleList api={api.problem.obstacles(problemId)} id={problemId} length={4} />
+          <ObstacleList
+            api={api.problem.obstacles(problemId)}
+            id={problemId}
+            length={4}
+          />
           <div class="flex justify-end m-2">
             <a href="./{problemId}/obstacles" class="text-xs text-blue-500"
               >All Risks</a

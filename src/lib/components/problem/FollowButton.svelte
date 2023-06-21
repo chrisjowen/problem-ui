@@ -34,7 +34,7 @@
 
 <Button
   size="xs"
-  class="w-full md:w-auto "
+  class="md:w-auto flex-1 "
   on:click={following ? onUnFollow : onFollow}
   color="light"
 >
