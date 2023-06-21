@@ -1,10 +1,11 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { selectedProblem, settings } from "$lib/store";
+  import { auth, selectedProblem, settings } from "$lib/store";
   import api from "$lib/api";
   import FollowButton from "./FollowButton.svelte";
   import ContributeButton from "./ContributeButton.svelte";
+  import { isMember } from "$lib/util/authUtil";
 
   export let problem: any = null;
   export let menuItems: any[] = [];
@@ -223,7 +224,7 @@
         </ul>
       </section>
       <div class="overflow-auto flex-1 h-full flex flex-col">
-        <div class="flex border-b-[1px]">
+        <div class="lg:flex border-b-[1px]">
           <div
             class="flex-1 p-4 text-sm text-gray-500  font-bold"
           >
@@ -239,10 +240,13 @@
               >{problem.public ? "Public" : "Private"}</span
             >
           </div>
-          <div class="space-x-1 p-2">
+          {#if !$auth.loggedInUser || !isMember(problem)} 
+          <div class="lg:space-x-1 spacy-y-1chr p-2">
+            
             <FollowButton on:change={() => reload(true)} {problem} />
             <ContributeButton on:requested={() => reload(true)} {problem} />
           </div>
+          {/if}
         </div>
 
         <div class="flex-1 overflow-auto h-full">

@@ -9,8 +9,6 @@ export const SvelteImageExtension = TiptapImage.extend({
   atom: true,
   draggable: true, // Optional: to make the node draggable
   inline: false,
-
-
   
   addAttributes() {
     return {

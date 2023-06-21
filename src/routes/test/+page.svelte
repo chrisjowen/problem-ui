@@ -1,10 +1,8 @@
 <script>
-  import Editor from "$lib/components/shared/editor/Editor.svelte";
+  import ScreenOverview from "$lib/components/home/ScreenOverview.svelte";
+import Editor from "$lib/components/shared/editor/Editor.svelte";
 
 </script>
 
 
-<div class="h-full">
-  <Editor />
-
-</div>
+<ScreenOverview />

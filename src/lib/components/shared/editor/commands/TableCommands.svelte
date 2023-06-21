@@ -46,7 +46,7 @@
 
   function toggleTableMenu() {
     if(editing) {
-        showTableMenu = true;
+        showTableMenu = !showTableMenu;
     }
     else{
         insertTable()

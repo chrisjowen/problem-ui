@@ -13,7 +13,7 @@
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
 
   let timer;
-  let listView = false;
+  let listView = true;
 
   $: problems = [];
   let q = "";
@@ -35,7 +35,7 @@
       `title[like]=${q.toLowerCase()}`,
       50,
       0,
-      ["sector", "user"]
+      ["sectors", "user"]
     );
     problems = response.data.entries;
   }
@@ -131,7 +131,7 @@
             <div class="p-4 relative">
               <img
                 class=" {listView
-                  ? 'w-auto h-[70px] md:h-[80px]  '
+                  ? 'w-auto h-[70px] md:h-[120px]  '
                   : 'w-full h-[200px]'} md:w-auto object-cover object-center border"
                 src="{PUBLIC_IMG_CDN_BASE}/{problem.img}"
                 alt="content"
@@ -151,15 +151,23 @@
                 @{problem.user.username} 
               </p>
             
-              <p class="text-xs md:text-md">
-                {problem.blurb.slice(0, 150)}...
+              <p class="prose max-w-none text-sm md:text-md mb-4">
+                {#if listView}
+                  {problem.blurb}
+                {:else}
+                  {problem.blurb.slice(0, 100)}
+                {/if}
               </p>
-              <p
-                class=" text-primary-500 p-1 pl-2 pr-2 bg-gray-200 text-xs inline-block"
-              >
-                <i class="fas fa-tag mr-1" />
-                {problem.sector.name}
-              </p>
+              <div>
+                {#each problem.sectors as sector}
+                <p
+                  class="text-primary-500 p-1 px-2  mr-1 bg-gray-200 text-xs inline-block"
+                >
+                  <i class="fas fa-tag mr-2" />
+                  {sector.name}
+                </p>
+                {/each}
+              </div>
             </div>
           </div>
         </div>

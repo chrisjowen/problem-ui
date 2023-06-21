@@ -1,4 +1,5 @@
 <script lang="ts">
+  import HighlightCommands from "./commands/HighlightCommands.svelte";
   import TableCommands from "./commands/TableCommands.svelte";
 import PictureUploadComand from "./commands/pictureUploadComand.svelte";
   import type { Editor } from "@tiptap/core";
@@ -11,6 +12,10 @@ import PictureUploadComand from "./commands/pictureUploadComand.svelte";
 
   let toggleList = () => {
     editor.chain().focus().toggleBulletList().run();
+  };
+
+  let toggleTaskList = () => {
+    editor.chain().focus().toggleTaskList().run();
   };
   let toggleNumbers = () => {
     editor.chain().focus().toggleOrderedList().run();
@@ -29,7 +34,7 @@ import PictureUploadComand from "./commands/pictureUploadComand.svelte";
 </script>
 
 {#if editor}
-  <div class="flex flex-row p-1 border {fullscreen ? 'z-50' : 'z-40'}">
+  <div class="flex flex-row p-1 border-b-[1px] {fullscreen ? 'z-50' : 'z-40'}">
     <button
       class="text-xs p-1 w-[40px] hover:bg-gray-50"
       on:click={() => editor.chain().focus().setParagraph().run()}
@@ -54,6 +59,7 @@ import PictureUploadComand from "./commands/pictureUploadComand.svelte";
     >
       <i class="fa fa-heading" /><span>3</span>
     </button>
+    <HighlightCommands {editor}/>
   
 
     <TableCommands {editor} bind:editing={showTableOptions} />
@@ -93,6 +99,13 @@ import PictureUploadComand from "./commands/pictureUploadComand.svelte";
     >
       <i class="fa fa-list" />
     </button>
+    <button
+      class="text-xs w-[40px] border-l-[1px] hover:bg-gray-50"
+      on:click={toggleTaskList}
+    >
+      <i class="fa-solid fa-list-check"></i>
+    </button>
+
     <button
       class="text-xs w-[40px] border-r-[1px] hover:bg-gray-50"
       on:click={toggleNumbers}

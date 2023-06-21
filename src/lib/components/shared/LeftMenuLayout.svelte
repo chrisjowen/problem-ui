@@ -14,9 +14,7 @@
 </script>
 
 <div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40">
-  <div class="bg-primary-500 p-4 hidden md:block">
-    <slot name="topmenu" />
-  </div>
+ 
   <div class="flex flex-1 flex-row overflow-hidden slide">
     <div class="bg-gray-200 text-xs lg:w-[200px]">
       <!-- svelte-ignore a11y-mouse-events-have-key-events -->
@@ -24,8 +22,7 @@
         {#each menuItems as item}
           <li>
             <a
-              href="#stay"
-              on:click={() => goto(item.href)}
+              href="{item.href}"
               class="block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm
                       {path == item.href
                 ? '!text-gray-600 bg-gray-100'

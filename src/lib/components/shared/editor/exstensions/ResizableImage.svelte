@@ -21,13 +21,13 @@
   {#if editable}
     <div class="group relative">
       <div  class="hidden group-hover:inline absolute top-[0px] left-[0px] bg-white border rounded-xl">
-        <button on:click={setWidth("100px")}  class="p-2 hover:bg-primary-50">
+        <button on:click={setWidth("25%")}  class="p-2 hover:bg-primary-50">
             <i class="fa fa-image text-xs" />
         </button>
-        <button on:click={setWidth("300px")}  class="p-2 hover:bg-primary-50">
+        <button on:click={setWidth("50%")}  class="p-2 hover:bg-primary-50">
           <i class="fa fa-image text-md" />
         </button>
-        <button on:click={setWidth("500px")} class="p-2 hover:bg-primary-50">
+        <button on:click={setWidth("75%")} class="p-2 hover:bg-primary-50">
           <i class="fa fa-image text-lg" />
         </button>
         <button on:click={setWidth("100%")} class="p-2 hover:bg-primary-50">

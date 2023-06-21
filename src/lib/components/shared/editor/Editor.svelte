@@ -10,7 +10,10 @@
   import TextAlign from "@tiptap/extension-text-align";
   import Link from "@tiptap/extension-link";
   import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-  import { SvelteImageExtension } from './exstensions/SvelteImageExtension';
+  import { SvelteImageExtension } from "./exstensions/SvelteImageExtension";
+  import TaskList from "@tiptap/extension-task-list";
+  import TaskItem from "@tiptap/extension-task-item";
+  import Highlight from "@tiptap/extension-highlight";
 
 
   import css from "highlight.js/lib/languages/css";
@@ -23,19 +26,18 @@
   lowlight.registerLanguage("js", js);
   lowlight.registerLanguage("ts", ts);
 
-  import Image from "@tiptap/extension-image";
   import TopMenu from "./TopMenu.svelte";
   export let showFullscreen = true;
   export let editable = true;
   export let fullscreen = false;
   export let height = "full";
-   export let html = `
+  export let html = `
    <p>This is still the text editor you’re used to, but enriched with node views.</p>
 
     <p>Did you see that? That’s a Svelte component. We are really living in the future.</p>
       
-   `
-   const dispatch = createEventDispatcher();
+   `;
+  const dispatch = createEventDispatcher();
 
   let element: HTMLDivElement;
   let editor: Editor;
@@ -58,8 +60,6 @@
     ? "absolute top-0 bottom-0 bg-white right-0 left-0 bg-white flex flex-col z-40 "
     : `flex flex-col  ${heightClass} relative  overflow-y-auto `;
 
-
-    
   onMount(() => {
     dispatch("change", html);
     editor = new Editor({
@@ -75,6 +75,19 @@
           defaultLanguage: "js",
         }),
         StarterKit,
+        Highlight.configure({
+          multicolor: true,
+        }),
+        TaskItem.configure({
+          HTMLAttributes: {
+            class: "flex space-x-2 items-start",
+          },
+        }),
+        TaskList.configure({
+          HTMLAttributes: {
+            class: "not-prose",
+          },
+        }),
         Table.configure({
           resizable: false,
           HTMLAttributes: {
@@ -99,13 +112,13 @@
         SvelteImageExtension.configure({
           HTMLAttributes: {
             class: "not-prose",
-          }
+          },
         }),
         TextAlign.configure({
           types: ["heading", "paragraph", "image"],
         }),
       ],
-      content: html ,
+      content: html,
       onTransaction: () => {
         editor = editor;
       },
@@ -114,14 +127,6 @@
         dispatch("change", html);
       },
       onSelectionUpdate: ({ editor }) => {
-        // let box = element.getBoundingClientRect();
-        // let parentTop = box.top + element.scrollTop;
-        // let parentLeft = box.left + element.scrollLeft;
-
-        // const { to, from } = editor.state.selection;
-        // overlayTop = editor.view.coordsAtPos(from).top - parentTop - 25;
-        // overlayLeft = editor.view.coordsAtPos(from).left - parentLeft;
-
         selection = editor.state.selection;
       },
     });
@@ -143,7 +148,7 @@
 
 <div class={className}>
   {#if editable}
-  <TopMenu {editor} bind:fullscreen bind:showFullscreen bind:selection />
+    <TopMenu {editor} bind:fullscreen bind:showFullscreen bind:selection />
   {/if}
 
   <div class="flex-1 overflow-y-auto" on:click={onClickEditor} on:keyup={focus}>

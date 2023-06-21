@@ -4,16 +4,17 @@
   import api from "$lib/api";
   import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
   import { auth } from "$lib/store";
+  import ScreenOverview from "$lib/components/home/ScreenOverview.svelte";
 
   let sectors: any = [];
   let problems: any = [];
 
   onMount(() => {
-    api.sector.list("", 18).then((res) => {
+    api.sector.list("", 6).then((res) => {
       sectors = res.data.entries;
     });
 
-    api.problem.list("", 6, 1, ["sector", "user"]).then((res) => {
+    api.problem.list("", 6, 1, ["sectors", "user"]).then((res) => {
       problems = res.data.entries;
     });
   });
@@ -48,10 +49,17 @@
   </div>
 </div>
 <!-- Features  -->
-
-<div class="p-2 md:p-9 m-h-[500px]">
+<div class="bg-white">
   <div class="max-w-[2000px] w-full m-auto">
-    <h1 class="mb-9 text-3xl text-primary-900 font-bold">Trending Problems</h1>
+    <ScreenOverview />
+  </div>
+</div>
+
+<div class="p-2 pt-5 md:p-9 m-h-[500px] mb-4">
+  <div class="max-w-[2000px] w-full m-auto">
+    <h1 class=" mb-2 md:text-3xl text-2xl text-primary-900 font-bold">
+      Trending Problems
+    </h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 w-full gap-2">
       {#each problems as problem}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -70,20 +78,25 @@
                 style="height: 150px"
               />
             </div>
-            <div class="flex-1 mb-4 m-4 flex flex-col space-y-2">
+            <div class="flex-1 m-4 flex flex-col">
               <h5 class="text-md font-bold text-primary-900">
-                {problem.user.username} / {problem.title.slice(0, 25)}
+                {problem.title.slice(0, 45)}
               </h5>
+              <p class="text-sm text-gray-500 mb-4">
+                @{problem.user.username}
+              </p>
               <p class="flex-1 text-sm">
                 {problem.blurb.slice(0, 90)}...
               </p>
               <div>
-                <p
-                  class="text-primary-500 p-1 pl-2 pr-2 bg-gray-200 text-xs inline-block"
-                >
-                  <i class="fas fa-tag mr-1" />
-                  {problem.sector.name}
-                </p>
+                {#each problem.sectors as sector}
+                  <p
+                    class="text-primary-500 p-1 px-2 mr-1 bg-gray-200 text-xs inline-block"
+                  >
+                    <i class="fas fa-tag mr-2" />
+                    {sector.name}
+                  </p>
+                {/each}
               </div>
             </div>
           </div>
@@ -93,13 +106,13 @@
   </div>
 </div>
 
-<div class="md:px-9 md:py-2 bg-gray-200">
+<div class="md:px-9 py-2 px-4 bg-white">
   <div class="max-w-[2000px] w-full m-auto">
-    <h1 class="my-4 mx-4 md:mx-0 text-2xl text-primary-900 font-bold">
-      Sectors
+    <h1 class="my-4 md:mx-0 text-2xl text-primary-900 font-bold">
+      Popular Sectors
     </h1>
     <div
-      class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-4 2xl:grid-cols-7 w-full gap-2"
+      class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-6 w-full gap-4"
     >
       {#each sectors.slice(0, 50) as sector}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
