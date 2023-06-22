@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { imageUrl } from '$lib/util/imageutil';
   import type { Page } from "$lib/types/index";
   import {
     Button,
@@ -6,20 +7,37 @@
     Input,
     InputAddon,
     Label,
+    Modal,
     Textarea,
   } from "flowbite-svelte";
   import AiHelper from "../shared/AiHelper.svelte";
   import Editor from "../shared/editor/Editor.svelte";
   import { createEventDispatcher } from "svelte";
   import TagList from "../shared/TagList.svelte";
-
+  import ImageUploadModal from '../shared/ImageUploadModal.svelte';
+  let showImageUplodModal = false
   export let problem: Problem;
 
   let dispatch = createEventDispatcher();
   function onSave(): void {
     dispatch("save", problem);
   }
+
+  let imageType = 'img'
+
+  function onImageUploaded(e: CustomEvent<any>): void {
+    problem[imageType] = e.detail.path
+  }
+
+  let showImageModal = (path: string) => () => {
+    imageType = path
+    showImageUplodModal = true
+  }
+ 
+
 </script>
+
+<ImageUploadModal bind:open={showImageUplodModal} on:imageUploaded={onImageUploaded} />
 
 <div class="h-full md:flex">
   <div class="h-full flex flex-col border-x-[1px] border-b-[1px] flex-1">
@@ -52,5 +70,21 @@
       <Label class="block mb-2">Tags</Label>
       <TagList bind:tags={problem.tags} />
     </div>
+
+
+    <div class="m-6">
+      <Label class="block mb-2">Image</Label>
+      <button class="border bg-white p-4" on:click={showImageModal("img")}>
+        <img src={imageUrl(problem.img)} alt="{problem.title}" class="w-[300px] m-auto border" />
+      </button>
+    </div>
+
+    <div class="m-6">
+      <Label class="block mb-2">Banner</Label>
+      <button class="border bg-white p-4" on:click={showImageModal("banner_image")}>
+        <img src={imageUrl(problem.banner_image)} alt="{problem.title}" class="w-[300px] m-auto border" />
+      </button>
+    </div>
+
   </div>
 </div>

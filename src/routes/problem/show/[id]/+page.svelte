@@ -52,7 +52,7 @@
               left:0
               right:0;
               bottom:0;
-              background: black url('{PUBLIC_IMG_CDN_BASE}{problem.img}');
+              background: black url('{imageUrl(problem.banner_image || problem.img)}');
               background-size: cover;  
               background-position: center;
               background-repeat: no-repeat;
@@ -64,7 +64,7 @@
               <img
                 src="{PUBLIC_IMG_CDN_BASE}{problem.img}"
                 alt={problem.title}
-                class="sm:w-[250px] w-[70%] border block md:inline-block m-auto md:float-left drop-shadow-xl"
+                class="w-[250px] h-[250px]  block md:inline-block m-auto md:float-left drop-shadow-xl"
               />
             </div>
           </div>
@@ -97,9 +97,6 @@
                 {problem.blurb}
               </p>
             </div>
-
-           
-
             <Editor editable={false} html={problem.overview} />
           </div>
         </div>

@@ -1,38 +1,34 @@
 <script lang="ts">
-  import { imageUrl } from "$lib/util/imageutil";
   import axios from "axios";
   import { Modal } from "flowbite-svelte";
   import { Dropzone } from "flowbite-svelte";
+  import { createEventDispatcher } from "svelte";
 
-  export let editor: any;
-  let area = "general"
-  let pictureModal = false;
+  let area = "general";
+  export let open = false;
   let files: any[] = [];
 
-  let buttonClicked = () => {
-    pictureModal = true;
-  };
-  let fileChanged = () => {
+  let dispatch = createEventDispatcher();
+
+  let onUpload = () => {
     const formData = new FormData();
     formData.append("file", files[0]);
 
     axios
-      .post("/api/image/general", formData, {
+      .post(`/api/image/${area}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        editor.commands.setImage({ src: imageUrl(res.data.path) });
-        pictureModal = false;
+        dispatch("imageUploaded", res.data);
+        open = false;
       });
   };
 </script>
 
-<slot {buttonClicked} />
-
-<Modal title="Upload Image" bind:open={pictureModal} size="xl" class="w-full">
-  <Dropzone id="dropzone" on:change={fileChanged} bind:files>
+<Modal title="Upload Image" bind:open size="xl" class="w-full">
+  <Dropzone id="dropzone" on:drop={onUpload} on:change={onUpload} bind:files>
     <svg
       aria-hidden="true"
       class="mb-3 w-10 h-20 text-gray-400"

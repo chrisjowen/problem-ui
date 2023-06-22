@@ -7,7 +7,7 @@ Mobile
 ✅ Set width of search for mobile 
 
 Problem
-- Make problem blurb/idea editable along with tags and body
+- ✅ Make problem blurb/idea editable along with tags and body
 - Make visibility of problem configurable and effect search 
 - Allow changing problem image and banner
 - Add tags and sector searchable in problem search 
@@ -15,8 +15,8 @@ Problem
 
 Discussions
 
-- Make discussion title editable
-- Add discussion tags and make editable
+- ✅ Make discussion title editable
+- ✅ Add discussion tags and make editable
 - Accurately add disucssion answer count 
 
 - Make discussions public visilbility togglable
@@ -27,7 +27,7 @@ Comments
 - ✅  Add comments to discussions
 
 Pages
-- Add tags to pages
+- ✅  Add tags to pages
 - Add page search with tags
 - Page publicity
 
