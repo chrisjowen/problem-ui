@@ -60,7 +60,9 @@
               />
             </div>
 
-            <EditableTextArea bind:input={sector.description} />
+              <div class="px-9">
+                <EditableTextArea bind:input={sector.description} />
+              </div>
           </div>
         </section>
         <section class="md:my-3 md:m-0 mx-4 flex-1 hidden 2xl:block">
