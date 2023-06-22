@@ -65,11 +65,11 @@
           icon: "fa fa-link ",
           href: `/problem/show/${problem.id}/links`,
         },
-        {
-          title: "Risks",
-          icon: "fa fa-exclamation-triangle ",
-          href: `/problem/show/${problem.id}/obstacles`,
-        },
+        // {
+        //   title: "Risks",
+        //   icon: "fa fa-exclamation-triangle ",
+        //   href: `/problem/show/${problem.id}/obstacles`,
+        // },
         {
           title: "Activity",
           icon: "fas fa-rss ",

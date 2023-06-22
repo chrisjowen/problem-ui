@@ -11,8 +11,12 @@
     },
   ];
 
+  $: selected = menuItems.find(inPath) || menuItems[0];
+  $: unselected = menuItems.filter((i) => i != selected);
+  $: small = $settings.expandProductMenu;
+
   export let showTopMenu = false;
- function defaultInPath(item: any) {
+  function defaultInPath(item: any) {
     return $page.url.pathname.includes(item.href);
   }
 
@@ -20,9 +24,6 @@
 
   let showMobileMenu = false;
 
-  $: selected = menuItems.find(inPath);
-  $: unselected = menuItems.filter((i) => i != selected);
-  $: small = $settings.expandProductMenu;
 
   function toggleWidth() {
     $settings.expandProductMenu = !$settings.expandProductMenu;
@@ -34,6 +35,7 @@
     showMobileMenu = !showMobileMenu;
   }
 </script>
+
 {#if selected}
 <div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40 h-full">
   <section id="MobileMenu" class="bg-primary-700 drop-shadow-sm">
@@ -126,7 +128,7 @@
     <div class="overflow-auto flex-1 h-full flex flex-col">
       {#if showTopMenu}
         <div class="border-b-[1px]">
-            <slot name="topmenu" />
+          <slot name="topmenu" />
         </div>
       {/if}
 

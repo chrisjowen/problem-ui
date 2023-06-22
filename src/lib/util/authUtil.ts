@@ -1,6 +1,6 @@
 import { goto } from "$app/navigation";
 import { auth } from "$lib/store";
-import type { Problem } from "$lib/types";
+import type { IdentifiableOwnedSchema, Problem } from "$lib/types";
 
 let loggedInUser: any = null;
 
@@ -16,6 +16,10 @@ export function redirectIfNotLoggedIn() {
 
 export function isLoggedIn() {
     return loggedInUser !== null;
+}
+
+export function isOwnedByMe(entity: IdentifiableOwnedSchema) {
+    return  loggedInUser?.id  == entity.user_id ;
 }
 
 

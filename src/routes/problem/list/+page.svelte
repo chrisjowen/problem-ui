@@ -12,6 +12,7 @@
   } from "$env/static/public";
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
 
+  let pageInnerWidth: number;
   let timer;
   let listView = true;
 
@@ -29,6 +30,12 @@
       loadProblems();
     }, 500);
   };
+
+  $: {
+    if(pageInnerWidth < 760) {
+      listView = false;
+    }
+  }
 
   async function loadProblems() {
     let response = await api.problem.list(
@@ -54,9 +61,8 @@
     return input;
   }
 </script>
-
+<svelte:window bind:innerWidth={pageInnerWidth}/>
 <div class="bg-gray-50 flex flex-col h-full">
-
   <div class="bg-gray-200 border-b-[1px] p-3 flex z-30">
     <div class="flex-1 mr-4">
       <Input
@@ -85,7 +91,7 @@
       <i class="fas fa-info-circle m-2" />
       {problems.length} Problems Found
     </div>
-    <div>
+    <div class="hidden md:block">
       <Button color="light" size="xs" on:click={() => (listView = false)}
         ><i class="fas fa-th-large" /></Button
       >
@@ -155,7 +161,7 @@
                 {#if listView}
                   {problem.blurb}
                 {:else}
-                  {problem.blurb.slice(0, 100)}
+                  {problem.blurb.slice(0, 100)}...
                 {/if}
               </p>
               <div>

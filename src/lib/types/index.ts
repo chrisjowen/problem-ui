@@ -1,59 +1,42 @@
 
 export type { default as PaginationResults } from './paginationResults';
 export type { default as Comment } from './comment';
-export interface Discussion {
-    id: string;
-    user_id: string;
+export interface Discussion extends IdentifiableSchema, OwnedSchema {
+    problem_id: null | string;
     title: string;
     question: string;
     user: any;
-    inserted_at: string;
-    updated_at: string;
-
-    answers: any[];
+    answers: Answer[];
+    tags: string[];
 }
-
-export interface Problem {
-    id: string;
+export interface Problem  extends IdentifiableSchema, OwnedSchema{
     title: string;
     slug: string;
     blurb: string;
     overview: string;
     status: string;
-    inserted_at: string;
     img: string;
-    updated_at: string;
-
-    user_id: string;
-    user: any;
 }
 
-export interface Link {
-    id: null | string;
+export interface Link  extends IdentifiableSchema, OwnedSchema{
     text: string;
     url: string;
     icon:  null |  string;
+    tags:  string[];
     image:  null |  string;
-    user_id: null | string;
-    user: null | any;
-    updated_at: null | string;
-    inserted_at: null | string;
 }
 
-export interface Sector {
-    id: null | string;
+export interface Answer  extends IdentifiableSchema, OwnedSchema{
+    answer:  string;
+    discussion_id: string;
+}
+
+
+export interface Sector  extends IdentifiableSchema, OwnedSchema  {
     name: string;
     image: string;
-    user_id: null | string;
-    user: null | any;
-    updated_at: null | string;
-    inserted_at: null | string;
 }
-
-
-
-export interface Obstacle {
-    id: null | string;
+export interface Obstacle  extends IdentifiableSchema, OwnedSchema {
     description: string;
     hint: string;
     state: string;
@@ -62,37 +45,42 @@ export interface Obstacle {
     state_history: any[];
     problem_id: null | string;
     problem: null | any;
-    updated_at: null | string;
-    inserted_at: null | string;
 }
 
 
-
-
-export interface User {
-    id:  string;
-    nickname: string;
+export interface User extends IdentifiableSchema {
+    username: string;
     email: string;
     name: string;
     last_name: string;
-    updated_at: null | string;
-    inserted_at: null | string;
 }
 
 
-export interface Page {
-    id: null | string;
+export interface Page extends IdentifiableOwnedSchema  {
     title: string;
     body: string;
     version: number;
     tags: string[];
-    user_id: number;
-    user: User;
     problem_id: null | string;
     problem: null | Problem;
+}
+
+
+export interface Schema  {
+    id: null | string;
+}
+export interface TimeStampable  {
     updated_at: null | string;
     inserted_at: null | string;
 }
+
+export interface OwnedSchema {
+    user_id: null | string;
+    user: null | User;
+}
+
+export interface IdentifiableSchema extends Schema, TimeStampable {}
+export interface IdentifiableOwnedSchema extends IdentifiableSchema, OwnedSchema {}
 
 
 

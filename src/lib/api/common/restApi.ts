@@ -23,13 +23,14 @@ class Client {
 export default class RestApi {    
     protected client: Client;
     protected baseUrl : string;
+    protected path : string;
     protected only: string[];
 
     constructor(baseUrl: string, only: string[] = ["get", "create", "update", "delete", "list"]) {
 
         this.only = only;
+        this.path = baseUrl;
         this.baseUrl = `${PUBLIC_PROBLEM_API_PATH}${baseUrl}`;
-        // this.baseUrl = `${baseUrl}`;
         this.client = new Client(this.baseUrl);
     }
 

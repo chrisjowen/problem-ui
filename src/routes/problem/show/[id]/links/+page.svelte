@@ -12,14 +12,7 @@
   let reload: Function;
   let problemId = $page.params.id;
 
-  let filters: string[] = [];
-
-  $: selected = (type: string) => {
-    if (filters.includes(type)) {
-      return "bg-primary-500 text-white hover:bg-primary-400 hover:text-white";
-    }
-    return "bg-white hover:bg-primary-400 hover:text-white";
-  };
+  let tags: string[] = [];
 
   let query = "";
   let q = "";
@@ -27,8 +20,7 @@
   let timer;
 
   $: {
-    console.log(filters.length);
-    query = filters.length == 0 ? "" : `type[in]=${filters.join(",")}`;
+    query = tags.length == 0 ? "" : `tags[list]=${tags.join(",")}`;
     query =
       search == ""
         ? query
@@ -42,20 +34,24 @@
     }, timeout);
   }
 
-  function onSearch() {
-    console.log("SEARCH");
-    debounce(() => {
-      console.log("BOUNCE");
-      search = q.toLowerCase();
-    });
+  function onSearch(event: KeyboardEvent) {
+    if (event.key == "Enter" && q.startsWith("#")) {
+      tags = [...tags, q.replace("#", "")];
+      q = "";
+    }
+
+    if (!q.startsWith("#")) {
+      debounce(() => {
+        console.log("BOUNCE");
+        search = q.toLowerCase();
+      });
+    }
   }
 
-  let toggleFilter = (type: string) => () => {
-    if (filters.includes(type)) {
-      filters = filters.filter((f) => f !== type);
-    } else {
-      filters = filters.concat([type]);
-    }
+  let removeAtIdx = (idx: number) => () => {
+    let tmp = [...tags];
+    tmp.splice(idx, 1);
+    tags = tmp;
   };
 </script>
 
@@ -63,7 +59,7 @@
 
 <ProblemLayout bind:problem bind:reload>
   {#if problem}
-    <div class="p-4 ">
+    <div class="p-4">
       <Input
         type="search"
         placeholder="Search Resources..."
@@ -72,44 +68,35 @@
       >
         <i slot="right" class="fa-solid fa-search" />
       </Input>
+
+      <div class="p-4">
+        {#each tags as tag, idx}
+          <div class="text-gray-600 text-xs mr-1 border inline-block mr-2">
+            <div class="flex">
+              <span class="py-2 mx-2">#{tag}</span>
+              <button
+                class="hover:bg-red-500 p-2 group rounded-r-lg"
+                on:click={removeAtIdx(idx)}
+              >
+                <i class="fas fa-trash group-hover:text-white" />
+              </button>
+            </div>
+          </div>
+        {/each}
+        <div class="text-gray-600 text-xs mr-1 border inline-block mr-2" />
+      </div>
     </div>
     <div class="p-4">
-      <!-- <div class="grid grid-cols-3 gap-2 mb-4">
-        <div
-          class="flex flex-col text-xs md:text-xl  p-4 border items-center justify-center {selected(
-            'product'
-          )}"
-          on:click={toggleFilter("product")}
-        >
-          <i class="fa-brands fa-product-hunt mb-4" />
-          Products
-        </div>
-        <div
-          class="flex flex-col text-xs md:text-xl p-4 border items-center justify-center {selected(
-            'learning'
-          )}"
-          on:click={toggleFilter("learning")}
-        >
-          <i class="fa-solid fa-book mb-4" />
-          Learning
-        </div>
-        <div
-          class="flex flex-col text-xs md:text-xl p-4 border items-center justify-center {selected(
-            'other'
-          )}"
-          on:click={toggleFilter("other")}
-        >
-          <i class="fa-solid fa-ellipsis-h mb-4" />
-          Other
-        </div>
-      </div> -->
       <LargeLinksList
         api={api.problem.links(problemId)}
         pageSize={20}
         editable={isMember(problem)}
+        on:tagClicked={(event) => {
+          tags = tags.concat(event.detail);
+        }}
         bind:query
         bind:search
       />
     </div>
-    {/if}
+  {/if}
 </ProblemLayout>

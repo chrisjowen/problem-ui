@@ -14,12 +14,13 @@
   import LatestDiscussions from "$lib/components/shared/discussions/LatestDiscussions.svelte";
   import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
   import ObstacleList from "$lib/components/shared/obstacles/ObstacleList.svelte";
-  import { isMember } from "$lib/util/authUtil";
+  import { isAdminMember, isMember } from "$lib/util/authUtil";
   import InviteContributor from "$lib/components/problem/InviteContributor.svelte";
   import FeedList from "$lib/components/problem/FeedList.svelte";
   import Editor from "$lib/components/shared/editor/Editor.svelte";
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { imageUrl } from "$lib/util/imageutil";
+  import EntityOverview from "$lib/components/shared/EntityOverview.svelte";
 
   let problem: any = null;
   let comments: PaginationResults<Comment>;
@@ -28,21 +29,11 @@
   let reload: (force: boolean) => void;
 
   onMount(() => {
-    loadComments();
     loggedInUser = $auth.loggedInUser;
   });
 
   function onUpdateProblemStatement() {
     api.problem.update(problemId, { overview: problem.overview });
-  }
-
-  function loadComments() {
-    api.problem
-      .comments(problemId)
-      .list("", 4, 0, ["user"])
-      .then((res) => {
-        comments = res.data;
-      });
   }
 </script>
 
@@ -77,53 +68,43 @@
               />
             </div>
           </div>
-          <div class="flex px-9 my-9">
-            <div class="rounded flex-shrink-0">
-              <Gravitar user={problem.user} size="md" className="rounded-md" />
+
+          <div class="p-8">
+            <div class="flex ">
+              <div class="flex-1">
+                <EntityOverview entity={problem} />
+              </div>
+                {#if isMember(problem)}
+                  <div>
+                    <Button
+                      color="light"
+                      size="xs"
+                      on:click={() => goto(`${problem.id}/update`)}>Edit</Button
+                    >
+                  </div>
+                {/if}
             </div>
-            <div class="px-4">
-              <p class="font-bold text-gray-600 md:text-lg text-sm">
-                {problem.user.name}
-                {problem.user.last_name}
-              </p>
-              <p class="text-xs text-gray-500 font-bold mb-1">
-                <span class="mr-1 mb-1 text-xs"
-                  >Problem Solver | Design Thinker | Experience Creator | Author
-                  of the
-                </span>
-              </p>
-              <p class="text-gray-400 text-xs">
-                @{problem.user.username}
+            <div class="my-9  p-4 bg-gray-50 text-gray-700">
+              <div class="flex">
+                <div class="mr-4">
+                  <i class="fa-solid fa-atom text-4xl" />
+                </div>
+                <div class="flex-1 flex items-center">
+                  <h1 class="text-2xl font-bold">{problem.title}</h1>
+                </div>
+              </div>
+              <p class="p-4">
+                {problem.blurb}
               </p>
             </div>
+
+           
+
+            <Editor editable={false} html={problem.overview} />
           </div>
-
-          <div
-            class="px-8 prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-h2:mt-0 prose-md max-w-none"
-          >
-            <h1>{problem.title}</h1>
-            <p class="text-gray-700">
-              {problem.blurb}
-            </p>
-          </div>
-
-          <Editor editable={false} html={problem.overview} />
-
-          <EditableTextArea
-            bind:input={problem.overview}
-            owner={problem.user}
-            editable={isMember(problem)}
-            let:editing
-            on:save={onUpdateProblemStatement}
-            height="350px"
-          />
         </div>
         <div class="bg-white p-2 md:rounded-md lg:border lg:mb-8">
-          <LatestComments
-            pagination={comments}
-            on:created={loadComments}
-            type="problem"
-          />
+          <LatestComments type="problem" />
         </div>
       </section>
       <section class="flex-1 hidden xl:block mr-4">

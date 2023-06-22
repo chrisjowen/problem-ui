@@ -61,7 +61,7 @@
   <div class="flex h-full">
     <section
       id="leftMenu"
-      class="w-[300px] bg-gray-200 h-full overflow-x-hidden overflow-y-auto flex flex-col"
+      class="w-[300px] bg-gray-200 h-full overflow-x-hidden overflow-y-auto flex flex-col hidden md:block"
     >
       <div class=" p-4 border-b-[1px]">
         <Button

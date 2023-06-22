@@ -3,8 +3,9 @@
   import Gravitar from "../Gravitar.svelte";
   import { auth } from "$lib/store";
   import { createEventDispatcher } from "svelte";
+  export let comment = "";
+  export let submitText = "Post";
   let user = $auth.loggedInUser;
-  let comment = "";
 
   let dispatch = createEventDispatcher();
 
@@ -12,7 +13,7 @@
 
   function onPost() {
     hasFocused = false
-    dispatch("post", { comment: comment, user_id: user.id })
+    dispatch("post",  comment)
     comment = "";
   }
 </script>
@@ -21,7 +22,7 @@
   <section class=" p-4 border-b-[1px]">
     <div class="flex">
       <div class="pr-2">
-        <Gravitar email={user.email} size="sm" className="rounded-md" />
+        <Gravitar user={user} size="sm" className="rounded-md" />
       </div>
       <div class="flex-1 ml-1">
         <p class="text-xs mb-2">{user.name} {user.last_name}</p>
@@ -34,7 +35,7 @@
     <div class="flex justify-end">
       <Button size="xs" class="bg-primary-400"  disabled={comment.length < 5 || comment.length >= 255 } on:click={onPost}>
         <i class="fa fa-comment mr-2 text-xs" />
-        Post 
+        {submitText} 
       </Button>
     </div>
   </section>

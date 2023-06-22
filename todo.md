@@ -1,4 +1,70 @@
+
+
+Launch:
+
+Mobile
+
+✅ Set width of search for mobile 
+
+Problem
+- Make problem blurb/idea editable along with tags and body
+- Make visibility of problem configurable and effect search 
+- Allow changing problem image and banner
+- Add tags and sector searchable in problem search 
+
+
+Discussions
+
+- Make discussion title editable
+- Add discussion tags and make editable
+- Accurately add disucssion answer count 
+
+- Make discussions public visilbility togglable
+
+
+Comments
+- ✅ Make comments editable
+- ✅  Add comments to discussions
+
+Pages
+- Add tags to pages
+- Add page search with tags
+- Page publicity
+
+Links:
+- ✅ Change type to tags
+- ✅ Allow search by tags
+- ✅ Allow removing links
+- Auto link from discussions and pages and problem 
+
+Risks:
+- ✅ Remove for now
+
+
+Profile
+- Add tabs for user for profile, products, bio, feed, invites, approvals
+- Create user profile 
+- Make Gravitar hoverable for mini user view and clickable for profile
+- Public profile page 
+
+
+Menu
+- Show my problems in menus somwhow (possibily in product search drop down on desktop and as list in side menu)
+
+Design
+- Make homepage features just a list for now
+
+
+
+
+
+
 PRIORITY LIST
+
+
+
+
+
 
 
 - Edit problem title and blurb

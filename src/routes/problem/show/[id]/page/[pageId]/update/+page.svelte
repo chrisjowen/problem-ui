@@ -35,8 +35,6 @@
 
 <ProblemLayout bind:problem>
   {#if pageDoc}
-  <div class="h-full flex">
     <EditablePage bind:page={pageDoc} on:save={onSavePage} />
-  </div>
   {/if}
 </ProblemLayout>

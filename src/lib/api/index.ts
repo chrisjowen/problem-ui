@@ -6,6 +6,7 @@ import solutionApi from './solutionApi';
 import discussionApi from './discussionApi';
 import workflowApi from './workflowApi';
 import aiProblemApi from './aiProblemApi';
+import answerApi from './answerApi';
 
 import RestApi from './common/restApi';
 
@@ -22,5 +23,6 @@ export default {
     notifications: new RestApi('/api/notification'),
     membership: new RestApi('/api/membership'),
     obstacle: new RestApi('/api/obstacle'),
+    answer:  answerApi,
     aiProblem: aiProblemApi
 }

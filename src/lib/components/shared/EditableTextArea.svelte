@@ -3,6 +3,7 @@
   import Editor from "$lib/components/shared/editor/Editor.svelte";
   import { Button } from "flowbite-svelte";
   import { createEventDispatcher } from "svelte";
+  import EntityOverview from "./EntityOverview.svelte";
 
   export let title: null | String = null;
   export let input: String;
@@ -80,6 +81,9 @@
         <h1 class="text-2xl">{title}</h1>
       {/if}
     </div>
+
+
+
 
     {#if editable}
       <div>

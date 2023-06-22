@@ -18,7 +18,7 @@
 
   async function loadDiscussions() {
     api.problem
-      .discussion($page.params.id)
+      .discussion(problemId)
       .list("", 50, 1, ["user"])
       .then((res) => {
         discussions = res.data;
@@ -40,7 +40,7 @@
 <ProblemLayout bind:problem>
   {#if problem}
   <div class="p-4">
-    <DiscussionList {discussions} on:create={createDiscussion} on:click={onClick} editable={isMember(problem)} />
+    <DiscussionList baseUrl="/problem/show/{problemId}" {discussions} on:create={createDiscussion} on:click={onClick} editable={isMember(problem)} />
   </div>
   {/if}
 </ProblemLayout>

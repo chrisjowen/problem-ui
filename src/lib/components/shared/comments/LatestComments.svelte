@@ -1,65 +1,55 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import api from "$lib/api";
+  import baseApi from "$lib/api";
   import type { PaginationResults, Comment } from "$lib/types/index";
-  import { createEventDispatcher } from "svelte";
-  import Gravitar from "../Gravitar.svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import CommentForm from "./CommentForm.svelte";
+  import CommentView from "./CommentView.svelte";
+  import type { AxiosResponse } from "axios";
 
-  export let pagination: PaginationResults<Comment>;
-  export let type = "solution"
-  export let id = $page.params.id
-
+  let pagination: PaginationResults<Comment>;
+  export let type = "solution";
+  export let id: null | string = $page.params.id;
+  let api: any = baseApi[type];
   let dispatch = createEventDispatcher();
-  
-  async function onPostComment(event : any) {
-    let result = await api[type].comments(id).create(event.detail)
-    dispatch("created", result)
+
+  onMount(() => {
+    loadComments();
+  });
+
+  function loadComments() {
+    api
+      .comments(id)
+      .list("", 4, 0, ["user"])
+      .then((res: AxiosResponse<PaginationResults<Comment>>) => {
+        pagination = res.data;
+      });
+  }
+
+  async function onPostComment(event: any) {
+    let result = await api.comments(id).create({ comment: event.detail });
+    dispatch("created", result);
+    loadComments();
+  }
+
+  async function onEditComment(event: any) {
+    let comment = event.detail;
+    let result = await api.comments(id).update(comment.id, comment);
+    dispatch("created", result);
+    loadComments();
   }
 </script>
 
 {#if pagination && pagination.entries}
-<div>
+  <div>
     <CommentForm on:post={onPostComment} />
     {#each pagination.entries as comment}
-      <div class="mx-4 py-4 flex border-b-[1px]">
-        <div>
-          <Gravitar
-            email={comment.user.email}
-            size="xs"
-            className="rounded-md"
-          />
-        </div>
-        <div class="px-4 flex-1">
-          <p class="text-xs">
-            {comment.user.name}
-            {comment.user.last_name} -
-            <span class="text-xs text-gray-400"> just now </span>
-          </p>
-          <p class="text-sm py-2">
-            {comment.comment.slice(
-              0,
-              100
-            )}{#if comment.comment.length > 100}...{/if}
-          </p>
-
-          {#if comment.comment.length > 100}
-            <p>
-              <span class="text-xs text-primary-300">View More</span>
-            </p>
-          {/if}
-
-          <p class="text-xs flex justify-end hidden">
-            <i class="fa fa-thumbs-up mr-1" />
-            Like
-          </p>
-        </div>
-      </div>
+      <CommentView {comment} on:edit={onEditComment} />
     {/each}
   </div>
   <div class="p-4 flex justify-end">
-    <p class=" text-xs text-primary-400 ">
-       Show All {pagination.total_entries} Comments
+    <p class=" text-xs text-primary-400">
+      {pagination.total_entries} Comments
     </p>
   </div>
 {/if}

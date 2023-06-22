@@ -12,12 +12,15 @@
 
   export let discussions: PaginationResults<any>;
   export let editable = false;
+  export let baseUrl = "";
 
   function showCreateDiscussion() {
     if (!$auth.loggedInUser) {
       goto("/login");
     }
-    showModal = true;
+    else{
+      goto(`${baseUrl}/discussion/create`)
+    }
   }
 
   async function onCreateDiscussion(event: any) {

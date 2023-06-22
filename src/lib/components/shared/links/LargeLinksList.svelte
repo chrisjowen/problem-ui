@@ -3,9 +3,11 @@
   import type { Link, PaginationResults } from "$lib/types";
   import { Button, Modal } from "flowbite-svelte";
   import LinkForm from "./LinkForm.svelte";
-  import { imageUrl } from "$lib/util/imageutil";
   import { redirectIfNotLoggedIn } from "$lib/util/authUtil";
+  import { createEventDispatcher } from "svelte";
 
+  let dispatch = createEventDispatcher();
+  
   let links: PaginationResults<Link>;
   export let api: RestApi;
   export let editable = false;
@@ -50,6 +52,16 @@
     showModal = false;
   }
 
+
+  async function onDeleteLink(e: CustomEvent<Link>): Promise<void> {
+    let link = e.detail;
+    await api.delete(link.id);
+    selectedLink = null;
+    await reload();
+    showModal = false;
+  }
+
+
   function icon(uri: string) {
     const url = new URL(uri);
     return `${url.protocol}//${url.host}/favicon.ico`;
@@ -65,10 +77,14 @@
 
     return text;
   }
+
+  let  onTagClicked = (tag: string) => () => {
+    dispatch("tagClicked", tag);
+  }
 </script>
 
 <Modal bind:open={showModal} title="Add Link" class="w-full" size="lg">
-  <LinkForm on:update={onUpdateLink} link={selectedLink} />
+  <LinkForm on:update={onUpdateLink} on:delete={onDeleteLink} link={selectedLink} />
 </Modal>
 
 <div class="flex mb-5">
@@ -81,21 +97,22 @@
   {/if}
 </div>
 
-
-
 {#if links}
   {#if links.total_entries == 0}
     <div class="bg-white border p-4">No Links</div>
   {/if}
 
-  <div class="grid grid-cols-1 grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+  <div
+    class="grid grid-cols-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+  >
     {#each links.entries as link}
       <div
         class="border p-3 relative w-full bg-white overflow-hidden rounded-xl hover:shadow-xl transition-shadow duration-[0.5s] ease-in-out"
       >
         <a target="_blank" href={link.url}>
-          <div class="w-full h-[200px] overflow-hidden border mb-4 rounded-xl justify-center text-center flex items-center">
-           
+          <div
+            class="w-full h-[200px] overflow-hidden border mb-4 rounded-xl justify-center text-center flex items-center"
+          >
             <object
               title={link.text}
               data="https://image.thum.io/get/{link.url}"
@@ -108,15 +125,19 @@
         </a>
 
         <div class="pb-4">
-          <span
-            class="text-xs bg-gray-50 p-2 mr-1 mb-1 inline-block text-gray-400 border"
-          >
-          <span>
-            <i class="fas fa-tag mr-1" />
-          </span>
-            #{link.type}
-          </span>
+          {#each link.tags as tag}
+            <button
+              class="text-xs bg-gray-50 p-2 mr-1 mb-1 inline-block text-gray-400 border hover:bg-primary-100"
+              on:click={onTagClicked(tag)}
+            >
+              <span>
+                <i class="fas fa-tag mr-1" />
+              </span>
+              {tag}
+            </button>
+          {/each}
         </div>
+
         <div class="flex">
           <div class="mr-3 mt-1">
             <object
@@ -143,18 +164,14 @@
             </p>
           </div>
           {#if editable}
-            <div>
+            <div class="absolute top-2 right-2">
               <Button size="xs" color="light" on:click={onShowLinkModal(link)}>
-                <i class="fas fa-edit" />
+                <i class="fas fa-edit mr-1" /> Edit
               </Button>
             </div>
           {/if}
         </div>
-      
       </div>
     {/each}
   </div>
-
- 
-  
 {/if}
