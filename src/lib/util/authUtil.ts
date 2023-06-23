@@ -15,7 +15,7 @@ export function redirectIfNotLoggedIn() {
 }
 
 export function isLoggedIn() {
-    return loggedInUser !== null;
+    return loggedInUser != null;
 }
 
 export function isOwnedByMe(entity: IdentifiableOwnedSchema) {

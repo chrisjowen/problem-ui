@@ -4,7 +4,7 @@
   import api from "$lib/api";
   import FollowButton from "./FollowButton.svelte";
   import ContributeButton from "./ContributeButton.svelte";
-  import { isMember } from "$lib/util/authUtil";
+  import { isLoggedIn, isMember } from "$lib/util/authUtil";
   import LeftMenuLayout from "../shared/LeftMenuLayout.svelte";
 
   export let problem: any = null;
@@ -127,7 +127,9 @@
       {#if !$auth.loggedInUser || !isMember(problem)}
         <div class="lg:space-x-1 flex spacy-y-1chr p-2 ">
           <FollowButton on:change={() => reload(true)} {problem} />
+            {#if isLoggedIn()} 
           <ContributeButton on:requested={() => reload(true)} {problem} />
+            {/if}
         </div>
       {/if}
     {/if}
