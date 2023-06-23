@@ -11,7 +11,7 @@
   export let menuItems: any[] = [];
 
   $: {
-    $page.params.id  && reload(true);
+    $page.params.id  && reload();
   }
 
   export function reload(force: boolean = false) {
