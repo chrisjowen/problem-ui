@@ -67,35 +67,38 @@
   <p class="font-bold text-primary-500 p-2 text-center bg-gray-50">
     N.B. Keep it short and concise, I will help you expand it later
   </p>
+  <div class="hidden md:block">
   <p>
     It should <span class="underline">
       not identify a solution or create a bias toward a specific strategy</span
     >.
   </p>
+ 
+    {#if suggestion}
+      <div class="p-4 bg-yellow-50">
+        <h2 class="!text-yellow-500">
+          <i class="fa fa-lightbulb text-yellow-500 mr-2" /> Example
+        </h2>
+        <p><strong>{suggestion.title}:</strong> {suggestion.blurb}</p>
+      </div>
+    {:else}
+      <p>It should identify the:</p>
 
-  {#if suggestion}
-    <div class="p-4 bg-yellow-50">
-      <h2 class="!text-yellow-500">
-        <i class="fa fa-lightbulb text-yellow-500 mr-2" /> Example
-      </h2>
-      <p><strong>{suggestion.title}:</strong> {suggestion.blurb}</p>
-    </div>
-  {:else}
-    <p>It should identify the:</p>
+      <ul>
+        <li><strong>Who:</strong> Who is currently experiencing the problem</li>
+        <li><strong>What:</strong> What is the problem experienced</li>
+        <li><strong>Why:</strong> Why is this a problem</li>
+        <li>
+          <strong>When:</strong> Has this always been a problem or is it just a recent
+          thing
+        </li>
+      </ul>
+    {/if}
 
-    <ul>
-      <li><strong>Who:</strong> Who is currently experiencing the problem</li>
-      <li><strong>What:</strong> What is the problem experienced</li>
-      <li><strong>Why:</strong> Why is this a problem</li>
-      <li>
-        <strong>When:</strong> Has this always been a problem or is it just a recent
-        thing
-      </li>
-    </ul>
-
-  {/if}
-  <Button on:click={makeSuggestion} class="mt-2 w-full">Give Me A Suggestion</Button>
-
+    <Button on:click={makeSuggestion} class="mt-2 w-full"
+      >Give Me A Suggestion</Button
+    >
+  </div>
 {:else if !checking && check?.hints && !check?.valid}
   <h3>Hints:</h3>
   {#each check.hints as item}
