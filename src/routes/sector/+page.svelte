@@ -21,7 +21,7 @@
     if ($state?.sectors != null) {
       sectors = $state.sectors.entries;
     } else {
-      api.sector.list("", 50, 1).then((r) => {
+      api.sector.list("", 100, 1).then((r) => {
         sectors = r.data.entries;
         $state.sectors = r.data;
       });
