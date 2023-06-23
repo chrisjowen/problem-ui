@@ -19,7 +19,6 @@
      if($auth.loggedInUser) {
       let channel  = await connect(`user:${$auth.loggedInUser.id}`, $auth.token);
       channel.on("notification", (notification: any) => {
-        debugger
         reloadNotifications()
       });
      }

@@ -12,6 +12,7 @@ export interface Discussion extends IdentifiableSchema, OwnedSchema {
 export interface Problem  extends IdentifiableSchema, OwnedSchema{
     title: string;
     slug: string;
+    pinned_note: string;
     blurb: string;
     overview: string;
     status: string;

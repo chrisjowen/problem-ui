@@ -83,7 +83,7 @@
     if (notification.external && doOpen) {
       open(notification.link, "_blank");
     } else if(doOpen) {
-      goto(notification.link);
+      goto(`${notification.link}?f=t`);
     }
     dispatch("click", notification);
   };

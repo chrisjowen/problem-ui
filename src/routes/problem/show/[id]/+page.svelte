@@ -38,6 +38,14 @@
   {#if problem}
     <div class="flex md:mt-4 items-start">
       <section class="xl:max-w-[940px] mx-auto md:mx-4 md:rounded-t-lg">
+        {#if problem.pinned_note && problem.pinned_note != ""}
+          <div class="p-4 bg-primary-100 mb-4 rounded-lg">
+            <i class="fas fa-info-circle mr-2"></i>
+
+            {@html problem.pinned_note}
+          </div>
+        {/if}
+
         <div class="md:border md:rounded-lg bg-white">
           <div class="relative text-gray-400 sm:flex md:rounded-t-lg">
             <div
@@ -49,7 +57,9 @@
               left:0
               right:0;
               bottom:0;
-              background: black url('{imageUrl(problem.banner_image || problem.img)}');
+              background: black url('{imageUrl(
+                problem.banner_image || problem.img
+              )}');
               background-size: cover;  
               background-position: center;
               background-repeat: no-repeat;
@@ -61,27 +71,27 @@
               <img
                 src="{PUBLIC_IMG_CDN_BASE}{problem.img}"
                 alt={problem.title}
-                class="w-[250px] h-[250px]  block md:inline-block m-auto md:float-left drop-shadow-xl"
+                class="w-[250px] h-[250px] block md:inline-block m-auto md:float-left drop-shadow-xl"
               />
             </div>
           </div>
 
           <div class="p-8">
-            <div class="flex ">
+            <div class="flex">
               <div class="flex-1">
                 <EntityOverview entity={problem} />
               </div>
-                {#if isMember(problem)}
-                  <div>
-                    <Button
-                      color="light"
-                      size="xs"
-                      on:click={() => goto(`${problem.id}/update`)}>Edit</Button
-                    >
-                  </div>
-                {/if}
+              {#if isMember(problem)}
+                <div>
+                  <Button
+                    color="light"
+                    size="xs"
+                    on:click={() => goto(`${problem.id}/update`)}>Edit</Button
+                  >
+                </div>
+              {/if}
             </div>
-            <div class="my-9  p-4 bg-gray-50 text-gray-700">
+            <div class="my-9 p-4 bg-gray-50 text-gray-700">
               <div class="flex">
                 <div class="mr-4">
                   <i class="fa-solid fa-atom text-4xl" />

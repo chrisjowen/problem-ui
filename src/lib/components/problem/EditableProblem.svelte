@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { imageUrl } from '$lib/util/imageutil';
-  import type { Page } from "$lib/types/index";
+  import type { Page, Problem } from "$lib/types/index";
   import {
     Button,
     ButtonGroup,
@@ -64,6 +64,11 @@
     <div class="m-6">
       <Label class="block mb-2">Overview</Label>
       <Textarea bind:value={problem.blurb} class="h-[200px]" />
+    </div>
+
+    <div class="m-6">
+      <Label class="block mb-2">Pinned Note</Label>
+      <Textarea bind:value={problem.pinned_note} class="h-[200px]" />
     </div>
 
     <div class="m-6">

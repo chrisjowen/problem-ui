@@ -11,11 +11,11 @@
   export let menuItems: any[] = [];
 
   $: {
-    $page.params.id && reload();
+    $page.params.id  && reload(true);
   }
 
   export function reload(force: boolean = false) {
-    if ($selectedProblem?.id?.toString() === $page.params.id && !force) {
+    if ($selectedProblem?.id?.toString() === $page.params.id && $page.params.f == null && !force) {
       problem = $selectedProblem;
     } else {
       api.problem
