@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { Answer, Problem } from "$lib/types";
   import { createEventDispatcher } from "svelte";
-  import EntityOverview from "../EntityOverview.svelte";
   import LatestComments from "../comments/LatestComments.svelte";
-  import Editor from "../editor/Editor.svelte";
   import { Button } from "flowbite-svelte";
   import { isOwnedByMe } from "$lib/util/authUtil";
+  import Editor from "../shared/editor/Editor.svelte";
+  import EntityOverview from "../shared/EntityOverview.svelte";
 
   export let answer: Answer;
   export let problem: Problem;

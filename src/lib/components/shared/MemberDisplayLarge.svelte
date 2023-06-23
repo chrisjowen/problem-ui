@@ -45,8 +45,7 @@
     </div>
     <div class="flex-1 ">
       <h2 class="text-sm mb-1 font-bold {active ? 'text-gray-600' : 'text-gray-200'} ">
-        {user.name}
-        {user.last_name}
+        @{user.username}
       </h2>
       <p class="text-xs mb-2 {active ? 'text-gray-500' : 'text-gray-200'}">
         Problem Solver | Design Thinker | Experience Creator | Author of the

@@ -24,7 +24,7 @@
     error = null;
     login(username, password)
       .then((res) => {
-        goto("/");
+        goto("/profile/me");
       })
       .catch((err) => {
         error = err;
@@ -35,7 +35,7 @@
     error = null;
     register(registration)
       .then((res) => {
-        goto("/");
+        goto("/profile/me");
       })
       .catch((err) => {
         error = err;
@@ -56,7 +56,7 @@
     <div class="w-full">
       {#if error}
         <div class="m-9">
-          <Alert color="red">{@html error}</Alert>
+          <Alert color="red">{@html error.replace("clear_password:", "Password")}</Alert>
         </div>
       {/if}
       {#if mode === "login"}

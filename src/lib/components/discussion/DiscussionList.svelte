@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Discussion, PaginationResults } from "$lib/types";
-  import DiscussionForm from "$lib/components/shared/discussions/DiscussionForm.svelte";
+  import DiscussionForm from "$lib/components/discussion/DiscussionForm.svelte";
   import { Button, Modal } from "flowbite-svelte";
   import { createEventDispatcher } from "svelte";
   import Gravitar from "$lib/components/shared/Gravitar.svelte";

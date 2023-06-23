@@ -6,8 +6,6 @@ class AnswerApi extends RestApi {
     constructor(discussionId: string) {
         super(`/api/discussion/${discussionId}/answer`);
     }
-
-   
     comments(answerId: string) {
         return new RestApi(`${this.path}/${answerId}/comment`);
     }

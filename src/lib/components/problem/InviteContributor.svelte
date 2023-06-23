@@ -4,7 +4,6 @@
   import { Button, Input, Modal } from "flowbite-svelte";
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import api from "$lib/api";
-  import { debounce } from "lodash";
   import { createEventDispatcher } from "svelte";
 
   export let problem: Problem;
@@ -13,21 +12,27 @@
   let results: PaginationResults<User>;
   let q = "";
 
+  $: isEmail =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/.test(
+      q
+    );
+
   let dispatch = createEventDispatcher();
 
   function onInviteContributer(e: MouseEvent): void {
-    search()
+    search();
     show = true;
   }
 
   function search() {
-    let params = q == "" ? "" : `OR(name[like]=${q}|last_name[like]=${q})`;
+    let params = q == "" ? "" : `OR(name[like]=${q}|last_name[like]=${q}|username[like]=${q})`;
     api.user.list(params).then((res) => {
       results = res.data;
     });
   }
 
   let onUserSelected = (user: User) => async () => {
+    debugger;
     await api.problem
       .members(problem.id)
       .create({ member_id: user.id, role: "contributor" });
@@ -36,6 +41,21 @@
   };
 
   $: users = results?.entries?.filter(exclude);
+
+  function checkEnter(e: KeyboardEvent): void {
+    if (e.code == "Enter" && results.entries.length > 0) {
+      onUserSelected(results.entries[0])();
+    } else {
+      search();
+    }
+  }
+
+
+  function sendEmailInvite(e: MouseEvent): void {
+    api.problem.invites(problem.id).create({ email: q, type: "email" }).then(() => {
+      show = false;
+    });
+  }
 </script>
 
 <Modal
@@ -49,11 +69,24 @@
 >
   <div class="flex flex-col h-full">
     <section class=" pb-4">
-      <Input bind:value={q} type="text" placeholder="Search" on:keyup={search}>
+      <Input
+        bind:value={q}
+        type="text"
+        placeholder="Search"
+        on:keyup={checkEnter}
+      >
         <i class="fas fa-search" slot="left" />
       </Input>
     </section>
-    {#if users}
+    {#if isEmail}
+      <section class="max-h-[500px] overflow-auto " >
+        <Button on:click={sendEmailInvite} color="light" class="w-full">
+        <i class="fas fa-envelope mr-2" />
+          Send email invite
+        </Button>
+      
+      </section>
+    {:else if users}
       <section class="max-h-[500px] overflow-auto bg-white border">
         {#each users as user}
           <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -64,9 +97,8 @@
             <div class="flex items-center"><Gravitar {user} size="sm" /></div>
             <div class="px-4 py-1 items-center">
               <p>{user.name} {user.last_name}</p>
-              <p class="text-xs">
-                Problem Solver | Design Thinker | Experience Creat...
-              </p>
+              <p class="text-xs">@{user.username}</p>
+             
             </div>
           </div>
         {/each}

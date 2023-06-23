@@ -3,7 +3,7 @@
   import { page } from "$app/stores";
   import api from "$lib/api";
   import { onMount } from "svelte";
-  import DiscussionList from "$lib/components/shared/discussions/DiscussionList.svelte";
+  import DiscussionList from "$lib/components/discussion/DiscussionList.svelte";
   import { goto } from "$app/navigation";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import { isMember } from "$lib/util/authUtil";

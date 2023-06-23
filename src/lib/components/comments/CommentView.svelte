@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import Gravitar from "../Gravitar.svelte";
-  import CommentForm from "./CommentForm.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
+  import CommentForm from "./CommentForm.svelte"; 
   import { auth } from "$lib/store";
   export let comment: any = {};
   let viewMore = false;

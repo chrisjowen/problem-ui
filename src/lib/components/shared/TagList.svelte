@@ -23,16 +23,14 @@
 </script>
 
 {#if editable}
-  <div class="flex mb-2 inline">
-    <div class="flex-1">
-      <Input type="text" bind:value={tag} size="sm" on:keydown={onKeyDown} />
-    </div>
-    <div class="flex items-center">
-      <Button on:click={saveTag} size="xs" color="light" class="ml-2">
-        <i class="fas fa-tag mr-2" /> Tag
-      </Button>
-    </div>
-  </div>
+ 
+
+  <Input type="text" bind:value={tag}  on:keydown={onKeyDown} >
+    <button slot="right" on:click={saveTag}  color="light" >
+      <i class="fas fa-plus mr-2" /> 
+    </button>
+  </Input>
+
 {/if}
 <div>
   {#if tags}

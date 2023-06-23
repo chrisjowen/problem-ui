@@ -2,8 +2,8 @@
   import { page } from "$app/stores";
   import api from "$lib/api";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
-  import LargeLinksList from "$lib/components/shared/links/LargeLinksList.svelte";
-  import LinksList from "$lib/components/shared/links/LinksList.svelte";
+  import LargeLinksList from "$lib/components/links/LargeLinksList.svelte";
+  import LinksList from "$lib/components/links/LinksList.svelte";
   import { isMember } from "$lib/util/authUtil";
   import { Input } from "flowbite-svelte";
   import { onMount } from "svelte";

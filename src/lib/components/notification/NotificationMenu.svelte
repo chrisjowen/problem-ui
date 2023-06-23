@@ -1,7 +1,7 @@
 <script lang="ts">
   import api from "$lib/api";
   import { auth, notifications } from "$lib/store";
-  import NotificationFeedList from "./problem/NotificationFeedList.svelte";
+  import NotificationFeedList from "../problem/NotificationFeedList.svelte";
 
   let showMenu = false;
 

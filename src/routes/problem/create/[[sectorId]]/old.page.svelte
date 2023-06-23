@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import api from "$lib/api";
-  import SectorSearchSelect from "$lib/components/SectorSearchSelect.svelte";
+  import SectorSearchSelect from "$lib/components/sector/SectorSearchSelect.svelte";
   import ProblemCreateSteps from "$lib/components/problem/create/ProblemCreateSteps.svelte";
   import StatementBlurb from "$lib/components/problem/create/StatementBlurb.svelte";
   import StatementTip from "$lib/components/problem/create/StatementTip.svelte";

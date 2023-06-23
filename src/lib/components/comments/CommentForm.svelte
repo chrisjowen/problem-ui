@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Button, Textarea } from "flowbite-svelte";
-  import Gravitar from "../Gravitar.svelte";
+  import Gravitar from "$lib/components/shared/Gravitar.svelte";
+
   import { auth } from "$lib/store";
   import { createEventDispatcher } from "svelte";
   export let comment = "";

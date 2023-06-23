@@ -23,6 +23,7 @@ export default {
     notifications: new RestApi('/api/notification'),
     membership: new RestApi('/api/membership'),
     obstacle: new RestApi('/api/obstacle'),
+    profile: new RestApi('/api/profile'),
     answer:  answerApi,
     aiProblem: aiProblemApi
 }

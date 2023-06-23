@@ -12,7 +12,7 @@
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { onMount } from "svelte";
   import UserMenuItem from "$lib/components/user/UserMenuItem.svelte";
-  import NotificationMenu from "$lib/components/NotificationMenu.svelte";
+  import NotificationMenu from "$lib/components/notification/NotificationMenu.svelte";
   import api from "$lib/api";
 
   let loggedInUser: any = null;

@@ -1,14 +1,14 @@
 <script lang="ts">
   import HighlightCommands from "./commands/HighlightCommands.svelte";
   import TableCommands from "./commands/TableCommands.svelte";
-import PictureUploadComand from "./commands/pictureUploadComand.svelte";
+  import PictureUploadComand from "./commands/pictureUploadComand.svelte";
   import type { Editor } from "@tiptap/core";
   let element: HTMLDivElement;
   export let editor: Editor;
   export let fullscreen: boolean;
   export let selection: any;
   export let showFullscreen = true;
-
+  export let simple = false;
 
   let toggleList = () => {
     editor.chain().focus().toggleBulletList().run();
@@ -59,10 +59,11 @@ import PictureUploadComand from "./commands/pictureUploadComand.svelte";
     >
       <i class="fa fa-heading" /><span>3</span>
     </button>
-    <HighlightCommands {editor}/>
-  
 
-    <TableCommands {editor} bind:editing={showTableOptions} />
+    {#if !simple}
+      <HighlightCommands {editor} />
+      <TableCommands {editor} bind:editing={showTableOptions} />
+    {/if}
 
 
     <button
@@ -85,6 +86,7 @@ import PictureUploadComand from "./commands/pictureUploadComand.svelte";
       <i class="fa fa-align-right" />
     </button>
 
+    {#if !simple}
     <PictureUploadComand {editor} let:buttonClicked>
       <button
         class="text-xs w-[40px] hover:bg-gray-50"
@@ -93,6 +95,7 @@ import PictureUploadComand from "./commands/pictureUploadComand.svelte";
         <i class="fas fa-image" />
       </button>
     </PictureUploadComand>
+    {/if}
     <button
       class="text-xs w-[40px] border-l-[1px] hover:bg-gray-50"
       on:click={toggleList}
@@ -103,7 +106,7 @@ import PictureUploadComand from "./commands/pictureUploadComand.svelte";
       class="text-xs w-[40px] border-l-[1px] hover:bg-gray-50"
       on:click={toggleTaskList}
     >
-      <i class="fa-solid fa-list-check"></i>
+      <i class="fa-solid fa-list-check" />
     </button>
 
     <button
@@ -112,6 +115,8 @@ import PictureUploadComand from "./commands/pictureUploadComand.svelte";
     >
       <i class="fa fa-thin fa-list-ol" />
     </button>
+
+    {#if !simple}
     <button
       class="text-xs w-[40px] border-r-[1px] hover:bg-gray-50"
       on:click={toggleQuote}
@@ -124,7 +129,7 @@ import PictureUploadComand from "./commands/pictureUploadComand.svelte";
     >
       <i class="fa-solid fa-code" />
     </button>
-
+    {/if}
 
     {#if showFullscreen}
       <div class="flex-1 flex flex-row justify-end">

@@ -8,7 +8,7 @@
     Label,
   } from "flowbite-svelte";
   import { createEventDispatcher, onMount } from "svelte";
-  import TagList from "../TagList.svelte";
+  import TagList from "../shared/TagList.svelte";
 
   export let link: null | Link;
 

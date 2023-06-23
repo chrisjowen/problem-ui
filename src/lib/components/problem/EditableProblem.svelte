@@ -75,14 +75,14 @@
     <div class="m-6">
       <Label class="block mb-2">Image</Label>
       <button class="border bg-white p-4" on:click={showImageModal("img")}>
-        <img src={imageUrl(problem.img)} alt="{problem.title}" class="w-[300px] m-auto border" />
+        <img src={imageUrl(problem.img)} alt="{problem.title}" class="w-[100px] h-[100px] m-auto border" />
       </button>
     </div>
 
     <div class="m-6">
       <Label class="block mb-2">Banner</Label>
       <button class="border bg-white p-4" on:click={showImageModal("banner_image")}>
-        <img src={imageUrl(problem.banner_image)} alt="{problem.title}" class="w-[300px] m-auto border" />
+        <img src={imageUrl(problem.banner_image)} alt="{problem.title}" class="w-[250px] h-[100px] m-auto border" />
       </button>
     </div>
 

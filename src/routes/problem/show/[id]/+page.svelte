@@ -1,24 +1,21 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
   import { page } from "$app/stores";
   import { Button } from "flowbite-svelte";
-  import UserList from "$lib/components/shared/UserList.svelte";
+  import UserList from "$lib/components/user/UserList.svelte";
   import { auth } from "$lib/store";
   import { goto } from "$app/navigation";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import api from "$lib/api";
-  import LatestComments from "$lib/components/shared/comments/LatestComments.svelte";
+  import LatestComments from "$lib/components/comments/LatestComments.svelte";
   import type { PaginationResults, Comment } from "$lib/types";
-  import LinksList from "$lib/components/shared/links/LinksList.svelte";
-  import LatestDiscussions from "$lib/components/shared/discussions/LatestDiscussions.svelte";
+  import LinksList from "$lib/components/links/LinksList.svelte";
+  import LatestDiscussions from "$lib/components/discussion/LatestDiscussions.svelte";
   import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
-  import ObstacleList from "$lib/components/shared/obstacles/ObstacleList.svelte";
-  import { isAdminMember, isMember } from "$lib/util/authUtil";
-  import InviteContributor from "$lib/components/problem/InviteContributor.svelte";
+  import ObstacleList from "$lib/components/obstacles/ObstacleList.svelte";
+  import { isMember } from "$lib/util/authUtil";
   import FeedList from "$lib/components/problem/FeedList.svelte";
   import Editor from "$lib/components/shared/editor/Editor.svelte";
-  import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { imageUrl } from "$lib/util/imageutil";
   import EntityOverview from "$lib/components/shared/EntityOverview.svelte";
 
@@ -100,7 +97,7 @@
             <Editor editable={false} html={problem.overview} />
           </div>
         </div>
-        <div class="bg-white p-2 md:rounded-md lg:border lg:mb-8">
+        <div class="bg-white p-2 mt-2 md:rounded-md lg:border lg:mb-8">
           <LatestComments type="problem" />
         </div>
       </section>
@@ -158,7 +155,7 @@
           </div>
         </div>
 
-        <div class="">
+        <div class="hidden">
           <h1 class="mb-4 text-xl text-gray-800">Risks</h1>
           <ObstacleList
             api={api.problem.obstacles(problemId)}

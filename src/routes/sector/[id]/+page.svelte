@@ -7,9 +7,6 @@
   import { imageUrl } from "$lib/util/imageutil";
   import SectorLayout from "$lib/components/sector/SectorLayout.svelte";
   let sector: any = null;
-  let loggedInUser: any = null;
-  let sectorId = $page.params.id;
-
   let sectorProblems: PaginationResults<any>;
 
   $: {

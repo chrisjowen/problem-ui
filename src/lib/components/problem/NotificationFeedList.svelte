@@ -53,6 +53,24 @@
           linkText: feedItem.item.discussion.title,
           prefix: "On discussion:",
         };
+      } else if (feedItem.type == "problemuser") {
+
+        var message = ""
+        if(feedItem.item.status == "invited") {
+          message = `@${feedItem.item.member.username} was invited to problem`
+        }
+        else if(feedItem.item.status == "requested") {
+          message = `@${feedItem.item.member.username} requested to join problem`
+        }
+
+
+        return {
+          ...feedItem,
+          icon: "fas fa-user",
+          link: `/problem/show/${feedItem.item.problem_id}/users`,
+          linkText: message,
+          prefix: "",
+        };
       }
     })
     .filter((i) => i != null);
@@ -78,7 +96,7 @@
       on:click={dispatchOnClick(item)}
       class="{item.read
         ? 'bg-gray-50 '
-        : 'bg-white'}   text-gray-700 border-b-[1px] p-3 flex hover:bg-primary-50"
+        : 'bg-primary-50'}   text-gray-700 border-b-[1px] p-3 flex hover:bg-primary-50"
     >
       <div class="m-2">
         <Gravitar user={item.by} size="md" />
@@ -89,7 +107,7 @@
           <p>
             <strong class="mr-1">
               {#if item.by}
-                {item.by.name} {item.by.last_name}
+                @{item.by.username}
               {:else}
                 System user
               {/if}
@@ -97,7 +115,9 @@
           </p>
           <p>
             {item.action}
-            {item.type}
+            {#if item.type != "problemuser"}
+              {item.type}
+            {/if}
             <i class="fas fa-arrow-right mx-1" />
             {item.prefix}
             <a
@@ -116,7 +136,6 @@
       </div>
     </div>
   {/each}
-
-  {:else}
-    <p class="text-md p-4 text-black">No Notifications</p>
+{:else}
+  <p class="text-md p-4 text-black">No Notifications</p>
 {/if}

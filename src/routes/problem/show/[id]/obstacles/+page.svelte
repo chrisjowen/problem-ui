@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import api from "$lib/api";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
-  import ObstacleList from "$lib/components/shared/obstacles/ObstacleList.svelte";
+  import ObstacleList from "$lib/components/obstacles/ObstacleList.svelte";
   import { isMember } from "$lib/util/authUtil";
   import { Button } from "flowbite-svelte";
   

@@ -3,15 +3,15 @@
   import { onMount } from "svelte";
   import api from "$lib/api";
   import type { Discussion, Problem } from "$lib/types";
-  import DiscussionView from "$lib/components/shared/discussions/DiscussionView.svelte";
+  import DiscussionView from "$lib/components/discussion/DiscussionView.svelte";
   import { page } from "$app/stores";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import Editor from "$lib/components/shared/editor/Editor.svelte";
   import { Button } from "flowbite-svelte";
   import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
-  import LatestComments from '$lib/components/shared/comments/LatestComments.svelte';
+  import LatestComments from '$lib/components/comments/LatestComments.svelte';
   import EntityOverview from '$lib/components/shared/EntityOverview.svelte';
-  import EditableAnswer from '$lib/components/shared/discussions/EditableAnswer.svelte';
+  import EditableAnswer from '$lib/components/discussion/EditableAnswer.svelte';
   let refreshEditor: any;
   let discussion: Discussion;
   let problem: Problem;

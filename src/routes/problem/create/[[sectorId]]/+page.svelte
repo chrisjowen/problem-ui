@@ -1,6 +1,6 @@
 <script lang="ts">
   import api from "$lib/api";
-  import MultiSectorSearchSelect from "$lib/components/MultiSectorSearchSelect.svelte";
+  import MultiSectorSearchSelect from "$lib/components/sector/MultiSectorSearchSelect.svelte";
   import StatementTip from "$lib/components/problem/create/StatementTip.svelte";
   import type { Sector } from "$lib/types";
   import { Button, StepIndicator } from "flowbite-svelte";

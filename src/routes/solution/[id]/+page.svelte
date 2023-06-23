@@ -1,11 +1,11 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import api from "$lib/api";
-  import LatestComments from "$lib/components/shared/comments/LatestComments.svelte";
+  import LatestComments from "$lib/components/comments/LatestComments.svelte";
   import LeftMenuLayout from "$lib/components/shared/LeftMenuLayout.svelte";
   import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
-  import Features from "$lib/components/showproblem/plan/features.svelte";
-  import TechnologiesAndExpertise from "$lib/components/showproblem/plan/technologiesAndExpertise.svelte";
+  import Features from "$lib/components/old/showproblem/plan/features.svelte";
+  import TechnologiesAndExpertise from "$lib/components/old/showproblem/plan/technologiesAndExpertise.svelte";
   import { auth } from "$lib/store";
   import { onMount } from "svelte";
   import type {PaginationResults, Comment}  from "$lib/types/index";

@@ -19,7 +19,6 @@ class ProblemApi extends RestApi {
         super('/api/problem');
     }
 
-
     comments(id: string) {
         return new CommentsApi(id);
     }
@@ -50,6 +49,9 @@ class ProblemApi extends RestApi {
     pages(id: string) {
         return new RestApi(`/api/problem/${id}/page`);
     }
+    invites(id: string) {
+        return new RestApi(`/api/problem/${id}/invite`);
+    }
 
     precheck(statement: string, sector: string) {
         return this.client.post(`/precheck`, { statement, sector })
@@ -57,7 +59,6 @@ class ProblemApi extends RestApi {
     solutions(id: string, preloads: string[]) {
         return this.client.get(`/${id}/solution?preloads=${preloads.join(',')}`)
     }
-
 
     submit(problemStatement: string, traceId: string, sectorId: number) {
         return this.client.post(`/submit`, {

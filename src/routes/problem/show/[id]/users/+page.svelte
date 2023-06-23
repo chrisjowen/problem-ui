@@ -1,12 +1,11 @@
 <script lang="ts">
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
-  import UserList from "$lib/components/shared/UserList.svelte";
-  import UserDisplay from "$lib/components/shared/UserDisplay.svelte";
   import MemberDisplayLarge from "$lib/components/shared/MemberDisplayLarge.svelte";
   import { isMember } from "$lib/util/authUtil";
   import InviteContributor from "$lib/components/problem/InviteContributor.svelte";
   import type { User } from "$lib/types";
   import api from "$lib/api";
+  import UserList from "$lib/components/user/UserList.svelte";
 
   let problem: any = null;
   let reload: (force: boolean) => void;
@@ -55,8 +54,6 @@
       </div>
 
       <h1 class="flex-1 items-end flex text-xl text-primary-600">Followers</h1>
-
-
       <UserList users={problem.followers} placeholder="No Followers" />
     </div>
   {/if}

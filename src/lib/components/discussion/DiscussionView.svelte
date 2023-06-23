@@ -4,10 +4,9 @@
   import type { Discussion } from "$lib/types";
   import { isOwnedByMe } from "$lib/util/authUtil";
   import { Button } from "flowbite-svelte";
-  import { editable } from "svelte-tiptap";
-  import EntityOverview from "../EntityOverview.svelte";
   import LatestComments from "../comments/LatestComments.svelte";
-  import Editor from "../editor/Editor.svelte";
+  import EntityOverview from "../shared/EntityOverview.svelte";
+  import Editor from "../shared/editor/Editor.svelte";
   export let discussion: any;
   export let baseUrl = "";
 

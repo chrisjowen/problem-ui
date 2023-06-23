@@ -31,6 +31,7 @@
   export let editable = true;
   export let fullscreen = false;
   export let height = "full";
+  export let simple = false
   export let html = `
    <p>This is still the text editor you’re used to, but enriched with node views.</p>
 
@@ -152,7 +153,7 @@
 
 <div class={className}>
   {#if editable}
-    <TopMenu {editor} bind:fullscreen bind:showFullscreen bind:selection />
+    <TopMenu {simple} {editor} bind:fullscreen bind:showFullscreen bind:selection />
   {/if}
 
   <div class="flex-1 overflow-y-auto  " on:click={onClickEditor} on:keyup={focus}>
