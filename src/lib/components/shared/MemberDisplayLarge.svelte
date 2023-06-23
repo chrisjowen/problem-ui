@@ -37,7 +37,7 @@
 </script>
 
 <div
-  class="{active ? 'bg-white' : 'bg-gray-50'} p-4 border-b-[1px] flex flex-shrink-0"
+  class="{active ? 'bg-white' : requested ? "bg-primary-50" : 'bg-gray-50'} p-4 border-b-[1px] flex flex-shrink-0"
 >
   <div class="flex flex-shrink-0 w-full">
     <div class="mr-4 mb-2">

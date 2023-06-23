@@ -56,6 +56,8 @@
     };
   });
 
+  
+
   $: showNavBar = $page.route.id != "/login";
 </script>
 

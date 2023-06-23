@@ -1,7 +1,9 @@
 <script lang="ts">
   import api from "$lib/api";
   import { auth, notifications } from "$lib/store";
+  import { onMount } from "svelte";
   import NotificationFeedList from "../problem/NotificationFeedList.svelte";
+  import { connect } from "$lib/channel/socket";
 
   let showMenu = false;
 
@@ -13,9 +15,18 @@
 
   $: unread = $notifications?.entries?.filter((n: any) => !n.read)?.length;
 
+  onMount(async () => {
+     if($auth.loggedInUser) {
+      let channel  = await connect(`user:${$auth.loggedInUser.id}`, $auth.token);
+      channel.on("notification", (notification: any) => {
+        debugger
+        reloadNotifications()
+      });
+     }
+  })
 
   function reloadNotifications() {
-    api.notifications.list("", 50, 1, ["to", "by"]).then((res) => {
+    api.notifications.list("", 10, 1, ["to", "by"]).then((res) => {
         $notifications = res.data;
       });
   }
@@ -38,8 +49,10 @@
 
   function markAsRead(event: any) {
     let notification = event.detail;
+    if(notification.read) {
+      return;
+    }
     readNotification(notification)
-    toggleMenu();
 
   }
 
@@ -60,7 +73,7 @@
     {showMenu ? 'bg-white text-black' : ''}
     "
   >
-    <i class="fa-solid fa-bell text-lg " />
+    <i class="fa-solid fa-bell text-lg  {unread > 0  ? "text-yellow-300" : ""} " />
     
   </div>
   <div
@@ -71,6 +84,6 @@
       ? 'block'
       : 'hidden'}"
   >
-    <NotificationFeedList on:click={markAsRead} />
+    <NotificationFeedList on:click={markAsRead}  />
   </div>
 </div>

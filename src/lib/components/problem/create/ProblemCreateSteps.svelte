@@ -63,7 +63,7 @@
   }
 
   export async function watch(traceId: String) {
-    channel = await connect(`problem:trace:${traceId}`, $auth.token);
+    channel = await connect(`user:trace:${traceId}`, $auth.token);
 
     channel.on("problem:creating", () => (steps.problem.state = "loading"));
     channel.on("problem:creating:meta", () => (steps.meta.state = "loading"));
@@ -78,14 +78,15 @@
     });
   }
 
-  onDestroy(() => {
+  onDestroy(async () => {
     if (channel) {
       channel.leave();
+      channel = await connect(`user:${$auth.loggedInUser.id}`, $auth.token);
     }
   });
 
   export async function watchProblem() {
-    channel = await connect(`problem:${problemId}`, $auth.token);
+    channel = await connect(`user:${$auth.loggedInUser.id}`, $auth.token);
 
     api.workflow.resources({ problem_id: problemId });
     api.workflow.obstacles({ problem_id: problemId });

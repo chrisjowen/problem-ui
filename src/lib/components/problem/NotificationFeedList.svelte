@@ -79,10 +79,10 @@
     return moment.utc(when).fromNow();
   }
 
-  let dispatchOnClick = (notification: any) => (e: Event) => {
-    if (notification.external) {
+  let dispatchOnClick = (notification: any, doOpen: boolean) => (e: Event) => {
+    if (notification.external && doOpen) {
       open(notification.link, "_blank");
-    } else {
+    } else if(doOpen) {
       goto(notification.link);
     }
     dispatch("click", notification);
@@ -93,7 +93,8 @@
   {#each items as item}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
-      on:click={dispatchOnClick(item)}
+      on:click={dispatchOnClick(item, true)}
+      on:mouseleave={dispatchOnClick(item, false)}
       class="{item.read
         ? 'bg-gray-50 '
         : 'bg-primary-50'}   text-gray-700 border-b-[1px] p-3 flex hover:bg-primary-50"
