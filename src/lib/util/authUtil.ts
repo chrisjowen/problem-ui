@@ -22,7 +22,6 @@ export function isOwnedByMe(entity: IdentifiableOwnedSchema) {
     return  loggedInUser?.id  == entity.user_id ;
 }
 
-
 export function isMember(problem: Problem) {
     let member = membership(problem)
     return  loggedInUser?.id  == problem.user_id || member?.status == "active";

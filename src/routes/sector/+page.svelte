@@ -5,9 +5,10 @@
   import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
   import { state } from "$lib/store";
   import { Button, Input } from "flowbite-svelte";
+  import { imageUrl } from "$lib/util/imageutil";
 
   let sectors: any[] = [];
-  let q = ""
+  let q = "";
   $: sorted = sectors?.sort((a, b) => {
     if (a.name < b.name) {
       return -1;
@@ -20,7 +21,7 @@
     if ($state?.sectors != null) {
       sectors = $state.sectors.entries;
     } else {
-      api.sector.list("", 100, 1).then((r) => {
+      api.sector.list("", 20, 1).then((r) => {
         sectors = r.data.entries;
         $state.sectors = r.data;
       });
@@ -28,7 +29,7 @@
   });
 
   let search = () => {
-    api.sector.list(`name[like]=${q.toLowerCase()}`, 100, 1).then((r) => {
+    api.sector.list(`name[like]=${q.toLowerCase()}`, 20, 1).then((r) => {
       sectors = r.data.entries;
     });
   };
@@ -40,12 +41,11 @@
       search();
     }, 500);
   };
-
 </script>
 
 <div class="bg-gray-200 border-b-[1px] p-3 flex z-30">
   <div class="flex-1 mr-4">
-    <Input type="text" placeholder="Search" bind:value={q}    on:keyup={debounce}>
+    <Input type="text" placeholder="Search" bind:value={q} on:keyup={debounce}>
       <i class="fas fa-search" slot="left" />
     </Input>
   </div>
@@ -53,7 +53,6 @@
     <Button
       class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600"
       on:click={() => goto("/problem/create")}
-      
     >
       <i class="fas fa-plus" />
       <span class="hidden md:block ml-2">Create Problem</span>
@@ -70,21 +69,22 @@
   >
     {#each sorted as sector}
       <a
-        class="rounded-lg hover:bd-blue-900 bg-white hover:drop-shadow-xl drop-shadow-sm relative flex-shrink-0 border-primary-200 border"
+        class=" bg-white relative flex-shrink-0 border-primary-200 border hover:border-primary-400"
         href={`/sector/${sector.id}`}
       >
         <img
-          class="w-full rounded-lg h-[200px] object-cover object-center"
-          src="{PUBLIC_IMG_CDN_BASE}{sector.image}"
+          class="w-full rounded-lg h-[200px]"
+          src="{imageUrl(sector.image)}"
           alt="content"
         />
         <h5
-          class="p-2 m-2 rounded text-md bg-white border tex-gray-500 prose font-bold absolute top-0 right-0 drop-shadow-xl"
+          class="p-2 m-2 font-bold text-xs bg-primary-700 text-white absolute top-0 right-0"
         >
-          <i class="fas fa-tag mr-2" />
           {sector.name}
         </h5>
       </a>
+
+      
     {/each}
   </div>
 </div>

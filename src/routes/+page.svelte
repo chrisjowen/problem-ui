@@ -116,22 +116,21 @@
       class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-6 w-full gap-4"
     >
       {#each sectors.slice(0, 50) as sector}
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div
-          class="rounded-lg hover:bd-blue-900 bg-white hover:drop-shadow-xl drop-shadow-sm relative flex-shrink-0 border-primary-200 border"
+        <button
+          class=" bg-white relative flex-shrink-0 border-primary-200 border hover:drop-shadow-xl"
           on:click={showSector(sector)}
         >
           <img
-            class="w-full rounded-lg h-[200px] object-cover object-center"
+            class="w-full rounded-lg h-[200px]"
             src="{PUBLIC_IMG_CDN_BASE}{sector.image}"
             alt="content"
           />
           <h5
-            class="p-2 m-2 font-bold rounded text-xs bg-primary-700 text-white absolute top-0 right-0 drop-shadow-xl"
+            class="p-2 m-2 font-bold  text-xs bg-primary-700 text-white absolute top-0 right-0 "
           >
             {sector.name}
           </h5>
-        </div>
+        </button>
       {/each}
     </div>
   </div>

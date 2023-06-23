@@ -40,7 +40,7 @@
   async function loadProblems() {
     let response = await api.problem.list(
       `title[like]=${q.toLowerCase()}`,
-      50,
+      20,
       0,
       ["sectors", "user"]
     );
@@ -100,17 +100,6 @@
       >
     </div>
   </section>
-  <!-- <section class="mx-4 mb-4">
-    <div class="bg-gray-400 text-white text-xs inline-block rounded">
-      <div class="flex flex-row">
-        <span class="flex-1 p-2">Virtual Reality (VR)</span>
-        <div class="p-2 hover:bg-primary-800 rounded">
-          <i class="fas fa-times" />
-        </div>
-      </div>
-    </div>
-  </section> -->
-
   <div class="flex-1 overflow-auto">
   <div class="max-w-[2000px] w-full m-auto">
     
@@ -128,7 +117,7 @@
         <div class="inline-block flex w-full">
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
-            class=" bg-white rounded-xl border hover:drop-shadow-lg drop-shadow-sm w-full {listView
+            class=" bg-white rounded-xl border hover:border-primary-400  w-full {listView
               ? 'flex'
               : 'md:flex'}  flex-row"
             on:click={showProblem(problem)}
