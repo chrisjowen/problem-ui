@@ -40,7 +40,7 @@
         {/if}
       </div>
 
-      <div class="border rounded-xl white">
+      <div class="border rounded-xl white bg">
         <MemberDisplayLarge problem={problem}  />
         {#each problem.problem_users as membership}
           <MemberDisplayLarge
