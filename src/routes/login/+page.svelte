@@ -12,7 +12,7 @@
     passwordConfirm: "",
     name: "",
     last_name: "",
-    username: ""
+    username: "",
   };
 
   function registerMode() {
@@ -56,7 +56,9 @@
     <div class="w-full">
       {#if error}
         <div class="m-9">
-          <Alert color="red">{@html error.replace("clear_password:", "Password")}</Alert>
+          <Alert color="red"
+            >{@html error.replace("clear_password:", "Password")}</Alert
+          >
         </div>
       {/if}
       {#if mode === "login"}
@@ -79,15 +81,34 @@
             placeholder="Password"
             bind:value={password}
           />
+
           <div class="flex flex-row justify-center text-center">
             <div class="w-full">
-              <Button
-                class="bg-primary-600 hover:bg-primary-600 w-full"
-                on:click={onLogin}
-              >
+              <Button color="light" class="w-full" on:click={onLogin}>
                 <i class="fas fa-sign-in-alt mr-4" />
                 Login
               </Button>
+
+              <div class="p-8">
+                <hr />
+              </div>
+
+              <div class="px-9 space-x-4 flex">
+                <a
+                  href="/oauth/google"
+                  class="bg-red-600 p-4 text-white flex-1 text-center"
+                >
+                  <i class="fab fa-google mr-2" />
+                  Login With Google
+                </a>
+                <a
+                  href="/oauth/linkedin"
+                  class="bg-blue-600 p-4 text-white flex-1 text-center hidden"
+                >
+                  <i class="fab fa-linkedin mr-2" />
+                  Login With LinkedIn
+                </a>
+              </div>
 
               <p class="mt-9 text-xl font-bold">
                 <a href="#" class="hover:text-primary-900">Forgot Password</a> |
