@@ -1,8 +1,20 @@
 import axios from "axios";
 import { auth } from "$lib/store";
 import { browser } from "$app/environment";
+import api from ".";
 
 
+
+export function resetToken(token: string) {
+    axios.defaults.headers.common['Authorization'] = `bearer ${token}`;
+    return api.user.me().then((res) => {
+        return setAuthToken({
+            user: res.data,
+            token: token,
+            claims: []
+        })
+    });
+}
 
 export function login(username: string, password: string) {
     if (browser) {
@@ -39,8 +51,6 @@ export function register(registaiton: any) {
                 return Promise.reject(error?.response?.data?.error.join('<br />') || error);
             });
     }
-
-
 }
 
 function setAuthToken(data: any) {

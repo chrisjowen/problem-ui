@@ -12,7 +12,7 @@
   export let id: null | string = $page.params.id;
   let api: any = baseApi[type];
   let dispatch = createEventDispatcher();
-
+  let showCommentForm = false;
   onMount(() => {
     loadComments();
   });
@@ -41,15 +41,21 @@
 </script>
 
 {#if pagination && pagination.entries}
-  <div>
-    <CommentForm on:post={onPostComment} />
+  <div class="ml-9">
+    {#if showCommentForm}
+      <CommentForm on:post={onPostComment} />
+    {:else}
+      <div class="p-4 flex justify-end">
+        <button
+          class=" text-xs text-gray-400"
+          on:click={() => (showCommentForm = true)}
+        >
+          Quick Comment
+        </button>
+      </div>
+    {/if}
     {#each pagination.entries as comment}
       <CommentView {comment} on:edit={onEditComment} />
     {/each}
-  </div>
-  <div class="p-4 flex justify-end">
-    <p class=" text-xs text-primary-400">
-      {pagination.total_entries} Comments
-    </p>
   </div>
 {/if}

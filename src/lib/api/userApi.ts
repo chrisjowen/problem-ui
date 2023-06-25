@@ -5,6 +5,9 @@ class UserApi extends RestApi {
     constructor() {
         super("/api/user");
     }
+    me() {
+        return this.client.get("/me");
+    }
     profile(id: String) {
         return new RestApi(`${this.path}/${id}/profile`);
     }

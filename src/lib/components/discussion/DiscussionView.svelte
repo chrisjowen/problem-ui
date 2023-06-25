@@ -49,6 +49,5 @@
   />
 </div>
 <div class="border-t-[1px] m-4 pt-4">
-  <h1 class="font-bold text-xs">Comments:</h1>
   <LatestComments type="discussion" id={discussion.id} />
 </div>

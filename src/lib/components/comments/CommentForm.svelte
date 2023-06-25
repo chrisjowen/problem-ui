@@ -20,10 +20,10 @@
 </script>
 
 {#if user}
-  <section class=" p-4 border-b-[1px]">
+  <section class="pb-4 border-b-[1px]">
     <div class="flex">
       <div class="pr-2">
-        <Gravitar user={user} size="sm" className="rounded-md" />
+        <Gravitar user={user} size="xs" className="rounded-md" />
       </div>
       <div class="flex-1 ml-1">
         <p class="text-xs mb-2">{user.name} {user.last_name}</p>
