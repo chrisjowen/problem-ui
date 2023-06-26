@@ -23,6 +23,8 @@
      tags  = $page.url.searchParams.get("tags")?.split(",") || [];
   })
 
+
+  
   $: {
     query = tags.length == 0 ? "" : `tags[list]=${tags.join(",")}`;
     query =

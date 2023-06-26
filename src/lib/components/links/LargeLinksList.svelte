@@ -157,7 +157,7 @@
               target="_blank"
               href={link.url}
             >
-              {@html highlight(link.text.slice(0, 35))}
+              {@html highlight((link.text || "").slice(0, 35))}
             </a>
             <p class="text-xs text-gray-500">
               {@html highlight(link.url.slice(0, 40))}...
