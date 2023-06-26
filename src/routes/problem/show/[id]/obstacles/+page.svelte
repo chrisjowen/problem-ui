@@ -5,6 +5,7 @@
   import ObstacleList from "$lib/components/obstacles/ObstacleList.svelte";
   import { isMember } from "$lib/util/authUtil";
   import { Button } from "flowbite-svelte";
+  import { goto } from "$app/navigation";
   
   let problem: any;
 </script>
@@ -20,7 +21,7 @@
             class=" text-xs"
             size="xs"
             on:click={() =>
-              goto("/problem/show/" + problem.id + "/page/create")}
+              goto("/problem/show/" + problem.id + "/obstacles/create")}
             color="light"
           >
             <i class="fas fa-exclamation-triangle mr-2" />

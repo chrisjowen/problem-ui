@@ -8,7 +8,6 @@
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import api from "$lib/api";
   import LatestComments from "$lib/components/comments/LatestComments.svelte";
-  import type { PaginationResults, Comment } from "$lib/types";
   import LinksList from "$lib/components/links/LinksList.svelte";
   import LatestDiscussions from "$lib/components/discussion/LatestDiscussions.svelte";
   import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
@@ -20,7 +19,6 @@
   import EntityOverview from "$lib/components/shared/EntityOverview.svelte";
 
   let problem: any = null;
-  let comments: PaginationResults<Comment>;
   let loggedInUser: any;
   let problemId = $page.params.id;
   let reload: (force: boolean) => void;
@@ -29,9 +27,6 @@
     loggedInUser = $auth.loggedInUser;
   });
 
-  function onUpdateProblemStatement() {
-    api.problem.update(problemId, { overview: problem.overview });
-  }
 </script>
 
 <ProblemLayout bind:problem bind:reload>

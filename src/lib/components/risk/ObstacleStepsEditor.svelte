@@ -25,6 +25,9 @@
   <ul>
     {#each steps as step, idx}
       <li class="flex mb-2">
+        <div class="text-xs flex items-center mr-2">
+          {idx +1})
+        </div>
         <div class="flex-1">
           <Input type="text" size="sm" bind:value={step} />
         </div>
@@ -36,14 +39,17 @@
       </li>
     {/each}
     <li class="flex">
+      <div class="text-xs flex items-center mr-2">
+        {steps.length +1})
+      </div>
       <div class="flex-1">
         <Input type="text" bind:value={next} size="sm" on:keydown={onKeyDown} />
       </div>
       <div class="flex items-center">
         <div>
-          <Button on:click={addStep} size="xs" color="light" class="px-4 ml-2">
-            <i class="fas fa-add mr-2" /> Step
-          </Button>
+          <button on:click={addStep} size="xs" color="light" class="px-4 ml-2">
+            <i class="fas fa-add" /> 
+          </button>
         </div>
       </div>
     </li>

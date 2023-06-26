@@ -2,8 +2,7 @@
   import { auth } from "$lib/store";
   import { onMount } from "svelte";
   import api from "$lib/api";
-  import Gravitar from "$lib/components/shared/Gravitar.svelte";
-  import { Button, TabItem, Tabs } from "flowbite-svelte";
+  import { Button, Indicator, TabItem, Tabs } from "flowbite-svelte";
   import { goto } from "$app/navigation";
   import NotificationFeedList from "$lib/components/problem/NotificationFeedList.svelte";
   import _ from "lodash";
@@ -24,15 +23,19 @@
     "id"
   );
 
-  $: filteredProblems = myProblems?.slice(0,5);
+  $: filteredProblems = myProblems?.slice(0, 5);
 
   $: invites = me?.memberships?.filter((m: any) => m.status == "invited") ?? [];
 
-// TODO: Make preloads queriable too https://hexdocs.pm/ecto/Ecto.Query.html#preload/3-preload-functions
+  // TODO: Make preloads queriable too https://hexdocs.pm/ecto/Ecto.Query.html#preload/3-preload-functions
   onMount(async () => {
-    me = (await api.user.get(me.id, ["memberships", "memberships.problem", "profile"]))
-      .data;
-
+    me = (
+      await api.user.get(me.id, [
+        "memberships",
+        "memberships.problem",
+        "profile",
+      ])
+    ).data;
     loadProblems();
   });
 
@@ -106,11 +109,11 @@
         <TabItem open title="Profile">
           <UserProfileDisplay user={me} />
         </TabItem>
-        <TabItem title="Invites">
+        <TabItem>
+          <div slot="title" class="flex items-center gap-2">
+            {invites.length} Invites
+          </div>
           <section id="Invites" class="flex flex-col m-4">
-            <h1 class="mb-4 text-xl text-primary-600 font-bold mt-3">
-              Invites
-            </h1>
             {#if invites.length > 0}
               <ul class="flex-1 overflow-x-hidden overflow-y-auto">
                 {#each invites as invite}
@@ -139,10 +142,10 @@
           </section>
         </TabItem>
         <TabItem title="Requests">
+          <div slot="title" class="flex items-center gap-2">
+            {requested.length} Contribution Request
+          </div>
           <section id="Requests" class="flex flex-col m-4">
-            <h1 class="mb-4 text-xl text-primary-600 font-bold mt-3">
-              Approval Requests
-            </h1>
             {#if requested.length > 0}
               <ul class="flex-1 overflow-x-hidden overflow-y-auto">
                 {#each requested as request}
@@ -172,7 +175,6 @@
         </TabItem>
         <TabItem title="Notifications">
           <section id="Feed" class="flex flex-col m-4">
-            <h1 class="mb-4 text-xl text-primary-600 font-bold mt-3">Feed</h1>
             <NotificationFeedList length={5} />
           </section>
         </TabItem>

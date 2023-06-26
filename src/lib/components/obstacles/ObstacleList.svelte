@@ -6,9 +6,9 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
 
-  export let length = 200;
-
   let obstacles: PaginationResults<Obstacle>;
+
+  export let length = 200;
   export let api: RestApi;
   export let id: String = "";
   export let base: String = `${id}`;

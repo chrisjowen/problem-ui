@@ -15,7 +15,12 @@
 
 {#if user.id == $auth.loggedInUser.id && editable}
   <div class="flex justify-end">
-    <Button size="xs" color="light" on:click={() => goto("/profile/update")}>
+    <Button
+      size="xs"
+      class="w-full md:w-auto"
+      color="light"
+      on:click={() => goto("/profile/update")}
+    >
       Update Profile
       <i class="fa fa-edit ml-2" />
     </Button>
@@ -95,7 +100,7 @@
 
       <div class=" max-w-none border p-4 bg-white rounded-xl">
         <h2 class="text-xl font-bold">Education</h2>
-        <p class="p-2">{ profile.education}</p>
+        <p class="p-2">{profile.education}</p>
       </div>
 
       <div class=" max-w-none border p-4 bg-white rounded-xl">
@@ -104,21 +109,6 @@
           <Editor bind:html={profile.anything_else} editable={false} />
         </div>
       </div>
-
-      <!-- 
-        field :accomplishments, :string
-        field :anything_else, :string
-        field :country, :string
-        field :hightst_education, :string
-        field :interests, {:array, :string}, default: []
-        field :languages, {:array, :map}, default: []
-        field :intro, :string
-        field :linkedin, :string
-        field :open_to_invites, :boolean, default: true
-        field :skills, {:array, :string}, default: []
-        field :start_working, :naive_datetime
-        field :technical, :boolean, default: false
-        field :twitter, :string -->
     </section>
   {/if}
 </div>

@@ -51,7 +51,6 @@
       class=" text-xs w-full md:w-auto"
       size="xs"
       on:click={() => goto("/problem/create")}
-      color="light"
     >
       <i class="fa-solid fa-atom mr-2" />
       Create New Problem</Button

@@ -98,14 +98,14 @@
                   href="/oauth/google"
                   class="bg-red-600 p-4 text-white flex-1 text-center"
                 >
-                  <i class="fab fa-google mr-2" />
+                  <i class="fab fa-google mr-2  text-lg" />
                   Login With Google
                 </a>
                 <a
                   href="/oauth/linkedin"
-                  class="bg-blue-600 p-4 text-white flex-1 text-center hidden"
+                  class="bg-blue-600 p-4 text-white flex-1 text-center "
                 >
-                  <i class="fab fa-linkedin mr-2" />
+                  <i class="fab fa-linkedin mr-2 text-lg" />
                   Login With LinkedIn
                 </a>
               </div>
