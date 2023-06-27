@@ -52,7 +52,7 @@
   let path = $page.url.pathname;
 
   $: {
-    if (problem && menuItems.length === 0 && $state.soons.entries?.length > 0) {
+    if (problem && menuItems.length === 0 && $state?.soons?.entries?.length > 0) {
       let additional = ($state.soons?.entries || []).map((soon: any) => {
         return {
           title: soon.title,
