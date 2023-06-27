@@ -29,7 +29,7 @@
   {#if soon}
     <section
       id="PageDisplay"
-      class="max-w-[1000px] xl:min-w-[1000px] h-full border flex-1 min-h-full mb-9 bg-white m-4 relative rounded-md p-8"
+      class="max-w-[1000px] xl:min-w-[1000px]  border flex-1 min-h-full mb-9 bg-white m-4 relative rounded-md p-8"
     >
       <Editor bind:html={soon.content} editable={false} />
     </section>
