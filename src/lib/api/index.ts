@@ -1,4 +1,3 @@
-import { PUBLIC_PROBLEM_NEWS_API_PATH } from '$env/static/public';
 import problemApi from './problemApi';
 import userApi from './userApi';
 import productApi from './productApi';
@@ -27,5 +26,5 @@ export default {
     soon: new RestApi('/api/soon'),
     answer:  answerApi,
     aiProblem: aiProblemApi,
-    news: new RestApi('/api/feed', PUBLIC_PROBLEM_NEWS_API_PATH)
+    news: new RestApi('/api/feed')
 }
