@@ -1,3 +1,4 @@
+import { PUBLIC_PROBLEM_NEWS_API_PATH } from '$env/static/public';
 import problemApi from './problemApi';
 import userApi from './userApi';
 import productApi from './productApi';
@@ -7,7 +8,6 @@ import discussionApi from './discussionApi';
 import workflowApi from './workflowApi';
 import aiProblemApi from './aiProblemApi';
 import answerApi from './answerApi';
-
 import RestApi from './common/restApi';
 
 export default {
@@ -27,5 +27,5 @@ export default {
     soon: new RestApi('/api/soon'),
     answer:  answerApi,
     aiProblem: aiProblemApi,
-    news: new RestApi('/api/feed', 'http://localhost:4001')
+    news: new RestApi('/api/feed', PUBLIC_PROBLEM_NEWS_API_PATH)
 }
