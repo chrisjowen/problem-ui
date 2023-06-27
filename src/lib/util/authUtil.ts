@@ -27,6 +27,17 @@ export function isMember(problem: Problem) {
     return  loggedInUser?.id  == problem.user_id || member?.status == "active";
 }
 
+export function invited(problem: Problem) {
+    let member = membership(problem)
+    return  member?.status == "invited";
+}
+
+export function requested(problem: Problem) {
+    let member = membership(problem)
+    return  member?.status == "requested";
+}
+
+
 export function isAnyMember(problem: Problem) {
     let member = membership(problem)
     return  loggedInUser?.id  == problem.user_id || member != null;
@@ -37,6 +48,6 @@ export function isAdminMember(problem: Problem) {
     return  loggedInUser?.id  == problem.user_id || member?.role == "admin" && member?.status == "active";
 }
 
-function membership(problem: Problem) {
+export function membership(problem: Problem) {
     return problem?.problem_users?.find((pu: any) => pu.member_id == loggedInUser?.id);
 }

@@ -37,7 +37,7 @@
     {#each tags as tag, idx}
       <div class="text-gray-600 text-xs mr-1 border inline-block mr-2">
         <div class="flex items-center">
-          <span class="py-1 mx-2"><i class="fas fa-tag mr-2" /> {tag}</span>
+          <span class="py-1 mx-2"><i class="fas fa-tag mr-2" /> {tag.toLowerCase()}</span>
           {#if editable}
             <button
               class="border-l-[1px] hover:bg-red-500 p-2 group rounded-r-lg"

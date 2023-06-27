@@ -26,11 +26,11 @@ export default class RestApi {
     protected path : string;
     protected only: string[];
 
-    constructor(baseUrl: string, only: string[] = ["get", "create", "update", "delete", "list"]) {
+    constructor(baseUrl: string, rootUrl: string = PUBLIC_PROBLEM_API_PATH,  only: string[] = ["get", "create", "update", "delete", "list"]) {
 
         this.only = only;
         this.path = baseUrl;
-        this.baseUrl = `${PUBLIC_PROBLEM_API_PATH}${baseUrl}`;
+        this.baseUrl = `${rootUrl}${baseUrl}`;
         this.client = new Client(this.baseUrl);
     }
 
@@ -47,7 +47,9 @@ export default class RestApi {
 
     get(id: string, preloads: string[] = []) {
         if(!this.only.includes("get")) throw new Error("Method not allowed")
-        return this.client.get(`/${id}?preloads=${preloads.join(',')}`)
+        return this.client.get(`/${id}?preloads=${preloads.join(',')}`).catch(e => { 
+            console.error(e)
+        })
     }
 
     delete(id: any) {

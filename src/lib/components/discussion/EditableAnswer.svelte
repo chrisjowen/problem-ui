@@ -60,7 +60,7 @@
     {/if}
   </div>
 
-  <div class="border-t-[1px] m-4 pt-4">
+  <div class="border-t-[1px] m-4 py-4">
     <LatestComments type="answer" id={answer.id} />
   </div>
 {/if}

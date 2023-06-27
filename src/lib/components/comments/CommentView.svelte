@@ -17,6 +17,8 @@
       showEditForm = !showEditForm;
     }
   }
+
+  $: mine = user?.id === comment.user_id
   async function onPostComment(event: any) {
     showEditForm = false;
     dispatch("edit", { ...comment, comment: event.detail });
@@ -28,7 +30,7 @@
   {#if showEditForm}
     <CommentForm on:post={onPostComment} comment={comment.comment} />
   {:else}
-    <div class="mx-4 p-2 flex mb-1 bg-gray-50" on:click={toggleShowEditForm}>
+    <div class="mx-4 p-2 flex mb-2 bg-gray-50" on:click={toggleShowEditForm}>
       <div>
         <Gravitar
           user={comment.user}
@@ -67,6 +69,11 @@
           Like
         </p>
       </div>
+      {#if mine}
+      <div class="flex items-center mr-4 text-xs text-gray-400">
+        <i class="fa fa-edit ml-1" />
+      </div>
+      {/if}
     </div>
   {/if}
 </div>

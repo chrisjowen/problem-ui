@@ -24,6 +24,7 @@ export const suggestions = writable({
 
 export const state = writable({
     sectors: null,
+    soons: null
 });
 export const selectedProblem = writable({})
 

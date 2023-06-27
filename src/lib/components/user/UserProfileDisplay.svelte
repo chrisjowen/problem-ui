@@ -13,7 +13,7 @@
   $: profile = user.profile;
 </script>
 
-{#if user.id == $auth.loggedInUser.id && editable}
+{#if user.id == $auth.loggedInUser?.id && editable}
   <div class="flex justify-end">
     <Button
       size="xs"

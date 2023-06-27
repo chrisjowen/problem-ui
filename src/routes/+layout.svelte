@@ -27,36 +27,33 @@
       api.sector.list("", 100, 1).then((r) => {
         $state.sectors = r.data;
       });
+      api.soon.list("", 100, 1).then((r) => {
+        $state.soons = r.data;
+      });
     }
 
-    // const report_error = (msg: string = "unknown error") => {
-    //   console.error("Caught unhandled rejection:", msg);
-    //   // toasts.push({
-    //   //   message: `Unhandled error: ${msg}`,
-    //   //   type: 'error',
-    //   // })
-    // };
+    const report_error = (msg: string = "unknown error") => {
+      console.error("Caught unhandled rejection:", msg);
+    };
 
-    // const handle_rejection = (e: PromiseRejectionEvent) => {
-    //   e.preventDefault();
-    //   report_error(e?.reason);
-    // };
+    const handle_rejection = (e: PromiseRejectionEvent) => {
+      e.preventDefault();
+      report_error(e?.reason);
+    };
 
-    // const handle_error = (e: ErrorEvent) => {
-    //   e.preventDefault();
-    //   report_error(e?.message);
-    // };
+    const handle_error = (e: ErrorEvent) => {
+      e.preventDefault();
+      report_error(e?.message);
+    };
 
-    // window.addEventListener("unhandledrejection", handle_rejection);
-    // window.addEventListener("error", handle_error);
+    window.addEventListener("unhandledrejection", handle_rejection);
+    window.addEventListener("error", handle_error);
 
-    // return () => {
-    //   window.removeEventListener("unhandledrejection", handle_rejection);
-    //   window.removeEventListener("error", handle_error);
-    // };
+    return () => {
+      window.removeEventListener("unhandledrejection", handle_rejection);
+      window.removeEventListener("error", handle_error);
+    };
   });
-
-  
 
   $: showNavBar = $page.route.id != "/login";
 </script>
@@ -75,7 +72,6 @@
       >
     </div>
   </div>
-
 
   <Sidebar>
     <SidebarWrapper divClass="overflow-y-auto p-2 text-gray-700 ">

@@ -26,7 +26,6 @@
   onMount(() => {
     loggedInUser = $auth.loggedInUser;
   });
-
 </script>
 
 <ProblemLayout bind:problem bind:reload>
@@ -35,11 +34,13 @@
       <section class="xl:max-w-[940px] mx-auto md:mx-4 md:rounded-t-lg">
         {#if problem.pinned_note && problem.pinned_note != ""}
           <div class="p-4 bg-primary-100 mb-4 rounded-lg">
-            <i class="fas fa-info-circle mr-2"></i>
+            <i class="fas fa-info-circle mr-2" />
 
             {@html problem.pinned_note}
           </div>
         {/if}
+
+      
 
         <div class="md:border md:rounded-lg bg-white">
           <div class="relative text-gray-400 sm:flex md:rounded-t-lg">
@@ -86,6 +87,7 @@
                 </div>
               {/if}
             </div>
+        
             <div class="my-9 p-4 bg-gray-50 text-gray-700">
               <div class="flex">
                 <div class="mr-4">
@@ -98,7 +100,22 @@
               <p class="p-4">
                 {problem.blurb}
               </p>
+              <div class="">
+                {#each problem.sectors as sector}
+                <span class="p-2 mt-4 mr-4  border inline-block bg-white">
+                  <span class="flex flex-row">
+                    <img
+                      src={imageUrl(sector.image, { w: 50, h: 50 })}
+                      class="w-6 h-6 mr-2 border"
+                      alt={sector.name}
+                    />
+                    <p>{sector.name}</p>
+                  </span>
+                </span>
+              {/each}
+              </div>
             </div>
+            
             <Editor editable={false} html={problem.overview} />
           </div>
         </div>

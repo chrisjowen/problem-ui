@@ -8,7 +8,6 @@
   import EntityOverview from "../shared/EntityOverview.svelte";
   import Editor from "../shared/editor/Editor.svelte";
   export let discussion: any;
-  export let baseUrl = "";
 
   function onUpdateDiscussion(e: CustomEvent<Discussion>): void {
     let question = e.detail;
@@ -35,7 +34,7 @@
         <Button
           color="light"
           size="xs"
-          on:click={() => goto(`${baseUrl}/discussion/${discussion.id}/update`)}
+          on:click={() => goto(`./${discussion.id}/update`)}
           >Edit</Button
         >
       </div>

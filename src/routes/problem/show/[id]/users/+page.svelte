@@ -6,6 +6,7 @@
   import type { User } from "$lib/types";
   import api from "$lib/api";
   import UserList from "$lib/components/user/UserList.svelte";
+  import { TabItem, Tabs } from "flowbite-svelte";
 
   let problem: any = null;
   let reload: (force: boolean) => void;
@@ -27,30 +28,64 @@
         reload(true);
       });
   }
+
+  $: requested =
+    problem?.problem_users?.filter((m: any) => m.status == "requested") || [];
+
+  $: invited =
+    problem?.problem_users?.filter((m: any) => m.status == "invited") || [];
+
+  $: active =
+    problem?.problem_users?.filter((m: any) => m.status == "active") || [];
 </script>
 
 <ProblemLayout bind:problem bind:reload>
   {#if problem}
     <div class="p-4 space-y-4">
       <div class="flex">
-        <h1 class="flex-1 items-end flex text-xl text-primary-600">Contributers</h1>
+        <h1 class="flex-1 items-end flex text-xl text-primary-600">
+          Contributers
+        </h1>
 
         {#if isMember(problem)}
           <InviteContributor {problem} on:add={() => reload(true)} {exclude} />
         {/if}
       </div>
 
-      <div class="border rounded-xl white bg">
-        <MemberDisplayLarge problem={problem}  />
-        {#each problem.problem_users as membership}
-          <MemberDisplayLarge
-            problem={problem} 
-            membership={membership}
-            
-            on:delete={onDeleteMember}
-            on:accept={() => reload(true)}
-          />
-        {/each}
+      <div class="border  white bg">
+        <Tabs>
+          <TabItem open title="Members">
+            <MemberDisplayLarge {problem} />
+            {#each active as membership}
+              <MemberDisplayLarge
+                {problem}
+                {membership}
+                on:delete={onDeleteMember}
+                on:accept={() => reload(true)}
+              />
+            {/each}
+          </TabItem>
+          <TabItem title="Requests ({requested.length})">
+            {#each requested as membership}
+              <MemberDisplayLarge
+                {problem}
+                {membership}
+                on:delete={onDeleteMember}
+                on:accept={() => reload(true)}
+              />
+            {/each}
+          </TabItem>
+          <TabItem title="Invited ({invited.length})">
+            {#each invited as membership}
+              <MemberDisplayLarge
+                {problem}
+                {membership}
+                on:delete={onDeleteMember}
+                on:accept={() => reload(true)}
+              />
+            {/each}
+          </TabItem>
+        </Tabs>
       </div>
 
       <h1 class="flex-1 items-end flex text-xl text-primary-600">Followers</h1>

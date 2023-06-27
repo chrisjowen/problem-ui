@@ -24,6 +24,8 @@ export default {
     membership: new RestApi('/api/membership'),
     obstacle: new RestApi('/api/obstacle'),
     profile: new RestApi('/api/profile'),
+    soon: new RestApi('/api/soon'),
     answer:  answerApi,
-    aiProblem: aiProblemApi
+    aiProblem: aiProblemApi,
+    news: new RestApi('/api/feed', 'http://localhost:4001')
 }

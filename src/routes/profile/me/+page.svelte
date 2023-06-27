@@ -23,7 +23,7 @@
     "id"
   );
 
-  $: filteredProblems = myProblems?.slice(0, 5);
+  $: filteredProblems = myProblems;
 
   $: invites = me?.memberships?.filter((m: any) => m.status == "invited") ?? [];
 
@@ -51,7 +51,7 @@
   function loadRequests() {
     let allProblemIds = problems?.map((p: any) => p?.id).join(",") || "";
     api.membership
-      .list(`problem_id[in]=${allProblemIds}|status=requested`, 5, 1, [
+      .list(`problem_id[in]=${allProblemIds}|status=requested`, 50, 1, [
         "problem",
       ])
       .then((res) => {

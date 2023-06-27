@@ -10,13 +10,12 @@
   export let initialSectorId: string | number | null = null;
   export let selected: any[] = [];
 
-  let sectors: PaginationResults<Sector>;
+  export let sectors: PaginationResults<Sector> | null = $state.sectors;
   let q = "";
   let showResults = false;
   let input: any;
 
   onMount(() => {
-    sectors = $state.sectors;
   });
 
   $: sorted = sectors?.entries.sort((a: Sector, b: Sector) => {
@@ -82,15 +81,15 @@
 </div>
 
 {#each selected as sector}
-  <span class="p-2  mt-4 mr-4 rounded-xl border inline-block">
-    <span class="flex flex-row">
+  <span class="p-2  mt-4 mr-4 rounded-xl border inline-block bg-white">
+    <span class="flex flex-row ">
       <img
         src={imageUrl(sector.image, { w: 50, h: 50 })}
         class="w-6 h-6 mr-2"
         alt={sector.name}
       />
       <p>Sector: {sector.name}</p>
-      <div class="justify-end ml-4">
+      <div class="justify-end ml-4 ">
         <button on:click={onRemoveSector(sector)}  class="px-2 hover:text-red-500 ">
           <i class="fa fa-close " />
         </button>

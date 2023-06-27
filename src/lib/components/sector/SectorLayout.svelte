@@ -31,14 +31,15 @@
           href: `/sector/${sector.id}`,
         },
         {
-          title: "News (Coming Soon)",
+          title: "News",
           icon: "fas fa-book",
-          href: `/sector/${sector.id}/#stay`,
+          href: `/sector/${sector.id}/news`,
         },
         {
-          title: "Insights (Coming Soon)",
+          title: "Insights ",
           icon: "fas fa-chalkboard-user text-color-red",
           href: `/sector/${sector.id}/#stay`,
+          comingSoon: true,
         },
       ];
     }
@@ -64,6 +65,6 @@
       </h2>
     </div>
   {:else}
-    <slot />
+    <slot  />
   {/if}
 </LeftMenuLayout>

@@ -1,15 +1,8 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { settings } from "$lib/store";
 
-  export let menuItems: any[] = [
-    {
-      title: "Overview",
-      icon: "fa-solid fa-atom ",
-      href: `/`,
-    },
-  ];
+  export let menuItems: any[] = [];
 
   $: selected = menuItems.find(inPath) || menuItems[0];
   $: unselected = menuItems.filter((i) => i != selected);
@@ -17,13 +10,25 @@
 
   export let showTopMenu = false;
   function defaultInPath(item: any) {
-    return $page.url.pathname.includes(item.href);
+    let exactMatch = menuItems.find((i) => i.href === $page.url.pathname);
+    let isExactMatch = exactMatch != null && item.href == exactMatch.href;
+    let isSubMatch = $page.url.pathname.includes(item.href);
+
+    let exactMatchExistsNotMe =
+      exactMatch != null && item.href != exactMatch.href;
+
+    if (exactMatchExistsNotMe) {
+      return false;
+    }
+    return isExactMatch || isSubMatch;
   }
+
+  
+  $: highlighted = $page.url.pathname && menuItems.find(defaultInPath);
 
   export let inPath: (item: any) => boolean = defaultInPath;
 
   let showMobileMenu = false;
-
 
   function toggleWidth() {
     $settings.expandProductMenu = !$settings.expandProductMenu;
@@ -37,110 +42,111 @@
 </script>
 
 {#if selected}
-<div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40 h-full">
-  <section id="MobileMenu" class="bg-primary-700 drop-shadow-sm">
-    <div class="block md:hidden text-xs p-2">
-      <div
-        class="bg-white border p-2 border rounded-lg flex flex-row"
-        on:click={toggleMobileMenu}
-        on:keypress={toggleMobileMenu}
-      >
-        <i class="{selected.icon} text-primary-400 flex items-center mr-2" />
-        <p class="flex-1 flex items-center">{selected.title}</p>
-        <i class="fas fa-chevron-down text-gray-400 mr-2 flex items-center" />
+  <div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40 h-full">
+    <section id="MobileMenu" class="bg-primary-700 drop-shadow-sm">
+      <div class="block md:hidden text-xs p-2">
+        <div
+          class="bg-white border p-2 border rounded-lg flex flex-row"
+          on:click={toggleMobileMenu}
+          on:keypress={toggleMobileMenu}
+        >
+          <i class="{selected.icon} text-primary-400 flex items-center mr-2" />
+          <p class="flex-1 flex items-center">{selected.title}</p>
+          <i class="fas fa-chevron-down text-gray-400 mr-2 flex items-center" />
+        </div>
+        <div
+          class="border bg-white p-2 rounded-xl mt-2 w-full {showMobileMenu
+            ? ''
+            : 'hidden'}"
+        >
+          {#each unselected as item}
+            <a
+              href={item.href}
+              class="flex flex-row w-full p-2 hover:bg-gray-50 text-gray-600 hover:text-primary-400"
+            >
+              {#if item.icon}
+                <i class="{item.icon} flex items-center mr-2" />
+              {/if}
+              <p class="flex items-center">
+                {item.title}
+              </p>
+            </a>
+          {/each}
+        </div>
       </div>
-      <div
-        class="border bg-white p-2 rounded-xl mt-2 w-full {showMobileMenu
+    </section>
+    <div class="flex flex-1 flex-row overflow-hidden slide h-full">
+      <section
+        id="LeftMenu"
+        class="bg-gray-200 text-xs {small
           ? ''
-          : 'hidden'}"
+          : 'lg:w-[200px]'}  hidden md:block"
       >
-        {#each unselected as item}
-          <a
-            href={item.href}
-            class="flex flex-row w-full p-2 hover:bg-gray-50 text-gray-600 hover:text-primary-400"
-          >
-            {#if item.icon}
-              <i class="{item.icon} flex items-center mr-2" />
-            {/if}
-            <p class="flex items-center">
-              {item.title}
-            </p>
-          </a>
-        {/each}
-      </div>
-    </div>
-  </section>
-  <div class="flex flex-1 flex-row overflow-hidden slide h-full">
-    <section
-      id="LeftMenu"
-      class="bg-gray-200 text-xs {small ? '' : 'lg:w-[200px]'}  hidden md:block"
-    >
-      <ul class={small ? "" : "flex flex-col"}>
-        {#each menuItems as item}
+        <ul class={small ? "" : "flex flex-col"}>
+          {#each menuItems as item}
+            <li>
+              <a
+                href={item.href}
+                class="block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm
+                  {small ? 'text-center' : ''} 
+                      {item == highlighted 
+                  ? '!text-gray-600 bg-gray-50'
+                  : ' hover:text-gray-600  hover:bg-gray-100 '}"
+              >
+                {#if item.icon}
+                  <i
+                    class="{item.icon} {small ? 'text-xl' : ''} {item == highlighted 
+                      ? 'text-gray-800'
+                      : 'text-gray-400'}  {small ? '' : 'lg:mr-2'} "
+                  />
+                {/if}
+                <div
+                  class=" {small ? 'hidden' : 'lg:inline'} 
+                {item == highlighted  ? 'text-gray-800' : 'text-gray-400'}
+                "
+                >
+                  {item.title}
+                </div>
+              </a>
+            </li>
+          {/each}
           <li>
             <a
               href="#stay"
-              on:click={() => goto(item.href)}
-              class="block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm
-                  {small ? 'text-center' : ''} 
-                      {inPath(item)
-                ? '!text-gray-600 bg-gray-50'
-                : ' hover:text-gray-600  hover:bg-gray-100 '}"
+              on:click={toggleWidth}
+              class="{small
+                ? 'text-center'
+                : ''} block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm hover:text-gray-600 hover:bg-gray-100"
             >
-              {#if item.icon}
-                <i
-                  class="{item.icon} {small ? 'text-xl' : ''} {inPath(item)
-                    ? 'text-gray-800'
-                    : 'text-gray-400'}  {small ? '' : 'lg:mr-2'} "
-                />
+              <i
+                class="fas {small
+                  ? 'fa-chevron-right'
+                  : 'fa-chevron-left lg:mr-2'} "
+              />
+
+              {#if !small}
+                Hide
               {/if}
-              <div
-                class=" {small ? 'hidden' : 'lg:inline'} 
-                {inPath(item) ? 'text-gray-800' : 'text-gray-400'}
-                "
-              >
-                {item.title}
-              </div>
             </a>
           </li>
-        {/each}
-        <li>
-          <a
-            href="#stay"
-            on:click={toggleWidth}
-            class="{small
-              ? 'text-center'
-              : ''} block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm hover:text-gray-600 hover:bg-gray-100"
-          >
-            <i
-              class="fas {small
-                ? 'fa-chevron-right'
-                : 'fa-chevron-left lg:mr-2'} "
-            />
+        </ul>
+      </section>
+      <div class="overflow-auto flex-1 h-full flex flex-col">
+        {#if showTopMenu}
+          <div class="border-b-[1px]">
+            <slot name="topmenu" />
+          </div>
+        {/if}
 
-            {#if !small}
-              Hide
-            {/if}
-          </a>
-        </li>
-      </ul>
-    </section>
-    <div class="overflow-auto flex-1 h-full flex flex-col">
-      {#if showTopMenu}
-        <div class="border-b-[1px]">
-          <slot name="topmenu" />
-        </div>
-      {/if}
-
-      <div class="flex-1 md:overflow-auto h-full">
-        <div class="max-w-[2000px] m-auto h-full">
-          <slot />
-          <div class=" mb-[100px]" />
+        <div class="flex-1 md:overflow-auto h-full">
+          <div class="max-w-[2000px] m-auto h-full">
+            <slot />
+            <div class=" mb-[100px]" />
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 {/if}
 
 <style lang="scss">

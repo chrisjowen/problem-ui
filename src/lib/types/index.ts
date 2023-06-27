@@ -17,6 +17,7 @@ export interface Problem  extends IdentifiableSchema, OwnedSchema{
     overview: string;
     status: string;
     img: string;
+    sectors: Sector[];
 }
 
 export interface Link  extends IdentifiableSchema, OwnedSchema{

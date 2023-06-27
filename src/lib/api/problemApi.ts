@@ -32,7 +32,7 @@ class ProblemApi extends RestApi {
     }
 
     feed(id: string) {
-        return new RestApi(`/api/problem/${id}/feed`, ["list"]);
+        return new RestApi(`/api/problem/${id}/feed`);
     }
 
     obstacles(id: string) {

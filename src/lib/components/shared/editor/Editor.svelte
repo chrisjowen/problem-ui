@@ -48,6 +48,12 @@
   let selectedNode = "";
 
   $: {
+    if (html && editor && !editable) {
+      refresh()
+    }
+  }
+  
+  $: {
     if (selection) {
       selectedNode = selection.node;
     } else {

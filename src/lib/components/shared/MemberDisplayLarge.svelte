@@ -28,60 +28,59 @@
   $: requested = membership?.status == "requested";
 
   function acceptRequest(e: MouseEvent): void {
-    api.problem.members(problem.id).update(membership.id, {
-      status: "active",
-    }).then(() => {
-      dispatch("accept", membership);
-    })
+    api.problem
+      .members(problem.id)
+      .update(membership.id, {
+        status: "active",
+      })
+      .then(() => {
+        dispatch("accept", membership);
+      });
   }
 </script>
 
-<div
-  class="{active ? 'bg-white' : requested ? "bg-primary-50" : 'bg-gray-50'} p-4 border-b-[1px] flex flex-shrink-0"
->
+<div class="bg-white p-4 border-b-[1px] flex flex-shrink-0">
   <div class="flex flex-shrink-0 w-full">
     <div class="mr-4 mb-2">
       <Gravitar {user} size="md" className="rounded-sm" />
     </div>
-    <div class="flex-1 ">
-      <h2 class="text-sm mb-1 font-bold {active ? 'text-gray-600' : 'text-gray-200'} ">
+    <div class="flex-1">
+      <h2 class="text-sm mb-1 font-bold">
         @{user.username}
       </h2>
-      <p class="text-xs mb-2 {active ? 'text-gray-500' : 'text-gray-200'}">
+      <p class="text-xs mb-2 text-gray-500">
         Problem Solver | Design Thinker | Experience Creator | Author of the
       </p>
-      <span class="text-xs inline-block {active ? 'text-gray-400' : 'text-gray-200'} bg-gray-50 border p-1">
+      <span class="text-xs inline-block text-gray-400 bg-gray-50 border p-1">
         {membership?.role || role}
       </span>
     </div>
     {#if membership?.status == "invited"}
       {#if membership.member_id == $auth.loggedInUser?.id}
         <div class="flex items-center">
-          <Button size="xs" color="light" on:click={acceptRequest}>
-            Accept
-          </Button>
+          <Button size="xs" on:click={acceptRequest}>Accept</Button>
         </div>
       {:else}
-        <p class="text-xs">Invited</p>
+        <div>
+          <p class="p-2 bg-gray-100 text-xs text-gray-500">
+            <i class="fa fa-check mr-1" />
+            Invite Sent
+          </p>
+        </div>
       {/if}
     {:else if membership?.status == "requested"}
       {#if isAdminMember(problem)}
         <div class="flex items-center">
-          <Button size="xs" color="light" on:click={acceptRequest}>
-            Accept
-          </Button>
+          <Button size="xs" on:click={acceptRequest}>Accept</Button>
         </div>
       {:else}
         <p class="text-xs">Requested</p>
       {/if}
-    {:else if deletable && isAdminMember(problem) || membership?.member_id ==  $auth.loggedInUser?.id}
-      <div class="flex items-center">
-        <button
-          class="text-xs text-gray-800 hover:text-red-600 p-4"
-          on:click={dispatchDelete}
-        >
+    {:else if (deletable && isAdminMember(problem)) || $auth.loggedInUser && membership?.member_id == $auth.loggedInUser?.id}
+    <div class="flex items-center">
+        <Button size="xs" color="red" on:click={dispatchDelete}>
           <i class="fa fa-trash mr-2" /> Remove
-        </button>
+        </Button>
       </div>
     {/if}
   </div>

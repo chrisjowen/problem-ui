@@ -15,6 +15,7 @@
   import { createEventDispatcher } from "svelte";
   import TagList from "../shared/TagList.svelte";
   import ImageUploadModal from '../shared/ImageUploadModal.svelte';
+  import MultiSectorSearchSelect from '../sector/MultiSectorSearchSelect.svelte';
   let showImageUplodModal = false
   export let problem: Problem;
 
@@ -60,7 +61,14 @@
       </Button>
     </div>
   </div>
-  <div class="border-l-[1px] min-w-[500px]">
+  <div class="border-l-[1px] min-w-[500px] max-w-[500px] overflow-auto">
+
+    <div class="m-6">
+      <Label class="block mb-2">Sectors</Label>
+      <MultiSectorSearchSelect bind:selected={problem.sectors} />
+    </div>
+
+
     <div class="m-6">
       <Label class="block mb-2">Overview</Label>
       <Textarea bind:value={problem.blurb} class="h-[200px]" />
