@@ -23,7 +23,6 @@
     return isExactMatch || isSubMatch;
   }
 
-  
   $: highlighted = $page.url.pathname && menuItems.find(defaultInPath);
 
   export let inPath: (item: any) => boolean = defaultInPath;
@@ -89,20 +88,21 @@
                 href={item.href}
                 class="block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm
                   {small ? 'text-center' : ''} 
-                      {item == highlighted 
+                      {item == highlighted
                   ? '!text-gray-600 bg-gray-50'
                   : ' hover:text-gray-600  hover:bg-gray-100 '}"
               >
                 {#if item.icon}
                   <i
-                    class="{item.icon} {small ? 'text-xl' : ''} {item == highlighted 
+                    class="{item.icon} {small ? 'text-xl' : ''} {item ==
+                    highlighted
                       ? 'text-gray-800'
                       : 'text-gray-400'}  {small ? '' : 'lg:mr-2'} "
                   />
                 {/if}
                 <div
                   class=" {small ? 'hidden' : 'lg:inline'} 
-                {item == highlighted  ? 'text-gray-800' : 'text-gray-400'}
+                {item == highlighted ? 'text-gray-800' : 'text-gray-400'}
                 "
                 >
                   {item.title}

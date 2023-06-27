@@ -5,8 +5,8 @@ export default defineConfig({
 	plugins: [sveltekit()],
 	server: {
 		proxy: {
+			'/api/feed': 'http://localhost:4001',
 			'/api': 'http://localhost:4000',
-			// '/feed': 'http://localhost:4001',
 			'/oauth': 'http://localhost:4000',
 		}
 	}

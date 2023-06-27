@@ -7,12 +7,16 @@
   import {  invited, isLoggedIn, membership, isMember, requested } from "$lib/util/authUtil";
   import LeftMenuLayout from "../shared/LeftMenuLayout.svelte";
   import { Button } from "flowbite-svelte";
+  import { onMount } from "svelte";
 
   export let problem: any = null;
   export let menuItems: any[] = [];
 
+
+  onMount(() => reload(true));
+
   $: {
-    $page.params.id && reload();
+    $page.params.id && reload(true);
   }
 
   export function reload(force: boolean = false) {
@@ -89,18 +93,6 @@
           icon: "fas fa-rss ",
           href: `/problem/show/${problem.id}/feed`,
         },
-        // {
-        //   title: "SCOR",
-        //   icon: "fa fa-exclamation-triangle ",
-        //   href: `/problem/show/${problem.id}/comingsoon/7`,
-        //   comingSoon: true,
-        // },
-        // {
-        //   title: "Competitor Analisys",
-        //   icon: "fa-brands fa-product-hunt ",
-        //   href: `/problem/show/${problem.id}/comingsoon/6`,
-        //   comingSoon: true,
-        // },
         ...additional
       ];
     }
