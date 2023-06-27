@@ -125,7 +125,7 @@
 
 </script>
 
-{#if $state.soons?.entries && menuItems != []} 
+
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <LeftMenuLayout  {menuItems} showTopMenu={true}>
   {#if invited(problem)}
@@ -185,5 +185,3 @@
     <slot />
   {/if}
 </LeftMenuLayout>
-
-{/if}
