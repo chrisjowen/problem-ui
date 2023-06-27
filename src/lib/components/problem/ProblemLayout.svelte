@@ -4,14 +4,19 @@
   import api from "$lib/api";
   import FollowButton from "./FollowButton.svelte";
   import ContributeButton from "./ContributeButton.svelte";
-  import {  invited, isLoggedIn, membership, isMember, requested } from "$lib/util/authUtil";
+  import {
+    invited,
+    isLoggedIn,
+    membership,
+    isMember,
+    requested,
+  } from "$lib/util/authUtil";
   import LeftMenuLayout from "../shared/LeftMenuLayout.svelte";
   import { Button } from "flowbite-svelte";
   import { onMount } from "svelte";
 
   export let problem: any = null;
   export let menuItems: any[] = [];
-
 
   onMount(() => reload(true));
 
@@ -47,15 +52,15 @@
   let path = $page.url.pathname;
 
   $: {
-    if (problem && menuItems.length === 0) {
-      let additional =  ($state.soons?.entries || []).map((soon: any) => {
+    if (problem && menuItems.length === 0 && $state.soons.entries?.length > 0) {
+      let additional = ($state.soons?.entries || []).map((soon: any) => {
         return {
           title: soon.title,
           icon: soon.icon,
           href: `/problem/show/${problem.id}/comingsoon/${soon.id}`,
           comingSoon: true,
         };
-      })
+      });
 
       menuItems = [
         {
@@ -93,12 +98,10 @@
           icon: "fas fa-rss ",
           href: `/problem/show/${problem.id}/feed`,
         },
-        ...additional
+        ...additional,
       ];
     }
   }
-
-
 
   function checkPath(item: any) {
     if (!problem) return false;
@@ -111,7 +114,6 @@
   }
 
   function acceptRequest(): void {
-
     let member = membership(problem);
     api.problem
       .members(problem.id)
@@ -119,15 +121,13 @@
         status: "active",
       })
       .then(() => {
-       reload(true);
+        reload(true);
       });
   }
-
 </script>
 
-
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-<LeftMenuLayout  {menuItems} showTopMenu={true}>
+<LeftMenuLayout {menuItems} showTopMenu={true}>
   {#if invited(problem)}
     <div class="p-4 bg-primary-100 text-center space-y-4">
       <p class="text-xl">
@@ -136,7 +136,7 @@
       </p>
 
       <div>
-        <Button on:click={acceptRequest} >
+        <Button on:click={acceptRequest}>
           <i class="fa fa-user-plus mr-2" /> Join & Contribute
         </Button>
       </div>
@@ -145,10 +145,9 @@
     <div class="p-4 bg-primary-100 text-center space-y-4">
       <p class="text-xl">
         <i class="fa fa-info-circle mr-2 text-5xl text-primary-700" /><br />
-        You have requested to contribute to this idea 
+        You have requested to contribute to this idea
       </p>
     </div>
-
   {/if}
 
   <div class="md:flex" slot="topmenu">

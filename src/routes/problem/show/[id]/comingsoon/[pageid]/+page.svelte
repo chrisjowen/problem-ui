@@ -1,7 +1,6 @@
 <script>
   import { page } from "$app/stores";
   import api from "$lib/api";
-  import PageView from "$lib/components/page/PageContent.svelte";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import Editor from "$lib/components/shared/editor/Editor.svelte";
   import { onMount } from "svelte";
@@ -11,8 +10,6 @@
   onMount(() => {
     load();
   });
-
-
 
   $: {
     $page.params.pageid && load()
