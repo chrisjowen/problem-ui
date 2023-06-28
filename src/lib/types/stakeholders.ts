@@ -10,4 +10,5 @@ export interface Stakeholder {
     traits: string[];
     socioEcenomics: [];
     race: string;
+    img: string;
   }

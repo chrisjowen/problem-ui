@@ -17,4 +17,4 @@
     <NewsList tags={problem.sectors.map((s) => s.name)} />
   {/if}
 </ProblemLayout>
-```
+

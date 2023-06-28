@@ -6,6 +6,7 @@
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import { auth } from "$lib/store";
   import { goto } from "$app/navigation";
+  import TagList from "../shared/TagList.svelte";
 
   let dispatch = createEventDispatcher();
   let showModal = false;
@@ -17,9 +18,8 @@
   function showCreateDiscussion() {
     if (!$auth.loggedInUser) {
       goto("/login");
-    }
-    else{
-      goto(`${baseUrl}/discussion/create`)
+    } else {
+      goto(`${baseUrl}/discussion/create`);
     }
   }
 
@@ -43,17 +43,15 @@
     <DiscussionForm on:submit={onCreateDiscussion} />
   </Modal>
 
-
   <div class="flex mb-5">
     <h1 class="flex-1 items-end flex text-xl text-primary-600">Discussions</h1>
     {#if editable}
-    <Button size="xs"  color="light" on:click={showCreateDiscussion}>
-      <i class="fa fa-comment mr-2 text-xs" />
-      Create Discussion
-    </Button>
+      <Button size="xs" color="light" on:click={showCreateDiscussion}>
+        <i class="fa fa-comment mr-2 text-xs" />
+        Create Discussion
+      </Button>
     {/if}
   </div>
-  
 
   {#if discussions}
     {#if discussions.total_entries == 0}
@@ -62,7 +60,7 @@
     {#each discussions.entries as discussion}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
-        class="bg-white hover:drop-shadow-md p-4 border  mb-2"
+        class="bg-white hover:drop-shadow-md p-4 border mb-2"
         on:click={onClick(discussion)}
       >
         <div class="flex">
@@ -74,18 +72,22 @@
             />
           </div>
           <div class="flex-1 ml-4">
+            <h2 class="text-xl text-gray-800 bold">
+              {discussion.title}
+            </h2>
             <p class="text-xs text-gray-400">
               {discussion.user.name}
               {discussion.user.last_name}
               - <span class="text-xs text-gray-500 mr-3"> 3 Answers </span>
             </p>
 
-            <h2 class="text-md text-gray-800 bold">
-              {discussion.title}
-           
-            </h2>
-            <p class="text-xs">5 Mins ago</p>
+            <p class="text-xs text-gray-400">5 Mins ago</p>
 
+            {#if discussion.tags?.length > 0}
+              <div class="pt-4">
+                <TagList tags={discussion.tags} editable={false} />
+              </div>
+            {/if}
           </div>
           <div class="flex justify-center items-center mr-2">
             <i class="fas fa-chevron-right text-gray-500" />

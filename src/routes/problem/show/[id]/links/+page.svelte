@@ -65,7 +65,7 @@
 
 <ProblemLayout bind:problem bind:reload>
   {#if problem}
-    <div class="p-4">
+    <div class="p-4 bg-gray-300">
       <Input
         type="search"
         placeholder="Search Resources..."
@@ -75,7 +75,7 @@
         <i slot="right" class="fa-solid fa-search" />
       </Input>
 
-      <div class="p-4">
+      <div class="p-4 hidden">
         {#each tags as tag, idx}
           <div class="text-gray-600 text-xs mr-1 border inline-block mr-2">
             <div class="flex">
@@ -89,7 +89,6 @@
             </div>
           </div>
         {/each}
-        <div class="text-gray-600 text-xs mr-1 border inline-block mr-2" />
       </div>
     </div>
     <div class="p-4">

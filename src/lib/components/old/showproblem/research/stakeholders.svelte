@@ -5,25 +5,17 @@
   import Demographics from "./demographics.svelte";
   import Wherewhen from "./wherewhen.svelte";
 
-  let stakeholders: any[] = [];
+  export let stakeholders: any[] = [];
   let showModal = false;
   let stakeholder: any = null;
 
   export let problemId: null | number = null;
 
-  onMount(async () => {
-    reload();
-  });
-
   let showInfo = (selected: any) => () => {
     stakeholder = selected;
     showModal = true;
   };
-
-  export async function reload() {
-    let response = await axios.get(`/api/problem/${problemId}/stakeholder`);
-    stakeholders = response.data;
-  }
+ 
 </script>
 
 <!-- <h1 class="text-2xl text-bold text-primary-600 mb-4">Stakeholders</h1> -->

@@ -32,13 +32,12 @@
   {#if problem}
     <div class="flex md:mt-4 items-start">
       <section class="xl:max-w-[940px] mx-auto md:mx-4 md:rounded-t-lg">
-        {#if problem.pinned_note && problem.pinned_note != ""}
-          <div class="p-4 bg-primary-100 mb-4 rounded-lg">
-            <i class="fas fa-info-circle mr-2" />
+        <!-- {#if problem.pinned_note && problem.pinned_note != ""}
+          <div class="p-4 bg-gray-500 text-white mb-4 rounded-lg">
 
             {@html problem.pinned_note}
           </div>
-        {/if}
+        {/if} -->
 
       
 

@@ -52,8 +52,8 @@
         {/if}
       </div>
 
-      <div class="border  white bg">
-        <Tabs>
+      <div class="border  white bg-white ">
+        <Tabs style="underline">
           <TabItem open title="Members">
             <MemberDisplayLarge {problem} />
             {#each active as membership}

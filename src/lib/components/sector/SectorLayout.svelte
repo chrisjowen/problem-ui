@@ -11,7 +11,13 @@
   import { goto } from "$app/navigation";
 
   let sectorId = $page.params.id;
-  let menuItems: any[] = [];
+  let menuItems: any[] = [
+    {
+      title: "Sector Overview",
+      icon: "fas fa-info-circle",
+      href: `/sector/${$page.params.id}`,
+    },
+  ];
 
   onMount(() => {
     loadSector();
@@ -65,6 +71,6 @@
       </h2>
     </div>
   {:else}
-    <slot  />
+    <slot />
   {/if}
 </LeftMenuLayout>

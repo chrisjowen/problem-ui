@@ -42,6 +42,10 @@ class ProblemApi extends RestApi {
         return new RestApi(`/api/problem/${id}/sector`);
     }
 
+    stakeholders(id: String) {
+        return new RestApi(`/api/problem/${id}/stakeholder`);
+    }
+
 
     members(id: String) {
         return new RestApi(`/api/problem/${id}/member`);

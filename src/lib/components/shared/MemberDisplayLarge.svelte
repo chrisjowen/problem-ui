@@ -39,7 +39,7 @@
   }
 </script>
 
-<div class="bg-white p-4 border-b-[1px] flex flex-shrink-0">
+<div class="bg-white p-4 mb-4 border rounded-lg flex flex-shrink-0">
   <div class="flex flex-shrink-0 w-full">
     <div class="mr-4 mb-2">
       <Gravitar {user} size="md" className="rounded-sm" />
@@ -74,10 +74,15 @@
           <Button size="xs" on:click={acceptRequest}>Accept</Button>
         </div>
       {:else}
-        <p class="text-xs">Requested</p>
+        <div>
+          <p class="p-2 bg-gray-100 text-xs text-gray-500">
+            <i class="fa fa-lock mr-1" />
+            Requested Access
+          </p>
+        </div>
       {/if}
-    {:else if (deletable && isAdminMember(problem)) || $auth.loggedInUser && membership?.member_id == $auth.loggedInUser?.id}
-    <div class="flex items-center">
+    {:else if (deletable && isAdminMember(problem)) || ($auth.loggedInUser && membership?.member_id == $auth.loggedInUser?.id)}
+      <div class="flex items-center">
         <Button size="xs" color="red" on:click={dispatchDelete}>
           <i class="fa fa-trash mr-2" /> Remove
         </Button>
