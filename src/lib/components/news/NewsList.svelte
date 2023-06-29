@@ -117,10 +117,10 @@
     </section>
     <section
       id="tags"
-      class="hidden xl:block w-[100px] relative p-4 overflow-auto"
+      class="hidden xl:block relative p-4 overflow-auto "
     >
-      <div class="fixed p-4">
-        <h1 class="flex-1 items-end mb-4 flex text-lg text-primary-600">
+      <div class="fixed p-4  w-[600px]">
+        <h1 class="mb-4 text-lg text-primary-600">
           Tags
         </h1>
         <TagList
