@@ -45,7 +45,7 @@
       !force
     ) {
       problem = $selectedProblem;
-      setTimeout(makeMenu, 0)
+      makeMenu()
     } else {
       api.problem
         .get($page.params.id, [
@@ -60,7 +60,7 @@
         .then((res) => {
           $selectedProblem = res.data;
           problem = res.data;
-          setTimeout(makeMenu, 0)
+          makeMenu()
         });
     }
   }
