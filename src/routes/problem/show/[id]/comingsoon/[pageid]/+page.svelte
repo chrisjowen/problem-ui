@@ -25,9 +25,9 @@
   {#if soon}
     <section
       id="PageDisplay"
-      class="  flex-1 min-h-full bg-white relative rounded-md p-8"
+      class="  flex-1 min-h-full bg-white relative rounded-md p-8 w-full"
     >
-      <div class="m-auto w-[1000px]">
+      <div class="m-auto max-w-[1000px]">
         <Editor bind:html={soon.content} editable={false} />
       </div>
     </section>
