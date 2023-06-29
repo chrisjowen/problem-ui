@@ -42,9 +42,9 @@
 
 <div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40 h-full">
   <section id="MobileMenu" class="bg-primary-700 drop-shadow-sm">
-    <div class="block md:hidden text-xs p-2">
+    <div class="block md:hidden text-lg ">
       <div
-        class="bg-white border p-2 border rounded-lg flex flex-row"
+        class="bg-white border p-2 border flex flex-row"
         on:click={toggleMobileMenu}
         on:keypress={toggleMobileMenu}
       >
@@ -53,7 +53,7 @@
         <i class="fas fa-chevron-down text-gray-400 mr-2 flex items-center" />
       </div>
       <div
-        class="border bg-white p-2 rounded-xl mt-2 w-full {showMobileMenu
+        class="border bg-white  w-full {showMobileMenu
           ? ''
           : 'hidden'}"
       >

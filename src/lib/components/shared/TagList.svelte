@@ -1,8 +1,14 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+  let dispatch = createEventDispatcher();
   let tag = "";
   export let tags: string[] = [];
   import { Button, Input } from "flowbite-svelte";
   export let editable = true;
+  export let clickable = false;
+
+  export let selected: string[] = [];
+
 
   function onKeyDown(e: KeyboardEvent): void {
     if (e.code == "Enter") {
@@ -20,24 +26,39 @@
     tmp.splice(idx, 1);
     tags = tmp;
   };
+
+  let onTagClicked = (tag: string) => () => {
+    if (clickable) {
+      dispatch("click", tag);
+    }
+  };
 </script>
 
 {#if editable}
- 
-
-  <Input type="text" bind:value={tag}  on:keydown={onKeyDown} >
-    <button slot="right" on:click={saveTag}  color="light" >
-      <i class="fas fa-plus mr-2" /> 
+  <Input type="text" bind:value={tag} on:keydown={onKeyDown}>
+    <button slot="right" on:click={saveTag} color="light">
+      <i class="fas fa-plus mr-2" />
     </button>
   </Input>
-
 {/if}
 <div>
   {#if tags}
     {#each tags as tag, idx}
-      <div class="text-gray-600 text-xs mr-1 border inline-block mr-2">
+      <button
+        class="text-gray-600  text-xs mr-1 border inline-block mr-2 mb-2 {clickable
+          ? 'hover:bg-primary-100 hover:text-gray-600'
+          : ''}
+          
+          {selected.includes(tag)
+            ? 'bg-primary-400 text-white '
+            : 'bg-white'}
+          "
+        on:click={onTagClicked(tag)}
+      >
         <div class="flex items-center">
-          <span class="py-1 mx-2"><i class="fas fa-tag mr-2" /> {tag.toLowerCase()}</span>
+          <span class="py-1 mx-2"
+            ><i class="fas fa-tag mr-2" /> {tag.toLowerCase()}</span
+          >
           {#if editable}
             <button
               class="border-l-[1px] hover:bg-red-500 p-2 group rounded-r-lg"
@@ -47,7 +68,7 @@
             </button>
           {/if}
         </div>
-      </div>
+      </button>
     {/each}
   {/if}
 </div>

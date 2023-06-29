@@ -6,7 +6,6 @@
   import { onMount } from "svelte";
 
   let soon = null;
-
   onMount(() => {
     load();
   });
@@ -26,9 +25,11 @@
   {#if soon}
     <section
       id="PageDisplay"
-      class="max-w-[1000px] xl:min-w-[1000px]  border flex-1 min-h-full mb-9 bg-white m-4 relative rounded-md p-8"
+      class="  flex-1 min-h-full bg-white relative rounded-md p-8"
     >
-      <Editor bind:html={soon.content} editable={false} />
+      <div class="m-auto w-[1000px]">
+        <Editor bind:html={soon.content} editable={false} />
+      </div>
     </section>
   {/if}
 </ProblemLayout>

@@ -29,6 +29,14 @@
   $: {
     $page.params.id && reload();
   }
+  $: {
+    if (
+      problem &&
+      $state?.soons?.entries?.length > 0
+    ) {
+      setTimeout(makeMenu, 0)
+    }
+  }
 
   export function reload(force: boolean = false) {
     if (
@@ -37,7 +45,7 @@
       !force
     ) {
       problem = $selectedProblem;
-      makeMenu() 
+      setTimeout(makeMenu, 0)
     } else {
       api.problem
         .get($page.params.id, [
@@ -52,7 +60,7 @@
         .then((res) => {
           $selectedProblem = res.data;
           problem = res.data;
-          makeMenu() 
+          setTimeout(makeMenu, 0)
         });
     }
   }
@@ -118,14 +126,7 @@
 
   let path = $page.url.pathname;
 
-  $: {
-    if (
-      problem &&
-      $state?.soons?.entries?.length > 0
-    ) {
-      makeMenu() 
-    }
-  }
+ 
 
   function checkPath(item: any) {
     if (!problem) return false;
