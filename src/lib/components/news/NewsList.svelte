@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { bind } from 'svelte/internal';
-  import { classNames } from "classnames";
-  import { auth } from "$lib/store";
   import type { PaginationResults } from "$lib/types";
   import api from "$lib/api";
   import TagList from "../shared/TagList.svelte";
@@ -69,13 +66,25 @@
               class="hidden md:w-[150px] mb-4 md:h-[150px] rounded-lg border"
               style="background: url('{item.image}'); background-size:cover"
             />
-            <div>
-              <img
-                src={item.image}
-                class="  rounded-lg border mb-4"
-                alt={item.title}
+            {#if item.source.provider == "youtube"}
+              <iframe
+               class="w-full rounded-lg"
+                height="415"
+                src="https://www.youtube.com/embed/{item.ext_id}"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
               />
-            </div>
+            {:else}
+              <div>
+                <img
+                  src={item.image}
+                  class="w-full rounded-lg border mb-4"
+                  alt={item.title}
+                />
+              </div>
+            {/if}
 
             <h3 class="text-xl mb-2">{@html item.title}</h3>
             <div class="text-xs text-gray-400 flex space-x-4">
@@ -102,8 +111,7 @@
 
           <p class="prose my-4">{@html item.summary}</p>
 
-          <slot name="actions" item={item} />
-
+          <slot name="actions" {item} />
         </div>
       {/each}
     </section>
