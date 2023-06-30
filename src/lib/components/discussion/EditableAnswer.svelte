@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Answer, Problem } from "$lib/types";
+  import type { Answer } from "$lib/types";
   import { createEventDispatcher } from "svelte";
   import LatestComments from "../comments/LatestComments.svelte";
   import { Button } from "flowbite-svelte";
@@ -8,7 +8,6 @@
   import EntityOverview from "../shared/EntityOverview.svelte";
 
   export let answer: Answer;
-  export let problem: Problem;
   let refreshEditor = () => null;
   let refreshReadOnlyEditor = () => null;
   let dispatch = createEventDispatcher();

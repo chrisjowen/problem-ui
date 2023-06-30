@@ -55,7 +55,7 @@
       {/if}
       {#each discussion.answers as answer}
         <section id="answer-{answer.id}" class="bg-white border-t-[1px] border-x-[1px]">
-          <EditableAnswer {answer} on:update={onUpdateAnswer(answer)} {problem} />
+          <EditableAnswer {answer} on:update={onUpdateAnswer(answer)} />
         </section>
       {/each}
       {#if $auth?.loggedInUser}

@@ -4,6 +4,6 @@
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
 </script>
 
-<ProblemLayout >
+<ProblemLayout>
     <Discussion discussionId={$page.params.discussionId} />
 </ProblemLayout>
