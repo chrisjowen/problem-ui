@@ -41,8 +41,7 @@
         class="text-white font-bold lg:text-7xl text-6xl bold text-center mb-9"
       >
         <span class="text-primary-300">
-          Turn your <i class="fas fa-lightbulb text-yellow-300" /> into
-          <i class="fas fa-rocket text-black text-red-500" /> <br />
+          Turn your  Ideas Into Reality
         </span>
         With The Power of the Crowd
       </h1>
