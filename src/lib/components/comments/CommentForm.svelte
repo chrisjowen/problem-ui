@@ -40,4 +40,6 @@
       </Button>
     </div>
   </section>
+  {:else}
+  <a href="/login" class="text-primary-500 underline">Log in</a> to comment
 {/if}

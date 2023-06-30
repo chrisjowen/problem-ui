@@ -20,6 +20,8 @@
   let onRemove = (tag: any) => () => {
     selected = selected.filter((s) => tag != tag);
   };
+
+  $: filtered = tags.filter((tag) => tag.toLowerCase().includes(q.toLowerCase()));
 </script>
 
 <div class="relative">
@@ -37,11 +39,11 @@
       class="absolute w-full z-10 border max-h-[300px] overflow-auto"
     >
       <ul class="bg-white">
-        {#each tags as tag}
+        {#each filtered as tag}
           <li >
             <button class="flex flex-row p-4 hover:bg-primary-100 items-center w-full" on:click={onAdd(tag)} on:keydown={onAdd(tag)}>
               <i class="fa fa-tag mr-2" />
-              {tag}
+              <HighlightedText value={tag.toLowerCase()} q={q.toLowerCase()} />
             </button>
           </li>
         {/each}
@@ -54,7 +56,7 @@
     <span class="flex flex-row items-center ">
       <i class="fa fa-tag mr-2" />
 
-      {tag}
+      {tag.toLowerCase()}
       <div class="justify-end ml-4">
         <button on:click={onRemove(tag)} class="px-2 hover:text-red-500">
           <i class="fa fa-close" />
