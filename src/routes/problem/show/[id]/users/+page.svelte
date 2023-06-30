@@ -88,8 +88,6 @@
         </Tabs>
       </div>
 
-      <h1 class="flex-1 items-end flex text-xl text-primary-600">Followers</h1>
-      <UserList users={problem.followers} placeholder="No Followers" />
     </div>
   {/if}
 </ProblemLayout>

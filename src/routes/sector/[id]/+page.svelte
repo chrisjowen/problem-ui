@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { PaginationResults } from "$lib/types";
   import EditableTextArea from "$lib/components/shared/EditableTextArea.svelte";
-  import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import api from "$lib/api";
   import { imageUrl } from "$lib/util/imageutil";
@@ -57,17 +56,19 @@
               />
             </div>
 
-              <div class="px-9">
-                <EditableTextArea bind:input={sector.description} />
-              </div>
+            <div class="px-9">
+              <EditableTextArea bind:input={sector.description} />
+            </div>
           </div>
         </section>
         <section class="md:my-3 md:m-0 mx-4 flex-1 hidden 2xl:block">
           <div class="grid grid-cols-1 md:grid-cols-1 overflow-x-auto">
-            <h1 class="text-xl m-2 text-gray-600 mb-4">Latest Problems</h1>
-
+            <h1 class="text-xl m-2 text-gray-600 mb-4">
+              <i class="fas fa-rocket mr-2" />
+              Sector Spaces
+            </h1>
             {#if !sectorProblems || sectorProblems?.entries.length == 0}
-              <div class="bg-white p-4 border mb-4">No problems found</div>
+              <div class="bg-white p-4 border mb-4">No spaces found</div>
             {:else}
               {#each sectorProblems.entries as sectorProblem, idx}
                 <div class="inline-block flex w-full mb-2">

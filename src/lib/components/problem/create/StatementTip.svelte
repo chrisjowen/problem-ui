@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import api from "$lib/api";
   import type { PaginationResults } from "$lib/types";
   import { Button } from "flowbite-svelte";
@@ -33,10 +34,10 @@
 </script>
 
 {#if checking}
-  <h2>Checking your problem statement</h2>
+  <h2>Checking Your Idea</h2>
   <p>
-    Please bear with me, I'm just checking your problem statement to see if
-    there is any advice I can give you to help you out
+    Please bear with me, I'm just checking your Idea to see if there is any
+    advice I can give you to help you out
   </p>
 {:else if check}
   {#if check.error}
@@ -44,61 +45,42 @@
     <p>{check.error}</p>
   {:else if !check.valid}
     <h2>I Need A Little More Info</h2>
-    <p>
-      A good problem statement should create awareness and stimulate creative
-      thinking.
-    </p>
+    <p>A good idea should create awareness and stimulate creative thinking.</p>
   {:else}
-    <h2>The Problem Statement Looks Good</h2>
+    <h2>The Idea Looks Good</h2>
     <p>
       I think I can use this to generate a template for you, here are some
-      sectors that seem relevent to the problem statement you provided...
+      sectors that seem relevent to the idea you provided...
     </p>
   {/if}
 {:else}
-  <h2>Describe The Problem Statement</h2>
+  <h2>
+    <i class="fa fa-rocket mr-2 text-primary-400" />
+    SolveSpace Creation
+  </h2>
 {/if}
 
 {#if !checking && !check}
   <p>
-    A good problem statement should create awareness and stimulate creative
-    thinking.
+    <strong>Hey there,</strong> <br /> Im the SolveSpace Creation AI wizzard, I'm
+    here to help you create a space where you can work on your idea and build the
+    next unicorn.
   </p>
-  <p class="font-bold text-primary-500 p-2 text-center bg-gray-50">
-    N.B. Keep it short and concise, I will help you expand it later
-  </p>
-  <div class="hidden md:block">
-  <p>
-    It should <span class="underline">
-      not identify a solution or create a bias toward a specific strategy</span
-    >.
-  </p>
- 
-    {#if suggestion}
-      <div class="p-4 bg-yellow-50">
-        <h2 class="!text-yellow-500">
-          <i class="fa fa-lightbulb text-yellow-500 mr-2" /> Example
-        </h2>
-        <p><strong>{suggestion.title}:</strong> {suggestion.blurb}</p>
-      </div>
-    {:else}
-      <p>It should identify the:</p>
-
-      <ul>
-        <li><strong>Who:</strong> Who is currently experiencing the problem</li>
-        <li><strong>What:</strong> What is the problem experienced</li>
-        <li><strong>Why:</strong> Why is this a problem</li>
-        <li>
-          <strong>When:</strong> Has this always been a problem or is it just a recent
-          thing
-        </li>
-      </ul>
-    {/if}
-
-    <Button on:click={makeSuggestion} class="mt-2 w-full"
-      >Give Me A Suggestion</Button
-    >
+  <div class=" p-4 !my-8 rounded-lg text-center bg-gray-50 border">
+    <p>
+      Firstly, telling me your idea but keep it keep it short and sweet, I will
+      help you expand it later
+    </p>
   </div>
+
+  <h3 class="">Having Trouble Thinking Up An Idea?</h3>
+  <p>
+    Take a look at our <a href="/ideas">
+      <i class="fa fa-lightbulb ml-2 text-yellow-400" />
+      AI generated ideas
+    </a> for inspiration.
+  </p>
+  <div class="text-center" />
 {:else if !checking && check?.hints && !check?.valid}
   <h3>Hints:</h3>
   {#each check.hints as item}

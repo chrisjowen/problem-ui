@@ -7,6 +7,7 @@ import discussionApi from './discussionApi';
 import workflowApi from './workflowApi';
 import aiProblemApi from './aiProblemApi';
 import answerApi from './answerApi';
+import ideaApi from './ideaApi';
 import RestApi from './common/restApi';
 
 export default {
@@ -20,6 +21,7 @@ export default {
     suggestion: new RestApi('/api/problem_suggestion'),
     follower: new RestApi('/api/follower'),
     notifications: new RestApi('/api/notification'),
+    ideas: ideaApi,
     membership: new RestApi('/api/membership'),
     obstacle: new RestApi('/api/obstacle'),
     profile: new RestApi('/api/profile'),

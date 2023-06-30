@@ -14,7 +14,7 @@
       state: "loading",
       message: {
         idle: "Building problem template",
-        loading: "Creating Problem",
+        loading: "Creating Solve Space - This may take a few minutes",
         done: "Problem created",
       },
     },
@@ -22,7 +22,7 @@
     meta: {
       state: "idle",
       message: {
-        loading: "Summarizing Problem",
+        loading: "Generating Problem Statement",
         done: "Problem summarized",
       },
     },
@@ -30,7 +30,7 @@
     image: {
       state: "idle",
       message: {
-        loading: "Generating banner image",
+        loading: "Creating banner image",
         done: "Banner image generated",
       },
     },

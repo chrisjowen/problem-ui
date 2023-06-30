@@ -41,12 +41,6 @@
           icon: "fas fa-book",
           href: `/sector/${sector.id}/news`,
         },
-        {
-          title: "Insights ",
-          icon: "fas fa-chalkboard-user text-color-red",
-          href: `/sector/${sector.id}/#stay`,
-          comingSoon: true,
-        },
       ];
     }
   }
@@ -59,11 +53,10 @@
       size="xs"
       on:click={() => goto("/problem/create")}
     >
-      <i class="fa-solid fa-atom mr-2" />
-      Create New Problem</Button
-    >
+      <i class="fa-solid fa-rocket mr-2" />
+      Create SolveSpace
+    </Button>
   </div>
-
   {#if !sector}
     <div class="bg-gray-50 p-9">
       <h2 class="mb-3 text-2xl font-bold tracking-tight text-primary-600">

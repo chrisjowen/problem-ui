@@ -20,7 +20,7 @@
 </script>
 
 {#if user}
-  <section class="pb-4 border-b-[1px]">
+  <section class="pb-4 ">
     <div class="flex">
       <div class="pr-2">
         <Gravitar user={user} size="xs" className="rounded-md" />

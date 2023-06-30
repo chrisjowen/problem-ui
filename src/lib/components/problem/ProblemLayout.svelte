@@ -19,7 +19,7 @@
   export let menuItems: any[] = [
     {
       title: "Overview",
-      icon: "fa-solid fa-atom ",
+      icon: "fa-solid fa-rocket ",
       href: `/problem/show/${$page.params.id}`,
     },
   ];
@@ -34,7 +34,7 @@
       problem &&
       $state?.soons?.entries?.length > 0
     ) {
-      setTimeout(makeMenu, 0)
+      setTimeout(makeMenu, 100)
     }
   }
 
@@ -79,7 +79,7 @@
       menuItems = [
         {
           title: "Overview",
-          icon: "fa-solid fa-atom ",
+          icon: "fa-solid fa-rocket ",
           href: `/problem/show/${problem.id}`,
         },
         {
@@ -188,14 +188,14 @@
         <span>/</span>
         <span>{problem.title}</span>
       </div>
-      {#if !$auth.loggedInUser || !isMember(problem)}
+      <!-- {#if !$auth.loggedInUser || !isMember(problem)}
         <div class="lg:space-x-1 flex spacy-y-1chr p-2">
           <FollowButton on:change={() => reload(true)} {problem} />
           {#if isLoggedIn()}
             <ContributeButton on:requested={() => reload(true)} {problem} />
           {/if}
         </div>
-      {/if}
+      {/if} -->
     {/if}
   </div>
 

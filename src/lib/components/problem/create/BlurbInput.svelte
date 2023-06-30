@@ -17,7 +17,7 @@
     warning = false;
   }
 
-  function onCheck() {
+  export function onCheck() {
     if (!checking) {
       valid = false;
       warning = false;
@@ -64,9 +64,9 @@
 
     {#if !valid}
       <div class="flex justify-end">
-        <Button on:click={onCheck} size="xs" color="light" disabled={checking}>
-          <i class="fa fa-arrow-right mr-2" />
-          Check Statement
+        <Button on:click={onCheck}   disabled={checking}>
+          <i class="fa fa-check mr-2" />
+          Validate My Idea
         </Button>
       </div>
     {/if}

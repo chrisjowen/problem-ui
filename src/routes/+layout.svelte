@@ -86,7 +86,7 @@
           </svelte:fragment>
         </SidebarItem>
         <SidebarItem
-          label="Problems"
+          label="Spaces"
           href="/problem/list"
           on:click={() => (hideSideBar = true)}
         >
@@ -152,12 +152,23 @@
             </a>
 
             <div class="p-5 px-7 space-x-2 flex text-xs hidden md:block">
+
               <a
-                href="/problem/list"
+              href="/ideas"
+              class="hover:bg-primary-600 rounded-xl p-2 px-3"
+            >
+            
+              <i class="fa-solid fa-lightbulb text-xs mr-1" />
+               Seed Ideas
+      
+            </a>
+
+              <a
+                href="/problem"
                 class="hover:bg-primary-600 rounded-xl p-2 px-3"
               >
-                <i class="fa-solid fa-magnifying-glass text-xs mr-1" />
-                Problems
+                <i class="fa-solid fa-rocket  text-xs mr-1" />
+                 SolveSpaces
               </a>
               <a
                 href="/sector"

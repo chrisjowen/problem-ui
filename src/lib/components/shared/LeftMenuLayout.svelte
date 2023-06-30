@@ -42,28 +42,31 @@
 
 <div class="flex flex-col h-full bg-gray-100 drop-shadow-xl z-40 h-full">
   <section id="MobileMenu" class="bg-primary-700 drop-shadow-sm">
-    <div class="block md:hidden text-lg ">
+    <div class="block md:hidden text-md">
       <div
-        class="bg-white border p-2 border flex flex-row"
+        class="bg-white border p-4 flex flex-row"
         on:click={toggleMobileMenu}
         on:keypress={toggleMobileMenu}
       >
+        <i class="fas fa-bars text-gray-400 mr-4 flex items-center" />
+
         <i class="{selected.icon} text-primary-400 flex items-center mr-2" />
-        <p class="flex-1 flex items-center">{selected.title}</p>
-        <i class="fas fa-chevron-down text-gray-400 mr-2 flex items-center" />
+        <p class="flex-1 flex items-center text-primary-400">
+          {selected.title}
+        </p>
       </div>
       <div
-        class="border bg-white  w-full {showMobileMenu
-          ? ''
-          : 'hidden'}"
+        class="border bg-white relative w-full {showMobileMenu ? '' : 'hidden'}"
       >
         {#each unselected as item}
           <a
             href={item.href}
-            class="flex flex-row w-full p-2 hover:bg-gray-50 text-gray-600 hover:text-primary-400"
+            class="flex flex-row w-full p-4 hover:bg-gray-50 text-gray-600 hover:text-primary-400"
           >
             {#if item.icon}
-              <i class="{item.icon} flex items-center mr-2" />
+              <div class="flex items-center w-[35px]">
+                <i class="{item.icon} flex items-center mr-2" />
+              </div>
             {/if}
             <p class="flex items-center">
               {item.title}

@@ -73,11 +73,11 @@
           on:click={() => goto("/problem/create")}
           color="light"
         >
-          <i class="fa-solid fa-atom mr-2" />
-          Create New Problem</Button
+          <i class="fa-solid fa-rocket mr-2" />
+          Add Problem Space</Button
         >
       </div>
-      <h1 class=" text-xl text-primary-600 font-bold px-4">Your Problems</h1>
+      <h1 class=" text-xl text-primary-600 font-bold px-4">Your Problem Spaces</h1>
       <ul class="flex-1 overflow-x-hidden overflow-y-auto">
         {#each filteredProblems as problem}
           <li>

@@ -12,10 +12,14 @@
   export let id: null | string = $page.params.id;
   let api: any = baseApi[type];
   let dispatch = createEventDispatcher();
-  let showCommentForm = false;
+  export let showCommentForm = false;
   onMount(() => {
     loadComments();
   });
+
+  $: {
+    id && loadComments();
+  }
 
   function loadComments() {
     api
@@ -41,7 +45,7 @@
 </script>
 
 {#if pagination && pagination.entries}
-  <div class="ml-9">
+  <div >
     {#if showCommentForm}
       <CommentForm on:post={onPostComment} />
     {:else}

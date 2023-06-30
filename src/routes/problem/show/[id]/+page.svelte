@@ -34,13 +34,9 @@
       <section class="xl:max-w-[940px] mx-auto md:mx-4 md:rounded-t-lg">
         <!-- {#if problem.pinned_note && problem.pinned_note != ""}
           <div class="p-4 bg-gray-500 text-white mb-4 rounded-lg">
-
             {@html problem.pinned_note}
           </div>
         {/if} -->
-
-      
-
         <div class="md:border md:rounded-lg bg-white">
           <div class="relative text-gray-400 sm:flex md:rounded-t-lg">
             <div
@@ -61,16 +57,14 @@
               filter: brightness(0.7) grayscale(100%);
             "
             />
-
             <div class="flex items-center flex-row w-full md:m-9">
               <img
-                src="{PUBLIC_IMG_CDN_BASE}{problem.img}"
+                src="{imageUrl(problem.img)}"
                 alt={problem.title}
                 class="w-[250px] h-[250px] block md:inline-block m-auto md:float-left drop-shadow-xl"
               />
             </div>
           </div>
-
           <div class="p-8">
             <div class="flex">
               <div class="flex-1">
@@ -86,11 +80,10 @@
                 </div>
               {/if}
             </div>
-        
             <div class="my-9 p-4 bg-gray-50 text-gray-700">
               <div class="flex">
                 <div class="mr-4">
-                  <i class="fa-solid fa-atom text-4xl" />
+                  <i class="fa-solid fa-rocket text-4xl" />
                 </div>
                 <div class="flex-1 flex items-center">
                   <h1 class="text-2xl font-bold">{problem.title}</h1>
@@ -125,7 +118,9 @@
       <section class="flex-1 hidden xl:block mr-4">
         <div class="mb-4">
           <h1 class="mb-4 text-xl text-gray-800">Contributers</h1>
-          <UserList placeholder="No Followers" users={problem.users} />
+          <div class="border p-4 bg-white">
+            <UserList placeholder="No Contributers" users={problem.users} />
+          </div>
           <div class="flex justify-end m-2">
             <a href="./{problemId}/users" class="text-xs text-blue-500"
               >All Contributers</a
@@ -143,16 +138,6 @@
           </div>
         </div>
 
-        <div class="mb-4">
-          <h1 class="mb-4 text-xl text-gray-800">Followers</h1>
-          <UserList placeholder="No Followers" users={problem.followers} />
-          <div class="flex justify-end m-2">
-            <a
-              href="/problem/show/{problemId}/users"
-              class="text-xs text-blue-500">All Followers</a
-            >
-          </div>
-        </div>
         <div class="mb-4">
           <h1 class="mb-4 text-xl text-gray-800">Resources</h1>
           <LinksList api={api.problem.links(problemId)} pageSize={4} />

@@ -33,6 +33,18 @@ export interface Answer  extends IdentifiableSchema, OwnedSchema{
     discussion_id: string;
 }
 
+export interface Idea  extends IdentifiableSchema{
+    title:  string;
+    img:  string;
+    estimated_timescale: number;
+    complexity: number;
+    description: string;
+    features: string[];
+    tags: string[];
+    skills: string[];
+    sectors: Sector[];
+}
+
 
 export interface Sector  extends IdentifiableSchema, OwnedSchema  {
     name: string;

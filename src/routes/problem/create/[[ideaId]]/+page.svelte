@@ -11,6 +11,7 @@
   import BlurbInput from "$lib/components/problem/create/BlurbInput.svelte";
   import StatusIndicator from "$lib/components/problem/create/StatusIndicator.svelte";
   import ProblemCreateSteps from "$lib/components/problem/create/ProblemCreateSteps.svelte";
+  import { page } from "$app/stores";
 
   onMount(redirectIfNotLoggedIn);
 
@@ -20,16 +21,27 @@
   let isChecking = false;
   let currentStep = 1;
   let createdProblemId: null | string | number = null;
-
+  let onCheck: () => void;
   let steps = [
-    "Step 1 - Describe The Problem",
-    "Step 2 - Select The Problem's Sector",
+    "Step 1 - Describe Your Idea",
+    "Step 2 - Select The Relevent Sectors",
     "Step 3 - Sit Back And Relax",
   ];
   let form = {
     blurb: "",
     sectors: [],
   };
+
+  onMount(() => {
+    if ($page.params.ideaId) {
+      api.ideas.get($page.params.ideaId, ["sectors"]).then((res) => {
+        let idea = res.data;
+        form.blurb = `${idea.title}: ${idea.description}`;
+        form.sectors = idea.sectors;
+        setTimeout(onCheck, 0);
+      });
+    }
+  });
 
   function buildTemplate() {
     currentStep = 3;
@@ -65,11 +77,13 @@
         <StepIndicator {currentStep} {steps} />
       </div>
 
-      <div class="p-4 m-4 prose  prose-h2:m-0 text-sm bg-white mb-2  md:hidden rounded-xl flex flex-shrink-0">
+      <div
+        class="p-4 m-4 prose prose-h2:m-0 text-sm bg-white mb-2 md:hidden rounded-xl flex flex-shrink-0"
+      >
         <div class="flex items-start flex-shrink-0 mx-6">
-          <img src="/img/ai.png" class="h-[60px] " alt="robot" />
+          <img src="/img/ai.png" class="h-[60px]" alt="robot" />
         </div>
-        <div >
+        <div>
           {#if currentStep == 1 || currentStep == 2}
             <StatementTip {check} bind:checking={isChecking} bind:sector />
           {:else if createdProblemId == null}
@@ -86,6 +100,7 @@
 
       {#if currentStep == 1 || currentStep == 2}
         <BlurbInput
+          bind:onCheck={onCheck}
           bind:blurb={form.blurb}
           bind:check
           bind:checking={isChecking}
@@ -108,7 +123,8 @@
               disabled={form.sectors.length == 0}
               on:click={buildTemplate}
             >
-              Create Problem
+            <i class="fas fa-robot mr-2"></i>
+              Generate My SolveSpace
             </Button>
           </div>
         {/if}

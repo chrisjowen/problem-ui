@@ -1,14 +1,14 @@
 <script lang="ts">
   import api from "$lib/api";
-  import { onMount, createEventDispatcher } from "svelte";
+  import { onMount } from "svelte";
   import type { PaginationResults, Sector } from "$lib/types";
   import HighlightedText from "../shared/HighlightedText.svelte";
   import { imageUrl } from "$lib/util/imageutil";
   import { state } from "$lib/store";
-  import { Button } from "flowbite-svelte";
-
+  
   export let initialSectorId: string | number | null = null;
   export let selected: any[] = [];
+  export let showSelected = true;
 
   export let sectors: PaginationResults<Sector> | null = $state.sectors;
   let q = "";
@@ -58,7 +58,7 @@
   {#if sectors && showResults}
     <section
       id="results"
-      class="relative z-10 border mt-2 max-h-[300px] overflow-auto"
+      class="absolute w-full z-10 border max-h-[300px] overflow-auto"
     >
       <ul class="bg-white">
         {#each sorted as sector}
@@ -80,8 +80,9 @@
   {/if}
 </div>
 
+{#if showSelected}
 {#each selected as sector}
-  <span class="p-2  mt-4 mr-4 rounded-xl border inline-block bg-white">
+  <span class="p-2  mt-4 mr-4  border inline-block bg-white">
     <span class="flex flex-row ">
       <img
         src={imageUrl(sector.image, { w: 50, h: 50 })}
@@ -97,3 +98,4 @@
     </span>
   </span>
 {/each}
+{/if}

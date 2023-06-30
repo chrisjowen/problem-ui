@@ -31,7 +31,7 @@
     on:click={onJoinClicked}
   >
     <i class="fa-solid fa-user-group mr-2" />
-    Contribute
+    Request Space Access
   </Button>
 {:else if !isMember(problem)}
   <Button size="xs" class="flex-1 md:flex-none md:w-auto " color="light" disabled={true}>

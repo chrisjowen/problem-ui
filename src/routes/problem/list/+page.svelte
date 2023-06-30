@@ -20,14 +20,14 @@
   let q = "";
 
   onMount(() => {
-    loadProblems();
+    loadPublicProblems();
   });
 
   const debounce = (v) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       q = v;
-      loadProblems();
+      loadPublicProblems();
     }, 500);
   };
 
@@ -37,11 +37,11 @@
     }
   }
 
-  async function loadProblems() {
+  async function loadPublicProblems() {
     let response = await api.problem.list(
-      `title[like]=${q.toLowerCase()}`,
-      20,
-      0,
+      `title[like]=${q.toLowerCase()}&public=true`,
+      10,
+      1,
       ["sectors", "user"]
     );
     problems = response.data.entries;
@@ -80,7 +80,7 @@
         on:click={() => goto("/problem/create")}
       >
         <i class="fas fa-plus" />
-        <span class="hidden md:block ml-2">Create Problem</span>
+        <span class="hidden md:block ml-2">Create</span>
       </Button>
     </div>
   </div>
@@ -89,7 +89,7 @@
   >
     <div class="flex-1">
       <i class="fas fa-info-circle m-2" />
-      {problems.length} Problems Found
+      {problems.length} Problem Spaces Found
     </div>
     <div class="hidden md:block">
       <Button color="light" size="xs" on:click={() => (listView = false)}
@@ -101,7 +101,9 @@
     </div>
   </section>
   <div class="flex-1 overflow-auto">
+    
   <div class="max-w-[2000px] w-full m-auto">
+    <h1 class="p-4">Public Spaces</h1>
     
     <div
       transition:slide={{ duration: 250 }}
@@ -112,6 +114,10 @@
       {#if !problems || problems.length == 0}
         <p>Loading...</p>
       {/if}
+
+
+
+
 
       {#each problems as problem}
         <div class="inline-block flex w-full">

@@ -3,9 +3,10 @@
   let dispatch = createEventDispatcher();
   let tag = "";
   export let tags: string[] = [];
-  import { Button, Input } from "flowbite-svelte";
+  import { Input } from "flowbite-svelte";
   export let editable = true;
   export let clickable = false;
+  export let icon = "fas fa-tag";
 
   export let selected: string[] = [];
 
@@ -57,7 +58,7 @@
       >
         <div class="flex items-center">
           <span class="py-1 mx-2"
-            ><i class="fas fa-tag mr-2" /> {tag.toLowerCase()}</span
+            ><i class="{icon} mr-2" /> {tag.toLowerCase()}</span
           >
           {#if editable}
             <button
