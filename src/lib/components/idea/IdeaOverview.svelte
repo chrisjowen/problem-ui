@@ -24,7 +24,7 @@
       <div class="md:flex">
         <div>
           <img
-            src={imageUrl(idea.img)}
+            src={imageUrl(idea.img || idea.sectors[0].image)}
             alt={idea.title}
             class="w-full mb-4 md:max-w-[200px] rounded border"
           />
