@@ -42,7 +42,7 @@
       >
         <span class="text-primary-300">
           Turn your <i class="fas fa-lightbulb text-yellow-300" /> into
-          <i class="fas fa-rocket text-black" /> <br />
+          <i class="fas fa-rocket text-black text-red-500" /> <br />
         </span>
         With The Power of the Crowd
       </h1>
@@ -75,7 +75,7 @@
 </div>
 <!-- Features  -->
 
-<div class="max-w-[1000px] m-auto py-9">
+<div class="max-w-[1000px] m-auto py-9 md:px-0 px-4">
   <h2 class="text-2xl mb-9">What's a SolveSpace Anyway?</h2>
   <SolveSpaceOverview />
 </div>

@@ -61,15 +61,15 @@
 </script>
 
 <div class="max-w-[1000px] m-auto">
-  <h2 class="text-2xl mb-9 text-gray-800">Features:</h2>
+  <h2 class="text-2xl md:mb-4 py-4 text-gray-800">Features:</h2>
 
   {#each features as feature}
     <Saos animation={"slide-in-bottom 0.9s both"} once={true}>
       <div class="flex border bg-white relative p-8 rounded-lg mb-2">
         {#if feature.coming}
-          <div class="flex justify-end mt-4 absolute top-0 right-5">
+          <div class="flex justify-end mt-4 absolute md:top-0 md:right-5 right-[5px] top-[-10px]">
             <p
-              class="bg-primary-500 text-white inline text-xs p-1 px-2 rounded-lg"
+              class="bg-gray-400 text-white inline text-xs p-1 px-2 rounded-lg"
             >
               Coming Soon
             </p>
@@ -77,15 +77,15 @@
         {/if}
         <div>
           <div
-            class="rounded-full bg-primary-700 md:w-[60px] md:h-[60px] w-[40px] h-[40px] text-gray-100 text-center flex items-center justify-center"
+            class="rounded-full bg-primary-700 md:w-[60px] md:h-[60px] w-[50px] h-[50px] text-gray-100 text-center flex items-center justify-center"
           >
             <i class="{feature.icon} text-xl md:text-2xl" />
           </div>
         </div>
-        <div class="px-8">
-          <h2 class="text-2xl">{feature.title}</h2>
+        <div class="md:px-8 px-4 flex-1">
+          <h2 class="md:text-2xl text-xl">{feature.title}</h2>
 
-          <p class="text-md">
+          <p class="text-sm md-text-md">
             {@html feature.overview}
           </p>
         </div>
