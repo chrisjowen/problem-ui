@@ -61,25 +61,22 @@
 {/if}
 
 {#if !checking && !check}
-  <p>
-    <strong>Hey there,</strong> <br /> Im the SolveSpace Creation AI wizzard, I'm
+  <p class="mt-2">
+    <strong>Hey there,</strong>
+  </p>
+    <p>Im the SolveSpace Creation AI wizzard, I'm
     here to help you create a space where you can work on your idea and build the
     next unicorn.
   </p>
-  <div class=" p-4 !my-8 rounded-lg text-center bg-gray-50 border">
+  <div class="p-2 md:p-4 rounded-lg text-center bg-gray-50 border">
     <p>
-      Firstly, telling me your idea but keep it keep it short and sweet, I will
-      help you expand it later
+      Tell me your idea take a look at our <a href="/ideas">
+        <i class="fa fa-lightbulb ml-2 text-yellow-400" />
+        AI generated ideas
+      </a> for inspiration.
     </p>
   </div>
 
-  <h3 class="">Having Trouble Thinking Up An Idea?</h3>
-  <p>
-    Take a look at our <a href="/ideas">
-      <i class="fa fa-lightbulb ml-2 text-yellow-400" />
-      AI generated ideas
-    </a> for inspiration.
-  </p>
   <div class="text-center" />
 {:else if !checking && check?.hints && !check?.valid}
   <h3>Hints:</h3>

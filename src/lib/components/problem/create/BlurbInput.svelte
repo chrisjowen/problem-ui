@@ -47,7 +47,9 @@
 </script>
 
 <section class="flex p-4">
-  <StatusIndicator bind:warning bind:loading={checking} bind:valid />
+  <div class="hidden md:block">
+    <StatusIndicator bind:warning bind:loading={checking} bind:valid />
+  </div>
   <div class="mb-4 flex-1">
     <div class="border">
       <textarea
@@ -64,8 +66,8 @@
 
     {#if !valid}
       <div class="flex justify-end">
-        <Button on:click={onCheck}   disabled={checking}>
-          <i class="fa fa-check mr-2" />
+        <Button on:click={onCheck}   disabled={checking} class="w-full md:w-auto mt-4">
+          <i class="fa fa-robot mr-2" />
           Validate My Idea
         </Button>
       </div>

@@ -16,8 +16,9 @@
   import VoteButton from "$lib/components/vote/VoteButton.svelte";
   import UserList from "$lib/components/user/UserList.svelte";
   import { goto } from "$app/navigation";
+  import TagSearch from "$lib/components/shared/TagSearch.svelte";
 
-  onMount(loadIdeas);
+  onMount(load);
 
   let voters: User[] = [];
 
@@ -27,11 +28,23 @@
     skills: [],
   };
 
+  let allTags = [];
+  let allSkills = [];
   let showFilters = false;
   let ideaIdx = 0;
   let selectedIdea = null;
 
   let ideas: PaginationResults<Idea>;
+
+  function load() {
+    loadIdeas();
+    api.ideas.tags().then((res) => {
+      allTags = res.data;
+    });
+    api.ideas.skills().then((res) => {
+      allSkills = res.data;
+    });
+  }
 
   function loadIdeas() {
     ideaIdx = 0;
@@ -54,9 +67,7 @@
 
     api.ideas.search(params).then((res) => {
       ideas = res.data;
-      if(selectedIdea==null) {
-        selectedIdea = ideas.entries[0];
-      }
+      selectedIdea = ideas.entries[0];
     });
   }
 
@@ -65,16 +76,6 @@
       loadIdeas();
     }
   }
-
-  $: allTags = _.chain(ideas?.entries || [])
-    .flatMap((i) => i.tags)
-    .uniq()
-    .value();
-
-  $: allSkills = _.chain(ideas?.entries || [])
-    .flatMap((i) => i.skills)
-    .uniq()
-    .value();
 
   function onSectorClicked(e: CustomEvent<Sector>): void {
     let sector: Sector = e.detail;
@@ -137,24 +138,10 @@
         <MultiSectorSearchSelect bind:selected={filters.sectors} />
 
         <Label class="mb-2">Tags</Label>
-        <TagList
-          tags={allTags}
-          editable={false}
-          clickable={true}
-          on:click={toggleTag}
-          selected={filters.tags}
-        />
+        <TagSearch bind:selected={filters.tags} bind:tags={allTags} />
 
         <Label class="mb-2">Skills</Label>
-
-        <TagList
-          tags={allSkills}
-          editable={false}
-          clickable={true}
-          on:click={toggleSkill}
-          selected={filters.skills}
-          icon="fa-solid fa-bolt text-yellow-300"
-        />
+        <TagSearch bind:selected={filters.skills} bind:tags={allSkills} />
       </div>
     {/if}
   </div>
@@ -182,7 +169,11 @@
         >
           <div class="  mx-4">
             <div class="flex space-x-2">
-              <Button class="w-full" size="xs" on:click={() => goto(`/problem/create/${selectedIdea.id}`)}>
+              <Button
+                class="w-full"
+                size="xs"
+                on:click={() => goto(`/problem/create/${selectedIdea.id}`)}
+              >
                 <i class="fa-solid fa-rocket mr-2" />
                 Create SolveSpace
               </Button>
@@ -209,7 +200,10 @@
           </p>
 
           <div class="flex justify-end">
-            <Button class="m-auto" on:click={() => goto(`/problem/create/${selectedIdea.id}`)}>
+            <Button
+              class="m-auto"
+              on:click={() => goto(`/problem/create/${selectedIdea.id}`)}
+            >
               <p><i class="fa fa-rocket mr-2 block" /></p>
 
               Create SolveSpace

@@ -86,12 +86,21 @@
           </svelte:fragment>
         </SidebarItem>
         <SidebarItem
-          label="Spaces"
+          label="Seed Ideas"
+          href="/ideas"
+          on:click={() => (hideSideBar = true)}
+        >
+          <svelte:fragment slot="icon">
+            <i class="fa-solid fa-lightbulb" />
+          </svelte:fragment>
+        </SidebarItem>
+        <SidebarItem
+          label="SolveSpaces"
           href="/problem/list"
           on:click={() => (hideSideBar = true)}
         >
           <svelte:fragment slot="icon">
-            <i class="fa-solid fa-magnifying-glass" />
+            <i class="fa-solid fa-rocket" />
           </svelte:fragment>
         </SidebarItem>
         <SidebarItem
@@ -152,23 +161,17 @@
             </a>
 
             <div class="p-5 px-7 space-x-2 flex text-xs hidden md:block">
-
-              <a
-              href="/ideas"
-              class="hover:bg-primary-600 rounded-xl p-2 px-3"
-            >
-            
-              <i class="fa-solid fa-lightbulb text-xs mr-1" />
-               Seed Ideas
-      
-            </a>
+              <a href="/ideas" class="hover:bg-primary-600 rounded-xl p-2 px-3">
+                <i class="fa-solid fa-lightbulb text-xs mr-1" />
+                Seed Ideas
+              </a>
 
               <a
                 href="/problem"
                 class="hover:bg-primary-600 rounded-xl p-2 px-3"
               >
-                <i class="fa-solid fa-rocket  text-xs mr-1" />
-                 SolveSpaces
+                <i class="fa-solid fa-rocket text-xs mr-1" />
+                SolveSpaces
               </a>
               <a
                 href="/sector"

@@ -80,8 +80,8 @@
       <div
         class="p-4 m-4 prose prose-h2:m-0 text-sm bg-white mb-2 md:hidden rounded-xl flex flex-shrink-0"
       >
-        <div class="flex items-start flex-shrink-0 mx-6">
-          <img src="/img/ai.png" class="h-[60px]" alt="robot" />
+        <div class="flex items-start flex-shrink-0 mx-6 hidden md:block">
+          <img src="/img/ai.png" class="h-[60px] " alt="robot" />
         </div>
         <div>
           {#if currentStep == 1 || currentStep == 2}
