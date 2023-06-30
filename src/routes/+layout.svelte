@@ -96,7 +96,7 @@
         </SidebarItem>
         <SidebarItem
           label="SolveSpaces"
-          href="/problem/list"
+          href="/problem"
           on:click={() => (hideSideBar = true)}
         >
           <svelte:fragment slot="icon">

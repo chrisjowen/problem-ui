@@ -3,9 +3,9 @@
   import { goto } from "$app/navigation";
   import api from "$lib/api";
   import { PUBLIC_IMG_CDN_BASE } from "$env/static/public";
-  import { auth } from "$lib/store";
-  import ScreenOverview from "$lib/components/home/ScreenOverview.svelte";
-  import ScreenOverviewSimple from "$lib/components/home/ScreenOverviewSimple.svelte";
+  import FeatureList from "$lib/components/home/FeatureList.svelte";
+  import SolveSpaceOverview from "$lib/components/home/SolveSpaceOverview.svelte";
+  import { Button } from "flowbite-svelte";
 
   let sectors: any = [];
   let problems: any = [];
@@ -35,39 +35,65 @@
     class="max-w-[2000px] hero bg-primary-600 flex flex justify-center m-h-[50%] xl:m-h-[50%] m-auto"
   >
     <div
-      class="lg:mt-[100px] mt-[50px] w-[80%] lg:w-[700px] md:w-[50%] lg:min-h-[600px] z-20"
+      class="lg:mt-[100px] mt-[50px] w-[80%] lg:w-[900px] md:w-[50%]  z-20"
     >
-      <h1 class="text-white font-bold lg:text-7xl text-6xl bold">
-        <span class="text-primary-200">Join A Global Community</span> Of Problem
-        Solvers
+      <h1
+        class="text-white font-bold lg:text-7xl text-6xl bold text-center mb-9"
+      >
+        <span class="text-primary-300">
+          Turn your <i class="fas fa-lightbulb text-yellow-300" /> into
+          <i class="fas fa-rocket text-black" /> <br />
+        </span>
+        With The Power of the Crowd
       </h1>
-      <p class="mt-9 mb-[50px] text-red-50 text-2xl lg:text-3xl xl:text-3xl">
-        A space where innovators, creators and investors come together to
-        resolve problems worth solving.
+
+      <p class="text-red-50 text-xl lg:text-2xl xl:text-3xl text-center mb-9">
+        From brainstorm to breakthrough, the crowd is here to help
       </p>
-      <div class="mt-9 mb-[50px] lg:mb-[150px] flex flex-row" />
+
+      <div class="flex flex-row justify-center mb-9 md:my-[100px]">
+        <a
+          href="/problem/create"
+          class="bg-white 
+            rounded-lg
+            drop-shadow-lg
+            text-primary-600 
+            text-xl md:text-2xl
+            lg:text-4xl drop-shadow-lg
+            hover:bg-primary-900
+            hover:text-white
+            font-bold
+            py-4
+            px-8"
+        >
+          <i class="fas fa-rocket mr-2" />
+          Create Your SolveSpace
+        </a>
+      </div>
     </div>
   </div>
 </div>
 <!-- Features  -->
-<div class="bg-white">
-  <div class="max-w-[2000px] w-full m-auto">
-    <ScreenOverviewSimple />
-  </div>
+
+<div class="max-w-[1000px] m-auto py-9">
+  <h2 class="text-2xl mb-9">What's a SolveSpace Anyway?</h2>
+  <SolveSpaceOverview />
+</div>
+<div class="bg-gray-200 max-w-[2000px] w-full m-auto px-4 md:p-8">
+  <FeatureList />
 </div>
 
-<div class="p-2 pt-5 md:p-9 m-h-[500px] mb-4">
+<div class="p-2 pt-5 p-4 md:p-9 m-h-[500px] bg-white">
   <div class="max-w-[2000px] w-full m-auto">
-    <h1 class=" mb-2 md:text-3xl text-2xl text-primary-900 font-bold">
-      Trending Problems
+    <h1 class=" mb-6 md:text-3xl text-2xl text-primary-900 font-bold">
+      Active Public SolveSpaces
     </h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 w-full gap-2">
       {#each problems as problem}
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div class="inline-block flex flex-shrink-0">
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
-            class="rounded-lg bg-white border hover:drop-shadow-xl w-full md:flex flex-row"
+            class="rounded-lg bg-white border border-gray-300 hover:drop-shadow-xl w-full md:flex flex-row"
             size="full"
             on:click={showProblem(problem)}
           >
@@ -109,7 +135,7 @@
 
 <div class="md:px-9 py-2 px-4 bg-white">
   <div class="max-w-[2000px] w-full m-auto">
-    <h1 class="my-4 md:mx-0 text-2xl text-primary-900 font-bold">
+    <h1 class="my-4 md:mx-0 text-2xl text-gray-800 font-bold">
       Popular Sectors
     </h1>
     <div
@@ -117,16 +143,16 @@
     >
       {#each sectors.slice(0, 50) as sector}
         <button
-          class=" bg-white relative flex-shrink-0 border-primary-200 border hover:drop-shadow-xl"
+          class=" bg-white relative flex-shrink-0 rounded-lg border border-gray-300 hover:drop-shadow-xl"
           on:click={showSector(sector)}
         >
           <img
-            class="w-full rounded-lg h-[200px]"
+            class="w-full rounded-lg h-[350px] md:h-[250px]"
             src="{PUBLIC_IMG_CDN_BASE}{sector.image}"
             alt="content"
           />
           <h5
-            class="p-2 m-2 font-bold  text-xs bg-primary-700 text-white absolute top-0 right-0 "
+            class="p-2 m-2 font-bold text-xs bg-primary-700 text-white absolute top-0 right-0"
           >
             {sector.name}
           </h5>
