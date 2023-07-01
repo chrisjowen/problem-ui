@@ -10,7 +10,6 @@
 
   let dispatch = createEventDispatcher();
   function onSavePage(): void {
-    debugger
     dispatch("save", page);
   }
 </script>

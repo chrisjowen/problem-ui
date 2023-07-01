@@ -23,6 +23,7 @@ export default {
     notifications: new RestApi('/api/notification'),
     ideas: ideaApi,
     membership: new RestApi('/api/membership'),
+    expert: new RestApi('/api/expert'),
     obstacle: new RestApi('/api/obstacle'),
     profile: new RestApi('/api/profile'),
     soon: new RestApi('/api/soon'),

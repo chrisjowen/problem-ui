@@ -93,7 +93,7 @@
                 />
               </div>
               <div>
-                <span>{problem.title.slice(0, 40)}</span>
+                <span>{(problem.title || "").slice(0, 40)}</span>
                 <span class="bg-gray-100 p-1 border rounded-xl text-xs"
                   >{problem.membership?.role || "owner"}</span
                 >

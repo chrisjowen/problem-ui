@@ -6,12 +6,16 @@
 
   export let sectors: Sector[];
   export let selectable = false;
+  export let selected: Sector[] = [];
 
   let onSectorClick = (sector: Sector) => () => {
     if (selectable) {
       dispatch("click", sector);
     }
   };
+
+  $: ids = selected.map((s) => s.id);
+
 </script>
 
 {#if sectors}
@@ -20,7 +24,10 @@
       <li>
         <button
           on:click={onSectorClick(sector)}
-          class="flex flex-row p-2 border mb-2 {selectable &&
+          class="flex flex-row p-2 border mb-2 
+          {ids.includes(sector.id) &&
+            'bg-primary-200'}
+          {selectable &&
             'hover:bg-primary-100'} "
         >
           <img

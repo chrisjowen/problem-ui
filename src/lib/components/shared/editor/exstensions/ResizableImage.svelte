@@ -19,7 +19,7 @@
   action={draggable}
 >
   {#if editable}
-    <div class="group relative">
+    <div class="group relative  inline-block" >
       <div  class="hidden group-hover:inline absolute top-[0px] left-[0px] bg-white border rounded-xl">
         <button on:click={setWidth("25%")}  class="p-2 hover:bg-primary-50">
             <i class="fa fa-image text-xs" />
@@ -34,7 +34,7 @@
           <i class="fa fa-image text-xl" />
         </button>
       </div>
-      <img src={node.attrs.src} alt={node.attrs.src} width="{node.attrs.width}" />
+      <img src={node.attrs.src} class="group-hover:border" alt={node.attrs.src} width="{node.attrs.width}" />
     </div>
   {:else}
     <img src={node.attrs.src} alt={node.attrs.src} width="{node.attrs.width}" />

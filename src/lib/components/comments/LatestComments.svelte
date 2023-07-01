@@ -45,21 +45,21 @@
 </script>
 
 {#if pagination && pagination.entries}
-  <div >
+  <div class="mx-4">
+    {#each pagination.entries as comment}
+      <CommentView {comment} on:edit={onEditComment} />
+    {/each}
     {#if showCommentForm}
       <CommentForm on:post={onPostComment} />
     {:else}
-      <div class="p-4 flex justify-end">
+      <div class="flex justify-end">
         <button
           class=" text-xs text-gray-400"
           on:click={() => (showCommentForm = true)}
         >
-          Quick Comment
+          Add Comment
         </button>
       </div>
     {/if}
-    {#each pagination.entries as comment}
-      <CommentView {comment} on:edit={onEditComment} />
-    {/each}
   </div>
 {/if}

@@ -1,6 +1,7 @@
 export interface Stakeholder {
     type: string;
     description: string;
+    education: string;
     problems: string[];
     age_from: number;
     age_to: number;

@@ -1,18 +1,12 @@
 <script lang="ts">
-  import Experts from "./../../lib/components/old/showproblem/plan/experts.svelte";
-  import { page } from "$app/stores";
   import api from "$lib/api";
   import MultiSectorSearchSelect from "$lib/components/sector/MultiSectorSearchSelect.svelte";
-  import SectorList from "$lib/components/sector/SectorList.svelte";
-  import TagList from "$lib/components/shared/TagList.svelte";
-  import type { PaginationResults, Sector, User } from "$lib/types";
+  import type { Idea, PaginationResults, Sector, User } from "$lib/types";
   import { onMount } from "svelte";
   import _ from "lodash";
-  import { imageUrl } from "$lib/util/imageutil";
   import { Button, Label } from "flowbite-svelte";
   import IdeaOverview from "$lib/components/idea/IdeaOverview.svelte";
   import LatestComments from "$lib/components/comments/LatestComments.svelte";
-  import LatestVotes from "$lib/components/vote/LatestVotes.svelte";
   import VoteButton from "$lib/components/vote/VoteButton.svelte";
   import UserList from "$lib/components/user/UserList.svelte";
   import { goto } from "$app/navigation";
@@ -26,13 +20,17 @@
     sectors: [],
     tags: [],
     skills: [],
+  } as {
+    sectors: Sector[];
+    tags: string[];
+    skills: string[];
   };
 
-  let allTags = [];
-  let allSkills = [];
+  let allTags: string[] = [];
+  let allSkills : string[] = [];
   let showFilters = false;
   let ideaIdx = 0;
-  let selectedIdea = null;
+  let selectedIdea: Idea | null = null;
 
   let ideas: PaginationResults<Idea>;
 
@@ -83,14 +81,14 @@
 
   function onSectorClicked(e: CustomEvent<Sector>): void {
     let sector: Sector = e.detail;
-    if (filters.sectors.includes(sector)) {
+    if (filters.sectors.find(s => s.id== sector.id)) {
       filters.sectors = filters.sectors.filter((s) => s.id != sector.id);
     } else {
       filters.sectors = [...filters.sectors, sector];
     }
   }
 
-  function toggleTag(e: CustomEvent<Sector>): void {
+  function toggleTag(e: CustomEvent<string>): void {
     let tag = e.detail;
     if (filters.tags.includes(tag)) {
       filters.tags = filters.tags.filter((t) => tag != t);
@@ -99,7 +97,7 @@
     }
   }
 
-  function toggleSkill(e: CustomEvent<Sector>): void {
+  function toggleSkill(e: CustomEvent<string>): void {
     let skill = e.detail;
     if (filters.skills.includes(skill)) {
       filters.skills = filters.skills.filter((t) => skill != t);

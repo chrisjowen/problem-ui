@@ -15,7 +15,7 @@
   let listView = false;
   let me = $auth.loggedInUser;
   let myProblems: Problem[] = [];
-
+  let loading = true
   onMount(() => {
     loadPublicSpaces();
     if ($auth.loggedInUser) {
@@ -38,6 +38,7 @@
   }
 
   async function loadYourSpaces() {
+    loading = true;
     api.user.get(me.id, ["memberships"]).then(async (r) => {
       me = r.data;
 
@@ -52,6 +53,9 @@
 
       let response = await api.problem.list(query, 50, 1, ["sectors", "user"]);
       myProblems = response.data.entries;
+      loading = false
+    }).catch(e => {
+      loading = false
     });
   }
 </script>
@@ -76,7 +80,10 @@
           <i class="fa-solid fa-rocket mr-1" />
           Your Spaces
         </h1>
-        {#if me && myProblems.length > 0}
+        {#if loading}
+          <div class="p-4 border m-4 bg-white">Loading...
+          </div>
+        {:else if me && myProblems.length > 0}
           <div
             class="grid gap-2 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 sm:grid-cols-1 my-4"
           >
@@ -92,8 +99,7 @@
               <img src="/img/ai.png" alt="Helper AI" class="w-32" />
             </div>
             <div >
-              <h1 class="text-xl">No Space
-                 Created</h1>
+              <h1 class="text-xl">No Space Created</h1>
               <p class="text-gray-500 prose max-w-none">
                 You have not created any spaces yet. Spaces are a place where
                 you can collaborate with others to solve problems, build

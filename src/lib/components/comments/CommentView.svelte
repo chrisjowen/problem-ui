@@ -30,7 +30,7 @@
   {#if showEditForm}
     <CommentForm on:post={onPostComment} comment={comment.comment} />
   {:else}
-    <div class="mx-4 p-2 flex mb-2 bg-gray-50" on:click={toggleShowEditForm}>
+    <div class="pb-2 flex mb-2 " on:click={toggleShowEditForm}>
       <div>
         <Gravitar
           user={comment.user}

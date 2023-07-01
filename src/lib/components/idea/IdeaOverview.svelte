@@ -1,13 +1,10 @@
 <script lang="ts">
   import { imageUrl } from "$lib/util/imageutil";
-  import { Button } from "flowbite-svelte";
   import SectorList from "../sector/SectorList.svelte";
   import TagList from "../shared/TagList.svelte";
   import type { Idea } from "$lib/types";
   import { createEventDispatcher } from "svelte";
-  import VoteButton from "../vote/VoteButton.svelte";
-  import { fade } from "svelte/transition";
-
+  
   let dispatch = createEventDispatcher();
   export let idea: Idea;
   export let filters: any = {};
@@ -22,13 +19,7 @@
   <div class="bg-white overflow-auto" >
     <div class="justify-start items-top space-y-4 flex-1">
       <div class="md:flex">
-        <div>
-          <img
-            src={imageUrl(idea.img || idea.sectors[0].image)}
-            alt={idea.title}
-            class="w-full mb-4 md:max-w-[200px] rounded border"
-          />
-        </div>
+    
 
         <div class="flex-1 p-4 mb-8 space-y-4">
           <h1 class="text-3xl mt-0">
@@ -62,7 +53,8 @@
       <h2 class="text-lg mb-2 mt-2 mt-4 text-primary-800">Sectors</h2>
       <SectorList
         bind:sectors={idea.sectors}
-        selectable={true}
+        selectable={false}
+        bind:selected={filters.sectors}
         on:click={emitEvent("sector-clicked")}
       />
     </div>
@@ -84,7 +76,7 @@
       <TagList
         on:click={emitEvent("skill-clicked")}
         selected={filters.skills}
-        clickable={true}
+        clickable={false}
         tags={idea.skills}
         editable={false}
         icon="fa-solid fa-bolt text-yellow-300"
@@ -96,7 +88,7 @@
       <TagList
         tags={idea.tags}
         editable={false}
-        clickable={true}
+        clickable={false}
         on:click={emitEvent("tag-clicked")}
         selected={filters.tags}
       />

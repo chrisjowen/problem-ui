@@ -106,13 +106,13 @@
             </div>
             <div class="flex-1 m-4 flex flex-col">
               <h5 class="text-md font-bold text-primary-900">
-                {problem.title.slice(0, 45)}
+                {(problem.title || "").slice(0, 45)}
               </h5>
               <p class="text-sm text-gray-500 mb-4">
                 @{problem.user.username}
               </p>
               <p class="flex-1 text-sm">
-                {problem.blurb.slice(0, 90)}...
+                {(problem.blurb || "").slice(0, 90)}...
               </p>
               <div>
                 {#each problem.sectors as sector}

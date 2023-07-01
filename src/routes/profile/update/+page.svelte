@@ -16,7 +16,6 @@
   } from "flowbite-svelte";
   import Editor from "$lib/components/shared/editor/Editor.svelte";
   import TagList from "$lib/components/shared/TagList.svelte";
-  import { json } from "@sveltejs/kit";
   import { goto } from "$app/navigation";
 
   export let user: User = $auth.loggedInUser;

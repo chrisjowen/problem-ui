@@ -23,7 +23,7 @@
   <section class="pb-4 ">
     <div class="flex">
       <div class="pr-2">
-        <Gravitar user={user} size="xs" className="rounded-md" />
+        <Gravitar user={user} size="xs" className="rounded-md w-[20px] h-[20px]" />
       </div>
       <div class="flex-1 ml-1">
         <p class="text-xs mb-2">{user.name} {user.last_name}</p>
@@ -36,8 +36,8 @@
     <div class="flex justify-end">
       <Button size="xs" class="bg-primary-400"  disabled={comment.length < 5 || comment.length >= 255 } on:click={onPost}>
         <i class="fa fa-comment mr-2 text-xs" />
-        {submitText} 
-      </Button>
+        {submitText}  
+      </Button> 
     </div>
   </section>
   {:else}

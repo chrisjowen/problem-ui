@@ -7,8 +7,42 @@ export interface Discussion extends IdentifiableSchema, OwnedSchema {
     question: string;
     user: any;
     answers: Answer[];
-    tags: string[];
+    tags: [],
 }
+
+
+
+export interface Expert extends IdentifiableSchema, OwnedSchema {
+    active: boolean;
+    bio: string;
+    email: string;
+    slug: string;
+    expertise: string[];
+    img: string;
+    institution: string;
+    location: string;
+    name: string;
+    title: string;
+}
+
+export interface Stakeholder extends IdentifiableSchema, OwnedSchema {
+    type: string;
+    description: string;
+    problems: [],
+    age_from: number;
+    age_to: number;
+    regions: [],
+    gender: string;
+    img: string;
+    benefits: string;
+    professions: [],
+    interests: [],
+    education: string;
+    races: string[];
+    socioEcenomics: [],
+    problem: Problem;
+}
+
 export interface Problem  extends IdentifiableSchema, OwnedSchema{
     title: string;
     slug: string;
@@ -24,7 +58,7 @@ export interface Link  extends IdentifiableSchema, OwnedSchema{
     text: string;
     url: string;
     icon:  null |  string;
-    tags:  string[];
+    tags:  [],
     image:  null |  string;
 }
 
@@ -39,9 +73,9 @@ export interface Idea  extends IdentifiableSchema{
     estimated_timescale: number;
     complexity: number;
     description: string;
-    features: string[];
-    tags: string[];
-    skills: string[];
+    features: [],
+    tags: [],
+    skills: [],
     sectors: Sector[];
 }
 
@@ -54,8 +88,8 @@ export interface Obstacle  extends IdentifiableSchema, OwnedSchema {
     description: string;
     hint: string;
     state: string;
-    questions: string[];
-    tags: string[];
+    questions: [],
+    tags: [],
     state_history: any[];
     problem_id: null | string;
     problem: null | any;
@@ -74,7 +108,7 @@ export interface Page extends IdentifiableOwnedSchema  {
     title: string;
     body: string;
     version: number;
-    tags: string[];
+    tags: [],
     problem_id: null | string;
     problem: null | Problem;
 }

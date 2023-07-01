@@ -98,7 +98,6 @@
           icon: "fas fa-file ",
           href: `/problem/show/${problem.id}/page`,
         },
-
         // {
         //   title: "Customer Insights",
         //   icon: "fa-solid fa-people-arrows",
@@ -188,14 +187,14 @@
         <span>/</span>
         <span>{problem.title}</span>
       </div>
-      <!-- {#if !$auth.loggedInUser || !isMember(problem)}
+      {#if !$auth.loggedInUser || !isMember(problem)}
         <div class="lg:space-x-1 flex spacy-y-1chr p-2">
-          <FollowButton on:change={() => reload(true)} {problem} />
+          <!-- <FollowButton on:change={() => reload(true)} {problem} /> -->
           {#if isLoggedIn()}
             <ContributeButton on:requested={() => reload(true)} {problem} />
           {/if}
         </div>
-      {/if} -->
+      {/if}
     {/if}
   </div>
 

@@ -8,6 +8,7 @@
   import Editor from "$lib/components/shared/editor/Editor.svelte";
   import { Button } from "flowbite-svelte";
   import EditableAnswer from '$lib/components/discussion/EditableAnswer.svelte';
+  import TagList from '../shared/TagList.svelte';
   let refreshEditor: any;
   let discussion: Discussion;
   let answer = "";
@@ -44,14 +45,16 @@
     loadDiscussion()
   }
 </script>
+{#if discussion}
 
-  <div class="max-w-[1000px] m-4">
-    {#if discussion}
-      <div class="border bg-white md:mb-4 pb-4">
+<div class="flex">
+
+  <div class="flex-1 max-w-[1000px] md:m-4">
+      <div class="border bg-white mb-2 md:mb-4 pb-4">
         <DiscussionView  {discussion} />
       </div>
       {#if discussion.answers.length > 0}
-      <h1 class="text-lg mb-4  font-bold hidden md:block">Responses</h1>
+      <h1 class="text-lg mb-4 mt-4  font-bold ml-2 md:ml-0">Responses</h1>
       {/if}
       {#each discussion.answers as answer}
         <section id="answer-{answer.id}" class="bg-white border-t-[1px] border-x-[1px]">
@@ -59,7 +62,7 @@
         </section>
       {/each}
       {#if $auth?.loggedInUser}
-      <h1 class="text-sm md:text-lg mb-4 mt-4 font-bold">Your Reponse</h1>
+      <h1 class="text-sm md:text-lg mb-4 mt-4 font-bold ml-2 md:ml-0">Your Reponse</h1>
 
       <section id="your-answer" class="bg-gray-50 md:p-4 p-3 border mt-4">
         <div class="border bg-white   h-[400px] ">
@@ -73,5 +76,12 @@
         </div>
       </section>
       {/if}
-    {/if}
   </div>
+
+  <div class="hidd">
+    <h1>Tags</h1>
+    <TagList tags={discussion.tags} editable={false}  />
+  </div>
+
+</div>
+{/if}

@@ -97,7 +97,7 @@
                   >
                     <i class="fas fa-file flex text-xl items-center mr-4" />
 
-                    {page.title.slice(0, 50)}</a
+                    {(page.title || "").slice(0, 50)}</a
                   >
                 </li>
               {/each}

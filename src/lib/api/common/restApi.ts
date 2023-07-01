@@ -45,7 +45,7 @@ export default class RestApi {
         return this.client.post("/", params)
     }
 
-    get(id: string, preloads: string[] = []) {
+    get(id: string, preloads: string[] = [])  {
         if (!this.only.includes("get")) throw new Error("Method not allowed")
         return this.client.get(`/${id}?preloads=${preloads.join(',')}`).catch(e => {
             console.error(e)
