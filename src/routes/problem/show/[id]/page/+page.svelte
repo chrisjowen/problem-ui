@@ -26,7 +26,7 @@
 
 <ProblemLayout bind:problem>
   {#if pages}
-    <div class="m-4">
+    <div class="md:m-4">
       <div class="flex mb-5">
         <h1 class="flex-1 items-end flex text-xl text-primary-600">Pages</h1>
         {#if isMember(problem)}
