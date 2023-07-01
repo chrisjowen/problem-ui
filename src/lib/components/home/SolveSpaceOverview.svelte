@@ -3,7 +3,7 @@
   import Saos from "saos";
 </script>
 
-<div class="space-y-4 mb-4">
+<div class="space-y-4 mb-4 overflow-hidden w-full">
   <Saos animation={"from-left 1s  both"} once={true}>
     <div class="flex">
       <div>
@@ -69,7 +69,7 @@
 </div>
 
 <style>
-  /* @keyframes -global-from-left {
+  @keyframes -global-from-left {
     0% {
       transform: rotateX(50deg) translateX(-200vw) skewX(-50deg);
       opacity: 1;
@@ -111,5 +111,5 @@
     100% {
       opacity: 1;
     }
-  } */
+  }
 </style>
