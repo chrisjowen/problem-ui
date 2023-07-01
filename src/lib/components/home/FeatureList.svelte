@@ -94,7 +94,7 @@
   {/each}
 
   <div class="py-4">
-    <Button class="w-full" size="xl" on:click={() => goto("/problem")} >
+    <Button class="w-full" size="xl" on:click={() => goto("/problem/create")} >
       <i class="fas fa-rocket mr-2" />
       Create Your SolveSpace
     </Button>
