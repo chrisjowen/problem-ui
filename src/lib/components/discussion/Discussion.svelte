@@ -47,7 +47,6 @@
 </script>
 {#if discussion}
 
-<div class="flex">
 
   <div class="flex-1 max-w-[1000px] md:m-4">
       <div class="border bg-white mb-2 md:mb-4 pb-4">
@@ -78,10 +77,12 @@
       {/if}
   </div>
 
+<!-- <div class="flex">
+
   <div class="hidden md:block">
     <h1>Tags</h1>
     <TagList tags={discussion.tags} editable={false}  />
   </div>
 
-</div>
+</div> -->
 {/if}
