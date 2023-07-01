@@ -78,7 +78,7 @@
       {/if}
   </div>
 
-  <div class="hidd">
+  <div class="hidden md:block">
     <h1>Tags</h1>
     <TagList tags={discussion.tags} editable={false}  />
   </div>
