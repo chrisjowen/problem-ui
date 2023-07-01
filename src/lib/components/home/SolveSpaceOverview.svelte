@@ -69,7 +69,7 @@
 </div>
 
 <style>
-  @keyframes -global-from-left {
+  /* @keyframes -global-from-left {
     0% {
       transform: rotateX(50deg) translateX(-200vw) skewX(-50deg);
       opacity: 1;
@@ -111,5 +111,5 @@
     100% {
       opacity: 1;
     }
-  }
+  } */
 </style>
