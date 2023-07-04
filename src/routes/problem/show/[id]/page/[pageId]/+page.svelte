@@ -92,7 +92,7 @@
                     : 'text-gray-400'}"
                 >
                   <a
-                    href="/problem/show/189/page/{page.id}"
+                    href="/problem/show/{problem.id}/page/{page.id}"
                     class="flex-1 flex text-xs items-center p-3"
                   >
                     <i class="fas fa-file flex text-xl items-center mr-4" />

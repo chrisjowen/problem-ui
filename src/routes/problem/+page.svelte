@@ -1,14 +1,13 @@
 <script lang="ts">
   import { auth } from "$lib/store";
   import { onMount } from "svelte";
-  import { slide } from "svelte/transition";
   import api from "$lib/api";
   import ProblemDisplayLarge from "$lib/components/problem/ProblemDisplayLarge.svelte";
-  import ProblemDisplayList from "$lib/components/problem/ProblemDisplayList.svelte";
   import type { Problem } from "$lib/types";
   import ProblemDisplayListSmall from "$lib/components/problem/ProblemDisplayListSmall.svelte";
   import { Button } from "flowbite-svelte";
   import { goto } from "$app/navigation";
+  
 
   $: publicSpaces = [];
   let pageInnerWidth: number;
@@ -16,6 +15,7 @@
   let me = $auth.loggedInUser;
   let myProblems: Problem[] = [];
   let loading = true
+
   onMount(() => {
     loadPublicSpaces();
     if ($auth.loggedInUser) {

@@ -85,7 +85,7 @@
             <i class="fas fa-home text-xs" />
           </svelte:fragment>
         </SidebarItem>
-        <SidebarItem
+        <!-- <SidebarItem
           label="Seed Ideas"
           href="/ideas"
           on:click={() => (hideSideBar = true)}
@@ -111,9 +111,9 @@
           <svelte:fragment slot="icon">
             <i class="fa-solid fa-industry" />
           </svelte:fragment>
-        </SidebarItem>
+        </SidebarItem> -->
         {#if loggedInUser}
-          <SidebarItem
+          <!-- <SidebarItem
             label="Notifications"
             href="/notifications"
             on:click={() => (hideSideBar = true)}
@@ -121,7 +121,7 @@
             <svelte:fragment slot="icon">
               <i class="fa-solid fa-bell" />
             </svelte:fragment>
-          </SidebarItem>
+          </SidebarItem> -->
           <SidebarItem
             label="Profile"
             href="/profile/me"
@@ -160,8 +160,8 @@
               </div>
             </a>
 
-            <div class="p-5 px-7 space-x-2 flex text-xs hidden md:block">
-              <a href="/ideas" class="hover:bg-primary-600 rounded-xl p-2 px-3">
+            <!-- <div class="p-5 px-7 space-x-2 flex text-xs hidden md:block">
+              <a href="/idea" class="hover:bg-primary-600 rounded-xl p-2 px-3">
                 <i class="fa-solid fa-lightbulb text-xs mr-1" />
                 Seed Ideas
               </a>
@@ -180,7 +180,7 @@
                 <i class="fa-solid fa-industry text-xs mr-1" />
                 Sectors
               </a>
-            </div>
+            </div> -->
           </div>
 
           <a
@@ -194,7 +194,7 @@
 
         <div class="hidden md:block">
           <div class="justify-end p-5 px-7 space-x-4 flex text-xs">
-            {#if loggedInUser}
+            <!-- {#if loggedInUser}
               <NotificationMenu />
               <div class=" m-1 mx-3">
                 <UserMenuItem user={loggedInUser} />
@@ -209,7 +209,7 @@
                   Login
                 </a>
               </div>
-            {/if}
+            {/if} -->
           </div>
         </div>
       </div>

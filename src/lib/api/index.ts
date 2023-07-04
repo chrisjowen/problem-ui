@@ -29,5 +29,6 @@ export default {
     soon: new RestApi('/api/soon'),
     answer:  answerApi,
     aiProblem: aiProblemApi,
-    news: new RestApi('/api/feed')
+    news: new RestApi('/api/feed'),
+    page: new RestApi('/api/page')
 }

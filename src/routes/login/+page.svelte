@@ -44,6 +44,8 @@
   }
 </script>
 
+
+
 <div class="grid grid-cols-1 md:grid-cols-2 h-screen">
   <div class="bg-primary-700 flex items-center justify-center min-h-[150px]">
     <h1

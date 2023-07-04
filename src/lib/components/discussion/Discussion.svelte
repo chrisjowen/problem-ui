@@ -9,6 +9,8 @@
   import { Button } from "flowbite-svelte";
   import EditableAnswer from '$lib/components/discussion/EditableAnswer.svelte';
   import TagList from '../shared/TagList.svelte';
+  import UserList from '../user/UserList.svelte';
+  import _ from 'lodash';
   let refreshEditor: any;
   let discussion: Discussion;
   let answer = "";
@@ -44,11 +46,13 @@
     await api.discussion.answer(discussionId).update(answer.id, answer);
     loadDiscussion()
   }
+
+  $: contributers = _.uniqBy(discussion?.answers.map((a) => a.user).concat(discussion?.user) || [], "id");
 </script>
 {#if discussion}
 
-
-  <div class="flex-1 max-w-[1000px] md:m-4">
+<div  class="block lg:flex">
+  <div class="flex-1 xl:min-w-[1000px] max-w-[1000px] md:m-4">
       <div class="border bg-white mb-2 md:mb-4 pb-4">
         <DiscussionView  {discussion} />
       </div>
@@ -76,13 +80,20 @@
       </section>
       {/if}
   </div>
+  <div class="hidden 2xl:block flex-1 m-4 space-y-4">
+    <h1>Tags</h1>
+    <TagList tags={discussion.tags} editable={false}  />
+
+    <h1>Contributers</h1>
+    <div class="border bg-white p-4">
+      <UserList users={contributers} editable={false}  />
+    </div>
+  </div>
+</div>
 
 <!-- <div class="flex">
 
-  <div class="hidden md:block">
-    <h1>Tags</h1>
-    <TagList tags={discussion.tags} editable={false}  />
-  </div>
+
 
 </div> -->
 {/if}

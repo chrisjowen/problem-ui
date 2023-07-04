@@ -1,6 +1,7 @@
 <script lang="ts">
   import NewsList from "$lib/components/news/NewsList.svelte";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
+  import Tip from "$lib/components/problem/Tip.svelte";
   import type { Problem } from "$lib/types";
   import { Button } from "flowbite-svelte";
 
@@ -8,7 +9,11 @@
 </script>
 
 <ProblemLayout bind:problem>
+
   {#if problem}
+  <Tip title="Related News">
+    Keep up to date with the latest news related to your problem statment. To tweak your newsfeed see the 
+  </Tip>
     <div class="flex mx-4 mt-4">
       <h1 class="flex-1 items-end flex text-xl text-primary-600">
         Related News

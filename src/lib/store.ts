@@ -18,13 +18,30 @@ export const auth = writable(authValue)
 export const notifications = writable(null)
 
 
+const dismissedTips = browser ? JSON.parse(window.localStorage.getItem('tips') || '[]') : [];
+
+export const tips = writable({
+    dismissed: dismissedTips
+})
+
+export function dismissTip(path: String) {
+    dismissedTips.push(path)
+    tips.update(t => {
+        t.dismissed = dismissedTips
+        return {
+            dismissed: t.dismissed.concat([path])
+        }
+    })
+    window.localStorage.setItem('tips', JSON.stringify(dismissedTips))
+}
+
 export const suggestions = writable({
     features: [],
 });
 
 export const state = writable({
     sectors: null,
-    soons: {entries: [] }
+    soons: { entries: [] }
 });
 export const selectedProblem = writable({})
 

@@ -53,7 +53,7 @@ export function register(registaiton: any) {
     }
 }
 
-function setAuthToken(data: any) {
+export function setAuthToken(data: any) {
     let params = {
         loggedInUser: data.user,
         token: data.token,

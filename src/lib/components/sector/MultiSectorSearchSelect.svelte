@@ -5,7 +5,7 @@
   import HighlightedText from "../shared/HighlightedText.svelte";
   import { imageUrl } from "$lib/util/imageutil";
   import { state } from "$lib/store";
-  
+
   export let initialSectorId: string | number | null = null;
   export let selected: any[] = [];
   export let showSelected = true;
@@ -15,8 +15,7 @@
   let showResults = false;
   let input: any;
 
-  onMount(() => {
-  });
+  onMount(() => {});
 
   $: sorted = sectors?.entries.sort((a: Sector, b: Sector) => {
     if (a.name < b.name) return -1;
@@ -40,10 +39,9 @@
     if (q) loadSectors();
   }
 
-
   let onRemoveSector = (sector: any) => () => {
-    selected = selected.filter(s => s.id !== sector.id)
-  }
+    selected = selected.filter((s) => s.id !== sector.id);
+  };
 </script>
 
 <div class="relative">
@@ -53,7 +51,7 @@
     type="text"
     bind:value={q}
     placeholder="Search for a sector"
-    class="w-full p-4 border border-gray-300 focus:outline-none active:outline-0 focus:ring-0"
+    class="w-full text-sm p-3 border border-gray-300 focus:outline-none active:outline-0 focus:ring-0"
   />
   {#if sectors && showResults}
     <section
@@ -63,13 +61,13 @@
       <ul class="bg-white">
         {#each sorted as sector}
           <li
-            class="flex flex-row p-4 hover:bg-primary-100"
+            class="flex flex-row p-4 hover:bg-primary-100 text-xs items-center cursor-pointer"
             on:click={onAddSector(sector)}
             on:keydown={onAddSector(sector)}
           >
             <img
               src={imageUrl(sector.image, { w: 50, h: 50 })}
-              class="w-6 h-6 mr-2"
+              class="w-6 h-6 mr-2 border"
               alt={sector.name}
             />
             <HighlightedText bind:value={sector.name} {q} />
@@ -81,21 +79,26 @@
 </div>
 
 {#if showSelected}
-{#each selected as sector}
-  <span class="p-2  mt-4 mr-4  border inline-block bg-white">
-    <span class="flex flex-row ">
-      <img
-        src={imageUrl(sector.image, { w: 50, h: 50 })}
-        class="w-6 h-6 mr-2"
-        alt={sector.name}
-      />
-      <p>Sector: {sector.name}</p>
-      <div class="justify-end ml-4 ">
-        <button on:click={onRemoveSector(sector)}  class="px-2 hover:text-red-500 ">
-          <i class="fa fa-close " />
-        </button>
-      </div>
+  {#each selected as sector}
+    <span class=" mt-2 mr-4 group border inline-block bg-white">
+      <span class="flex flex-row text-xs">
+        <div class="px-2 flex items-center">
+          <img
+            src={imageUrl(sector.image, { w: 50, h: 50 })}
+            class="w-7 h-7  m-1 border"
+            alt={sector.name}
+          />
+        </div>
+
+        <p class="flex items-center p-2">{sector.name}</p>
+        <div
+          class="justify-end ml-4 p-2 flex hover:bg-red-400 hover:text-white"
+        >
+          <button on:click={onRemoveSector(sector)} class="px-2">
+            <i class="fa fa-close" />
+          </button>
+        </div>
+      </span>
     </span>
-  </span>
-{/each}
+  {/each}
 {/if}

@@ -51,17 +51,18 @@
     <StatusIndicator bind:warning bind:loading={checking} bind:valid />
   </div>
   <div class="mb-4 flex-1">
+    <h1>Describe Your SolveSpace's Core Problem To Solve</h1>
     <div class="border">
       <textarea
         on:keydown={onTyping}
         on:click={onTyping}
         bind:value={blurb}
-        class="h-[350px]
+        class="h-[200px] md:h-[350px]
           w-full focus:outline-none border-0 bg-white active:outline-0 focus:ring-0"
       />
     </div>
-    <p class="text-xs">
-      <LengthChecker bind:input={blurb} maxLength={600} minLength={125} />
+    <p class="text-xs pt-4">
+      <LengthChecker bind:input={blurb} maxLength={500} minLength={100} />
     </p>
 
     {#if !valid}

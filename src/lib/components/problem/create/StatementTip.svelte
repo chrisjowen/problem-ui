@@ -64,13 +64,13 @@
   <p class="mt-2">
     <strong>Hey there,</strong>
   </p>
-    <p>Im the SolveSpace Creation AI wizzard, I'm
+    <p>I'm
     here to help you create a space where you can work on your idea and build the
     next unicorn.
   </p>
   <div class="p-2 md:p-4 rounded-lg text-center bg-gray-50 border">
     <p>
-      Tell me your idea take a look at our <a href="/ideas">
+      Tell me your idea take a look at our <a href="/idea">
         <i class="fa fa-lightbulb ml-2 text-yellow-400" />
         AI generated ideas
       </a> for inspiration.

@@ -3,7 +3,7 @@
   import MultiSectorSearchSelect from "$lib/components/sector/MultiSectorSearchSelect.svelte";
   import StatementTip from "$lib/components/problem/create/StatementTip.svelte";
   import type { Sector } from "$lib/types";
-  import { Button, StepIndicator } from "flowbite-svelte";
+  import { Button, Input, Label, StepIndicator } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { state } from "$lib/store";
   import { redirectIfNotLoggedIn } from "$lib/util/authUtil";
@@ -12,6 +12,7 @@
   import StatusIndicator from "$lib/components/problem/create/StatusIndicator.svelte";
   import ProblemCreateSteps from "$lib/components/problem/create/ProblemCreateSteps.svelte";
   import { page } from "$app/stores";
+  import { goto } from "$app/navigation";
 
   onMount(redirectIfNotLoggedIn);
 
@@ -25,11 +26,11 @@
   let steps = [
     "Step 1 - Describe Your Idea",
     "Step 2 - Select The Relevent Sectors",
-    "Step 3 - Sit Back And Relax",
   ];
   let form = {
     blurb: "",
     sectors: [],
+    title: ""
   };
 
   onMount(() => {
@@ -43,15 +44,15 @@
     }
   });
 
-  function buildTemplate() {
-    currentStep = 3;
-    api.workflow
-      .template({
+
+  function createProblem() {
+    api.problem
+      .create({
+        ...form,
         sector_ids: form.sectors.map((s: any) => s.id),
-        statement: form.blurb,
       })
       .then(async (res) => {
-        watch(res.data.trace_id);
+        goto(`/problem/show/${res.data.id}`);
       });
   }
 
@@ -81,7 +82,7 @@
         class="p-4 m-4 prose prose-h2:m-0 text-sm bg-white mb-2 md:hidden rounded-xl flex flex-shrink-0"
       >
         <div class="flex items-start flex-shrink-0 mx-6 hidden md:block">
-          <img src="/img/ai.png" class="h-[60px] " alt="robot" />
+          <img src="/img/ai.png" class="h-[60px]" alt="robot" />
         </div>
         <div>
           {#if currentStep == 1 || currentStep == 2}
@@ -99,8 +100,21 @@
       </div>
 
       {#if currentStep == 1 || currentStep == 2}
+      <section class="flex p-4">
+        <div class="hidden md:block">
+          <StatusIndicator
+            valid={form.title.length > 5}
+          />
+        </div>
+
+        <div class="flex-1">
+          <Label>Title</Label>
+          <Input type="text" bind:value={form.title} />
+        </div>
+      </section>
+
         <BlurbInput
-          bind:onCheck={onCheck}
+          bind:onCheck
           bind:blurb={form.blurb}
           bind:check
           bind:checking={isChecking}
@@ -108,23 +122,27 @@
         />
         {#if currentStep == 2}
           <section class="flex p-4">
-            <StatusIndicator
-              warning={form.sectors.length == 0}
-              valid={form.sectors.length > 0}
-            />
+            <div class="hidden md:block">
+              <StatusIndicator
+                warning={form.sectors.length == 0}
+                valid={form.sectors.length > 0}
+              />
+            </div>
+
             <div class="flex-1">
+              <h1>Select Relevent Sectors</h1>
               <MultiSectorSearchSelect bind:selected={form.sectors} />
             </div>
           </section>
-          <div class="p-8">
+          <div class="p-4 md:p-8">
             <Button
               color="primary"
               class=" w-full"
               disabled={form.sectors.length == 0}
-              on:click={buildTemplate}
+              on:click={createProblem}
             >
-            <i class="fas fa-robot mr-2"></i>
-              Generate My SolveSpace
+              <i class="fas fa-robot mr-2" />
+              Generate My Idea
             </Button>
           </div>
         {/if}
@@ -143,12 +161,15 @@
           {#if currentStep == 1 || currentStep == 2}
             <StatementTip {check} bind:checking={isChecking} bind:sector />
           {:else if createdProblemId == null}
-            <h2>Your problem is being created!</h2>
+            <h2>Your SolveSpace is being created!</h2>
             <p>You can sit back and relax while I do the heavy lifting.</p>
           {:else}
-            <h2>Congratulations, Your Problem Has Been Created</h2>
-            <p>
-              <a href="/problem/show/{createdProblemId}">View Problem</a>
+            <h2>Congratulations, Your SolveSpace Has Been Created</h2>
+            <p class="p-4 bg-primary-100">
+              <a href="/problem/show/{createdProblemId}">
+                <i class="fas fa-robot mr-2" />
+                View SolveSpace</a
+              >
             </p>
           {/if}
         </AiHelper>

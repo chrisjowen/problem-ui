@@ -86,7 +86,7 @@
         />
       </Label>
       <Label class="space-y-2">
-        <span>Notes</span>
+        <span>Pages</span>
         <Textarea
           name="notes"
           class="h-[200px]"

@@ -30,11 +30,8 @@
     $page.params.id && reload();
   }
   $: {
-    if (
-      problem &&
-      $state?.soons?.entries?.length > 0
-    ) {
-      setTimeout(makeMenu, 100)
+    if (problem && $state?.soons?.entries?.length > 0) {
+      setTimeout(makeMenu, 100);
     }
   }
 
@@ -45,7 +42,7 @@
       !force
     ) {
       problem = $selectedProblem;
-      makeMenu()
+      makeMenu();
     } else {
       api.problem
         .get($page.params.id, [
@@ -60,73 +57,68 @@
         .then((res) => {
           $selectedProblem = res.data;
           problem = res.data;
-          makeMenu()
+          makeMenu();
         });
     }
   }
 
-
   function makeMenu() {
+    if(!problem) return;
     let additional = ($state.soons?.entries || []).map((soon: any) => {
-        return {
-          title: soon.title,
-          icon: soon.icon,
-          href: `/problem/show/${problem.id}/comingsoon/${soon.id}`,
-          comingSoon: true,
-        };
-      });
+      return {
+        title: soon.title,
+        icon: soon.icon,
+        href: `/problem/show/${problem.id}/comingsoon/${soon.id}`,
+        comingSoon: true,
+      };
+    });
 
-      menuItems = [
-        {
-          title: "Overview",
-          icon: "fa-solid fa-rocket ",
-          href: `/problem/show/${problem.id}`,
-        },
-        {
-          title: "News",
-          icon: "fas fa-newspaper",
-          href: `/problem/show/${problem.id}/news`,
-        },
-
-        {
-          title: "Discussions",
-          icon: "fa-solid fa-comment ",
-          href: `/problem/show/${problem.id}/discussion`,
-        },
-        {
-          title: "Notes",
-          icon: "fas fa-file ",
-          href: `/problem/show/${problem.id}/page`,
-        },
-        // {
-        //   title: "Customer Insights",
-        //   icon: "fa-solid fa-people-arrows",
-        //   href: `/problem/show/${problem.id}/customers`,
-        // },
-        {
-          title: "Resources",
-          icon: "fa fa-link ",
-          href: `/problem/show/${problem.id}/links`,
-        },
-        {
-          title: "Contributors",
-          icon: "fa fa-user-plus",
-          href: `/problem/show/${problem.id}/users`,
-        },
-        ...additional,
-        {
-          title: "Activity",
-          icon: "fas fa-rss ",
-          href: `/problem/show/${problem.id}/feed`,
-        },
-      ];
+    menuItems = [
+      {
+        title: "Overview",
+        icon: "fa-solid fa-rocket ",
+        href: `/problem/show/${problem.id}`,
+      },
+      {
+        title: "News",
+        icon: "fas fa-newspaper",
+        href: `/problem/show/${problem.id}/news`,
+      },
+      {
+        title: "Discussions",
+        icon: "fa-solid fa-comment ",
+        href: `/problem/show/${problem.id}/discussion`,
+      },
+      {
+        title: "Pages",
+        icon: "fas fa-file ",
+        href: `/problem/show/${problem.id}/page`,
+      },
+      // {
+      //   title: "Customer Insights",
+      //   icon: "fa-solid fa-people-arrows",
+      //   href: `/problem/show/${problem.id}/customers`,
+      // },
+      {
+        title: "Resources",
+        icon: "fa fa-link ",
+        href: `/problem/show/${problem.id}/links`,
+      },
+      {
+        title: "Contributors",
+        icon: "fa fa-user-plus",
+        href: `/problem/show/${problem.id}/users`,
+      },
+      ...additional,
+      {
+        title: "Activity",
+        icon: "fas fa-rss ",
+        href: `/problem/show/${problem.id}/feed`,
+      },
+    ];
   }
 
-
   let path = $page.url.pathname;
-
- 
-
   function checkPath(item: any) {
     if (!problem) return false;
     let base = `/problem/show/${problem.id}`;
@@ -205,6 +197,7 @@
       </h2>
     </div>
   {:else}
+
     <slot />
   {/if}
 </LeftMenuLayout>

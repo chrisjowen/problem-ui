@@ -37,6 +37,15 @@
     <div class="m-6">
       <Label class="block mb-2">Tags</Label>
       <TagList bind:tags={page.tags} />
+
+      <Label class="block mb-2">Slug</Label>
+      <Input type="text"  bind:value={page.slug} />
+
+
+
+
+      <Label class="block mb-2">Scope</Label>
+      {page.scope || "PAGE"}
     </div>
   </div>
 

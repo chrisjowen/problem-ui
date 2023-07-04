@@ -8,6 +8,10 @@
   import _ from "lodash";
   import { imageUrl } from "$lib/util/imageutil";
   import UserProfileDisplay from "$lib/components/user/UserProfileDisplay.svelte";
+  import type { PageData } from "./$types";
+
+
+
 
   let me = $auth.loggedInUser;
   let problems: any[] = [];
@@ -61,6 +65,7 @@
 </script>
 
 {#if me}
+
   <div class="flex h-full">
     <section
       id="leftMenu"

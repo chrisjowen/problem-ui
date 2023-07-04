@@ -14,8 +14,8 @@
       state: "loading",
       message: {
         idle: "Building problem template",
-        loading: "Creating Solve Space - This may take a few minutes",
-        done: "Problem created",
+        loading: "<i class='fa-solid fa-robot mx-2'></i> Creating Solve Space  This may take a few minutes",
+        done: "SolveSpace created, <i class='fa-solid fa-robot mx-2'></i> ill be busy in the background but for now <i class='fa-solid fa-rocket mx-2'></i> <a href='/problem/show/${problemId}' class='underline text-primary-700'>View Space</a> " ,
       },
     },
 
@@ -110,20 +110,20 @@
 
 
 <div>
-  <ul class="space-y-9">
+  <ul class="space-y-9 text-sm">
     {#each Object.entries(steps) as [stepName, step]}
       <li class="flex {step.state == "idle" ? "hidden" : ""} ">
         <span class="mr-9">
           {#if step.state == "done"}
-            <i class="fa fa-check-circle text-green-400 text-4xl" />
+            <i class="fa fa-check-circle text-green-400 text-xl lg:text-xl" />
           {:else if step.state == "loading"}
-            <i class="fas fa-spinner fa-spin text-gray-400 text-4xl" />
+            <i class="fas fa-spinner fa-spin text-gray-400 text-xl lg:text-xl" />
           {:else}
-            <i class="fa fa-circle text-gray-400 text-4xl" />
+            <i class="fa fa-circle text-gray-400 text-xl lg:text-xl" />
           {/if}
         </span>
         <span class="mt-1">
-          {step.state == "done" ? step.message.done : step.message.loading}
+          {@html step.state == "done" ? step.message.done : step.message.loading}
         </span>
       </li>
     {/each}
