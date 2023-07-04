@@ -29,35 +29,35 @@
   };
 </script>
 
-<div style="background:#245cd6" class="h-full">
+<div  class="h-full">
   <!-- HERO -->
   <div
-    class="max-w-[2000px] hero bg-primary-600 h-full flex flex justify-center  m-auto"
+    class="max-w-[2000px] bg-white  old:bg-primary-600 h-full flex flex justify-center  m-auto"
   >
     <div
       class="lg:mt-[100px] mt-[50px] w-[80%] lg:w-[900px] md:w-[50%]  z-20"
     >
       <h1
-        class="text-white font-bold lg:text-7xl text-6xl bold  mb-9"
+        class="font-bold lg:text-7xl text-6xl bold  mb-9"
       >
-        <span class="text-primary-300">
+        <span class="text-primary-600">
           CrowdSolve Is Pivoting!!
         </span> <br /> Come Back Soon
       </h1>
 
       <div class="prose">
         <h1>Whats The Story?</h1>
-        <p class="text-white text-xl l  mb-9 ">
+        <p class=" text-xl l  mb-9 ">
           When I first setout to build CrowdSolve I envisioned something, and then went full steam ahead building. 
           Obviously, this was an aweful approach and one that the next version of CrowdSolve will actively help people to avoid. 
         </p>
 
-        <p class="text-white text-xl mb-9 ">
+        <p class=" text-xl mb-9 ">
           Right now I am regathering my thoughts and will be back soon with a new version of CrowdSolve that will help people validate their ideas before they build them. 
           Exactly what I should have done intially 🤦‍♂️
         </p>
 
-        <p class="text-white text-xl mb-9 ">
+        <p class="text-xl mb-9 ">
           Thanks, Chris
         </p>
 
