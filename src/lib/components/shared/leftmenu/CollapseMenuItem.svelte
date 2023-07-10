@@ -19,24 +19,26 @@
   }
 </script>
 
-<li>
+<li >
   <div
-    class="flex items-center m-1 {selected?.href == item.href && 'bg-gray-100' }  {open
-      ? ''
-      : ''} rounded-lg hover:text-primary-600"
+    class="flex  items-center m-1 flex-shrink-0 {selected?.href == item.href &&
+      'bg-gray-100'}  {open ? '' : ''} rounded-lg hover:text-primary-600 items-center md:text-xs"
   >
     {#if item.children?.length > 0}
       {#if open}
-        <i class="fas fa-chevron-down pl-2 text-xs" />
+        <i class="fas fa-chevron-down pl-2 mr-2 hidden" />
       {:else}
-        <i class="fas fa-chevron-right pl-2 text-xs" />
+        <i class="fas fa-chevron-right pl-2 mr-2 hidden" />
       {/if}
-      {:else}
-        <span class="mr-4"></span>
+    {:else}
+      <span class="mr-4 hidden" />
     {/if}
-    <a href={item.virtual ? item.children[0].href : item.href} class="flex-1 block md:text-sm md:p-3 text-xs ">
+    <a
+      href={item.virtual ? item.children[0].href : item.href}
+      class="flex flex-1 block md:text-sm md:p-3 items-center flex-shrink-0 p-2 md:p-0"
+    >
       {#if item.icon}
-        <i class="{item.icon} lg:mr-2" />
+        <i class="{item.icon} mr-2" />
       {/if}
       <div class="md:inline">
         {item.title}
@@ -46,7 +48,9 @@
   {#if item.children && open}
     <div class="ml-3">
       {#each item.children as child}
-        <CollapseMenuItem item={child} {selected} />
+        <ul>
+          <CollapseMenuItem item={child} {selected} />
+        </ul>
       {/each}
     </div>
   {/if}

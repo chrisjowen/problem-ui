@@ -12,9 +12,9 @@
 
 <IdeaShell bind:problem>
   {#if problem}
-    <div class="p-4">
-      <div class="border p-4 bg-white relative">
-        {#if problem.products}
+    <div>
+      <div class="border-b-[1px] p-4 bg-white relative">
+        {#if problem.products?.length > 0}
           {#each problem.products as product}
             <a
               class="flex p-4 hover:bg-primary-100"
@@ -39,9 +39,11 @@
               </div>
             </a>
           {/each}
+        {:else}
+          No Competition Identified
         {/if}
       </div>
-      <div class="flex justify-end mt-4">
+      <div class="flex justify-end mt-4 px-2">
         <Button href="./competition/create" size="xs">
           <i class="fas fa-plus mr-2" />
           Competition</Button

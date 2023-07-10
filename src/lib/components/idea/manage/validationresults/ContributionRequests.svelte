@@ -43,7 +43,7 @@
   </Modal>
 {/if}
 
-<div class="bg-white mx-8 mb-4 border prose max-w-none">
+<div class="bg-white border prose max-w-none">
   {#if problem.contribution_requests.length > 0}
     <table>
       <tr class="bg-gray-100 border-b-[1px]">

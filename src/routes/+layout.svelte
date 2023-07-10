@@ -90,6 +90,21 @@
             <i class="fas fa-home text-xs" />
           </svelte:fragment>
         </SidebarItem>
+
+
+        <SidebarItem
+        label="Your Ideas"
+        href="/idea/me"
+        on:click={() => (hideSideBar = true)}
+      >
+        <svelte:fragment slot="icon">
+          <i class="fas fa-lightbulb text-xs" />
+        </svelte:fragment>
+
+        
+
+      </SidebarItem>
+
         <!-- <SidebarItem
           label="Seed Ideas"
           href="/ideas"

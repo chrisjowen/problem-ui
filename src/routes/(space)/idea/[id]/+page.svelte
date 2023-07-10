@@ -10,12 +10,14 @@
 
 <IdeaShell bind:problem>
   {#if problem}
-    <div class="flex p-4">
-      <div class="max-w-[800px] m-2">
-        <IdeaValidationView {problem} editable={true} />
-      </div>
-      <div>
-        <ProblemCard {problem} readOnly={true} />
+    <div class="md:p-4">
+      <div class="md:flex">
+        <div class="max-w-[800px] mr-4">
+          <IdeaValidationView {problem} editable={true} />
+        </div>
+        <div class="hidden lg:block">
+          <ProblemCard {problem} readOnly={true} />
+        </div>
       </div>
     </div>
   {/if}

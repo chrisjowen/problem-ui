@@ -23,7 +23,7 @@
         checking = false;
         validationResult = response.data;
         console.log(validationResult)
-        if (!validationResult.error && validationResult.score > 70) {
+        if (!validationResult.error && validationResult.score >= 70) {
           valid();
         }
       });

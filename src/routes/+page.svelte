@@ -27,14 +27,14 @@
       <h1
         class="text-white font-bold lg:text-7xl text-6xl bold text-center mb-9"
       >
-       So You've Got An Awesome Startup Idea?
+        So You've Got An Awesome Startup Idea?
       </h1>
       <h2
         class="text-primary-300 mb-9 font-bold lg:text-5xl text-4xl bold text-center"
       >
         Before building it, first validated it with the crowd!
       </h2>
-      <div class="flex flex-row justify-center mb-9 md:my-[100px] ">
+      <div class="flex flex-row justify-center mb-9 md:my-[100px]">
         <a
           href="/idea/create"
           class="bg-white
@@ -51,7 +51,9 @@
             py-4
             px-8"
         >
-          <i class="fas fa-lightbulb text-gray-200 group-hover:text-yellow-300 mr-2" />
+          <i
+            class="fas fa-lightbulb text-gray-200 group-hover:text-yellow-300 mr-2"
+          />
           Validate Your Idea
         </a>
       </div>
@@ -64,7 +66,11 @@
     <div class="flex-1">
       <h2 class="text-xl font-bold my-2">Trending Ideas</h2>
     </div>
-    <a href="/idea/" color="light" class="hover:bg-gray-50 px-2 text-xs rounded-lg  flex items-center">
+    <a
+      href="/idea/"
+      color="light"
+      class="hover:bg-gray-50 px-2 text-xs rounded-lg flex items-center"
+    >
       <i class="fas fa-lightbulb text-yellow-300 mx-2" />
       Explore All Ideas
       <i class="fas fa-chevron-right text-gray-500 mx-2" />
@@ -72,10 +78,9 @@
   </div>
   <div class="noscroll flex overflow-auto w-full flex-shrink-0 my-2">
     {#each problems as problem}
-      <ProblemCard {problem} />
+        <ProblemCard {problem} className="mr-4" />
     {/each}
   </div>
- 
 </div>
 
 <style lang="scss">

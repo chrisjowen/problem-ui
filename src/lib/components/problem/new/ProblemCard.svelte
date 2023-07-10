@@ -10,6 +10,8 @@
   export let problem: Problem;
   export let readOnly: boolean = false;
 
+  export let className = ""
+
   let windowWidth = 0;
 
   $: maxBlurb = windowWidth > 650 ? 400 : 100;
@@ -26,7 +28,7 @@
   on:click={validate}
   class="group 
   {readOnly ? 'cursor-default' : 'hover:drop-shadow-lg'}
-   drop-shadow-sm text-left w-[280px] md:w-[330px] m-2 bg-white border rounded-lg shrink-0 flex flex-col"
+   drop-shadow-sm text-left w-[280px] md:w-[330px] {className} bg-white border rounded-lg shrink-0 flex flex-col"
   in:fade
 >
   <div class="w-full">

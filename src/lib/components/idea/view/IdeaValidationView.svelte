@@ -130,7 +130,7 @@
       <IdeaCompetitors {problem} />
     </div>
 
-    <div class="mb-[200px] md:hidden">Empty space</div>
+    <div class="mb-[200px] invisible">Empty space</div>
   </div>
   {#if !editable}
     <div class="shrink-0 w-[370px] p-4 relative hidden md:block h-full">

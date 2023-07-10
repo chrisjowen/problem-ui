@@ -111,7 +111,7 @@
       <h2 class="text-xl font-bold my-2">Latest</h2>
       <div class="noscroll flex overflow-auto w-full flex-shrink-0 my-2">
         {#each latest as problem}
-          <ProblemCard {problem} />
+          <ProblemCard className="mr-4" {problem} />
         {/each}
       </div>
 
@@ -119,7 +119,7 @@
         <h2 class="text-xl font-bold my-4">{sector}</h2>
         <div class="noscroll flex overflow-auto w-full flex-shrink-0 my-2">
           {#each problemsBySector[sector] as problem}
-            <ProblemCard {problem} />
+            <ProblemCard {problem} className="mr-4" />
           {/each}
         </div>
       {/each}

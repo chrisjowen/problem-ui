@@ -18,57 +18,68 @@
       dislikes: problem.votes.filter((v: Vote) => v.liked == false),
       views: 320,
     };
+
+  $: ratio = statistics && {
+    likes:
+      (100 / (statistics.likes.length + statistics.dislikes.length)) *
+      statistics.likes.length || 0,
+    dislikes:
+      (100 / (statistics.likes.length + statistics.dislikes.length)) *
+      statistics.dislikes.length || 0,
+  };
 </script>
 
 {#if statistics}
-  <div class="bg-white py-4">
-    <div class="mx-8 my-4">
-      <div class="grid grid-cols-3 gap-2">
-        <div class=" border p-2 text-center text-green-500 bg-white">
-          <i class="fas fa-thumbs-up text-2xl" />
-          <p class="text-sm mt-2">
-            {statistics?.likes.length} Love It
-          </p>
+  <div class="my-4">
+    <div class="mb-4 space-y-2 w-full text-xl border p-4">
+      <div class="flex items-center">
+        <div class="mr-2 w-[90px] text-green-500">
+            <i class="fas fa-thumbs-up ml-2" /> {ratio.likes}% 
         </div>
+        <div class="flex-1 ">
+          <div style="width: {ratio.likes}%" class="p-5 bg-green-500 text-white flex items-center">
+          </div>
+        </div>
+      </div>
 
-        <div class=" border p-2 text-center text-red-500 bg-white">
-          <i class="fas fa-thumbs-down text-2xl" />
-          <p class="text-sm mt-2">
-            {statistics?.dislikes.length} Hate It
-          </p>
+      <div class="flex items-center">
+        <div class="mr-2 w-[90px] text-red-500">
+            <i class="fas fa-thumbs-down ml-2" /> {ratio.dislikes}% 
         </div>
-
-        <div class="border p-2 text-center text-primary-500 bg-white">
-          <i class="fa-solid fa-comment text-2xl" />
-          <p class="text-sm mt-2">
-            {problem?.comments?.length} Comments
-          </p>
+        <div class="flex-1 ">
+          <div style="width: {ratio.dislikes}%" class="p-5 bg-red-500 text-white flex items-center">
+          </div>
         </div>
+      
       </div>
     </div>
 
-    <h1 class="mx-8 mb-4">Votes</h1>
+
+  </div>
+
+  <div class="mb-4">
+    <h1 class="mb-4">Votes</h1>
     <ValidationVotes {problem} />
+  </div>
 
-    <h1 class="mx-8 mb-4">Contribution Requests</h1>
+  <h1 class="mb-4">Comments</h1>
+  <div class="bg-white border mb-4 p-4">
+    {#if problem.comments.length > 0}
+      {#each problem.comments as comment}
+        <CommentView {comment} readOnly={true} />
+      {/each}
+    {:else}
+      No Comments Yet
+    {/if}
+  </div>
+
+  <div class="mb-4">
+    <h1 class="mb-4">Contribution Requests</h1>
     <ContributionRequests {problem} />
+  </div>
 
-    <!-- 
-
-  <h1 class="mx-8 mb-4">Users Will Pay</h1>
-  <div class="p-6 mx-8 mb-4 border bg-white">
+  <!-- <h1 class="mb-4">Users Will Pay</h1>
+  <div class="p-6 mb-4 border bg-white">
     <PriceChart {problem} />
   </div> -->
-
-    <h1 class="mx-8 mb-4">Comments</h1>
-    <div class="bg-white border mx-8 mb-4 p-4">
-      {#if problem.comments.length > 0}
-        {#each problem.comments as comment}
-          <CommentView {comment} readOnly={true} />
-        {/each}
-      {:else}
-        No Comments Yet
-      {/if}
-    </div>
-  </div>
 {/if}
