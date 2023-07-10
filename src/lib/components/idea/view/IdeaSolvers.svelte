@@ -22,7 +22,7 @@
     <p class="text-gray-500 text-xs">@{user.username}</p>
 
     <p class="prose">
-      {user.profile?.intro || ""}
+      {@html user.profile?.intro || ""}
     </p>
   </div>
 </button>
