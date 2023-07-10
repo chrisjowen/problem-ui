@@ -94,7 +94,7 @@
 
   .hero::before {
     content: "";
-    background-image: url("/img/hero.png");
+    background-image: url("/img/hero.jpg");
     background-size: cover;
     position: absolute;
     top: 0px;
