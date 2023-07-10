@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { children } from "svelte/internal";
   import { page } from "$app/stores";
   import { auth, selectedProblem } from "$lib/store";
   import type { Problem, User } from "$lib/types";
@@ -63,14 +64,19 @@
   let hideMenu = true;
   export let menuItems = [
     {
-      title: "Idea",
+      title: "Ideation",
       icon: "fa-solid fa-lightbulb",
       href: `/idea/${id}`,
+      virtual: true,
       children: [
+        {
+          title: "Preview",
+          icon: "fa-solid fa-eye",
+          href: `/idea/${id}`,
+        },
         {
           title: "Manage",
           icon: "fa-solid fa-edit",
-
           virtual: true,
           children: [
             {
@@ -98,9 +104,30 @@
       ],
     },
     {
-      title: "Validate",
+      title: "Research",
       icon: "fa-solid fa-flask",
       href: `/idea/${id}/manage`,
+      virtual: true,
+      children: [
+        {
+          title: "Idea Validatation",
+          icon: "fa-solid fa-vial-circle-check",
+          href: `/idea/${id}/manage`,
+        },
+      ],
+    },
+    {
+      title: "Collaboration",
+      icon: "fa-solid fa-users",
+      href: `/idea/${id}/tools`,
+      virtual: true,
+      children: [
+        {
+          title: "Resources",
+          icon: "fa fa-link ",
+          href: `/idea/${id}/links`,
+        },
+      ],
     },
 
     // {
