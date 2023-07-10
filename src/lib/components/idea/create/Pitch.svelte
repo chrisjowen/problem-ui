@@ -22,7 +22,8 @@
       api.aiProblem.precheck(value).then((response) => {
         checking = false;
         validationResult = response.data;
-        if (!validationResult.error && validationResult.score < 70) {
+        console.log(validationResult)
+        if (!validationResult.error && validationResult.score > 70) {
           valid();
         }
       });
