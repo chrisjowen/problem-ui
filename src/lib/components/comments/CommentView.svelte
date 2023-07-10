@@ -3,7 +3,9 @@
   import Gravitar from "$lib/components/shared/Gravitar.svelte";
   import CommentForm from "./CommentForm.svelte";
   import { auth } from "$lib/store";
+  import { fromNow } from "$lib/util/datetimeUtil";
   export let comment: any = {};
+  export let readOnly = false;
   let viewMore = false;
   let showEditForm = false;
   let dispatch = createEventDispatcher();
@@ -18,7 +20,7 @@
     }
   }
 
-  $: mine = user?.id === comment.user_id
+  $: mine = user?.id === comment.user_id;
   async function onPostComment(event: any) {
     showEditForm = false;
     dispatch("edit", { ...comment, comment: event.detail });
@@ -30,7 +32,7 @@
   {#if showEditForm}
     <CommentForm on:post={onPostComment} comment={comment.comment} />
   {:else}
-    <div class="pb-2 flex mb-2 " on:click={toggleShowEditForm}>
+    <div class=" flex mb-2" on:click={toggleShowEditForm}>
       <div>
         <Gravitar
           user={comment.user}
@@ -42,7 +44,9 @@
         <p class="text-xs">
           {comment.user.name}
           {comment.user.last_name} -
-          <span class="text-xs text-gray-400"> just now </span>
+          <span class="text-xs text-gray-400">
+            {fromNow(comment.inserted_at)}</span
+          >
         </p>
         {#if viewMore}
           <p class="text-sm py-2">{comment.comment}</p>
@@ -69,10 +73,10 @@
           Like
         </p>
       </div>
-      {#if mine}
-      <div class="flex items-center mr-4 text-xs text-gray-400">
-        <i class="fa fa-edit ml-1" />
-      </div>
+      {#if mine && !readOnly}
+        <div class="flex items-center mr-4 text-xs text-gray-400 mb-2">
+          <i class="fa fa-edit ml-1" />
+        </div>
       {/if}
     </div>
   {/if}

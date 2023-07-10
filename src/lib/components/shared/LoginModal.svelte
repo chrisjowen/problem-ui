@@ -3,7 +3,6 @@
   import { Modal } from "flowbite-svelte";
   import { Input, Button, Alert } from "flowbite-svelte";
   import { login, register, resetToken, setAuthToken } from "$lib/api/auth";
-  import { goto } from "$app/navigation";
   import { browser } from "$app/environment";
   export let open = false;
 
@@ -13,6 +12,7 @@
   let error: null | string = null;
   let oauthUrl = "";
   let showOauth = false;
+
   let registration = {
     email: "",
     password: "",
@@ -34,7 +34,7 @@
         open = false;
       })
       .catch((err) => {
-        error = err;
+        error = err.response?.data.error  || err;
       });
   }
 
@@ -45,7 +45,7 @@
         open = false;
       })
       .catch((err) => {
-        error = err;
+        error = err.response?.data?.error  || err;
       });
   }
 
@@ -76,7 +76,7 @@
         {#if error}
           <div class="m-9">
             <Alert color="red"
-              >{@html error.replace("clear_password:", "Password")}</Alert
+              >{@html error}</Alert
             >
           </div>
         {/if}
@@ -173,7 +173,7 @@
           <div class="p-8 my-8 relative">
             <hr />
             <div class="absolute top-[20px] w-full">
-              <span class="bg-gray-100 px-4 text-gray-400"> OR </span>
+              <span class="bg-gray-100 p-4 rounded-lg text-gray-400 relative left-[-40px]"> OR </span>
             </div>
           </div>
 

@@ -4,13 +4,15 @@
 
   import { auth } from "$lib/store";
   import { createEventDispatcher } from "svelte";
+  import LoginModal from "../shared/LoginModal.svelte";
   export let comment = "";
   export let submitText = "Post";
-  let user = $auth.loggedInUser;
+  $: user = $auth.loggedInUser;
 
   let dispatch = createEventDispatcher();
 
   let hasFocused = false
+  let showLoginModel = false
 
   function onPost() {
     hasFocused = false
@@ -19,7 +21,8 @@
   }
 </script>
 
-{#if user}
+<LoginModal bind:open={showLoginModel} />
+{#if $auth.loggedInUser}
   <section class="pb-4 ">
     <div class="flex">
       <div class="pr-2">
@@ -34,12 +37,16 @@
       </div>
     </div>
     <div class="flex justify-end">
-      <Button size="xs" class="bg-primary-400"  disabled={comment.length < 5 || comment.length >= 255 } on:click={onPost}>
-        <i class="fa fa-comment mr-2 text-xs" />
+      <button   class="border text-xs p-1 rounded-md hover:bg-primary-50 px-2 text-gray-500" disabled={comment.length < 5 || comment.length >= 255 } on:click={onPost}>
+        <i class="fa fa-comment mr-1 text-xs" />
         {submitText}  
-      </Button> 
+      </button> 
     </div>
   </section>
   {:else}
-  <a href="/login" class="text-primary-500 underline">Log in</a> to comment
+  <div class="p-4 text-xs flex justify-center">
+    <button on:click={() => showLoginModel = true} class="text-primary-500 underline mr-1">
+      <i class="fa fa-sign-in-alt mr-1" />
+      Log in  to comment</button> 
+  </div>
 {/if}

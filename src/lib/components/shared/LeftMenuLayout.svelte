@@ -79,7 +79,7 @@
   <div class="flex flex-1 flex-row overflow-hidden slide h-full">
     <section
       id="LeftMenu"
-      class="bg-gray-200 border-r-[1px] text-xs {small
+      class="bg-gray-200 text-xs {small
         ? ''
         : 'lg:w-[200px]'}  hidden md:block"
     >
@@ -91,8 +91,8 @@
               class="block p-2 md:text-sm md:p-3 m-1 text-xs md:text-md
                   {small ? 'text-center' : ''} 
                   {item == highlighted
-                ? 'text-primary-500 bg-gray-50'
-                : '  hover:bg-gray-50 hover:text-gray-600  text-gray-400'}"
+                ? 'text-gray-600 bg-gray-50'
+                : '  hover:bg-gray-50 text-gray-400'}"
             >
               {#if item.icon}
                 <i
@@ -116,7 +116,7 @@
             on:click={toggleWidth}
             class="{small
               ? 'text-center'
-              : ''} block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm hover:text-gray-600 hover:bg-gray-100"
+              : ''} block md:text-sm md:p-3 m-1 hover:bg-gray-50 text-gray-400 text-xs md:text-md rounded-sm "
           >
             <i
               class="fas {small

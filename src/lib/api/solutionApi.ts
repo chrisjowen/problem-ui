@@ -1,16 +1,17 @@
-import RestApi from "./common/restApi";
+import type { Discussion } from "$lib/types";
+import RestApi, { UntypedRestApi } from "./common/restApi";
 
-class SolutionApi extends RestApi {
+class SolutionApi extends UntypedRestApi {
     constructor() {
         super('/api/solution');
     }
 
     comments(solutionId: string) {
-        return new RestApi(`/api/solution/${solutionId}/comment`);
+        return new UntypedRestApi(`/api/solution/${solutionId}/comment`);
     }
 
     discussion(solutionId: string) {
-        return new RestApi(`/api/solution/${solutionId}/discussion`);
+        return new RestApi<Discussion>(`/api/solution/${solutionId}/discussion`);
     }
 }
 

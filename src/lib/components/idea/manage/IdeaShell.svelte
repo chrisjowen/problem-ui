@@ -1,0 +1,166 @@
+<script lang="ts">
+  import { page } from "$app/stores";
+  import { auth, selectedProblem } from "$lib/store";
+  import type { Problem, User } from "$lib/types";
+  import api from "$lib/api";
+  import LeftMenuLayout from "$lib/components/shared/LeftMenuLayout.svelte";
+  import { fade } from "svelte/transition";
+  import { Toast } from "flowbite-svelte";
+  import CollapseMenu from "$lib/components/shared/leftmenu/CollapseMenu.svelte";
+
+  export let problem: Problem;
+  let reloadStakeholders: () => void;
+  let me: User = $auth.loggedInUser;
+  let id = $page.params.id;
+
+  //   onMount(() => {
+  //     reload();
+  //   })
+
+  let toast: null | string = null;
+  function setToast(message: string) {
+    toast = message;
+    setTimeout(() => {
+      toast = null;
+    }, 3000);
+  }
+
+  export const save =
+    (message: null | string = null) =>
+    async () => {
+      const res = await api.problem.update(problem.id, problem);
+      reload(true, message);
+    };
+
+  export function reload(
+    force: boolean = false,
+    successMessage: null | string = null
+  ) {
+    // debugger
+    // if ($selectedProblem  && !force) return;
+    api.problem
+      .get($page.params.id, [
+        "user",
+        "user.profile",
+        "problem_users",
+        "problem_users.member",
+        "sectors",
+        "stakeholders",
+        "votes",
+        "votes.user",
+        "comments",
+        "comments.user",
+        "contribution_requests",
+        "contribution_requests.user",
+        "products",
+      ])
+      .then((res) => {
+        $selectedProblem = res.data;
+        if (force) {
+          setToast(successMessage || "Idea updated");
+        }
+        problem = res.data;
+      });
+  }
+
+  export let menuItems = [
+    {
+      title: "Idea",
+      icon: "fa-solid fa-lightbulb",
+      href: `/idea/${id}`,
+      children: [
+        {
+          title: "Validate",
+          icon: "fa-solid fa-flask",
+          href: `/idea/${id}/manage`,
+        },
+        {
+          title: "Manage",
+          icon: "fa-solid fa-edit",
+
+          virtual: true,
+          children: [
+            {
+              title: "Basic Details",
+              icon: "fa-solid fa-info-circle",
+              href: `/idea/${id}/manage/details`,
+            },
+            {
+              title: "Problem Statement",
+              icon: "fa-solid fa-triangle-exclamation",
+              href: `/idea/${id}/manage/statement`,
+            },
+            {
+              title: "Stakeholders",
+              icon: "fa-solid fa-people-arrows",
+              href: `/idea/${id}/manage/stakeholders`,
+            },
+            {
+              title: "Competition",
+              icon: "fa-brands fa-product-hunt",
+              href: `/idea/${id}/manage/competition`,
+            },
+          ],
+        },
+      ],
+    },
+
+    // {
+    //   title: "Solution",
+    //   icon: "fa-brands fa-lab",
+    //   href: `/idea/${id}/manage/solution`,
+    //   children: [
+    //     {
+    //       title: "Competition",
+    //       icon: "fa-brands fa-product-hunt",
+    //       href: `/idea/${id}/manage/competition`,
+    //     },
+    //   ],
+    // },
+  ];
+</script>
+
+{#if toast}
+  <div class="relative w-full">
+    <Toast
+      class="absolute
+    z-20
+    right-10
+    top-10 p-4
+    w-full
+  "
+    >
+      <div>
+        <i class="fa-solid fa-info-circle mr-2" />
+      </div>
+      <div>
+        <h1 class="text-xl font-bold text center">
+          {toast}
+        </h1>
+      </div>
+    </Toast>
+  </div>
+{/if}
+
+{#if problem}
+  <div class="md:flex h-full">
+    <div class="w-[250px] bg-gray-200">
+      <CollapseMenu {menuItems} />
+    </div>
+    <div class="flex-1 h-full flex flex-col">
+      <div class="p-4 text-xs text-gray-800 bg-white font-bold border-b-[1px]">
+        <span class=" p-1 px-2 mr-2 bg-primary-800 text-white text-xs">
+          {problem.status}
+        </span>
+        <span>
+          @<a href="/users/{problem.user.username}">{problem.user.username}</a>
+        </span>
+        <span>/</span>
+        <span>{problem.title}</span>
+      </div>
+      <div class="flex-1 overflow-auto">
+        <slot />
+      </div>
+    </div>
+  </div>
+{/if}

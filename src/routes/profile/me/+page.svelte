@@ -9,9 +9,8 @@
   import { imageUrl } from "$lib/util/imageutil";
   import UserProfileDisplay from "$lib/components/user/UserProfileDisplay.svelte";
   import type { PageData } from "./$types";
-
-
-
+  import ProblemCard from "$lib/components/problem/new/ProblemCard.svelte";
+  import MiniProblemCard from "$lib/components/problem/MiniProblemCard.svelte";
 
   let me = $auth.loggedInUser;
   let problems: any[] = [];
@@ -65,53 +64,22 @@
 </script>
 
 {#if me}
-
-  <div class="flex h-full">
-    <section
-      id="leftMenu"
-      class="w-[300px] bg-gray-200 h-full overflow-x-hidden overflow-y-auto flex flex-col hidden md:block"
-    >
-      <div class=" p-4 border-b-[1px]">
-        <Button
-          class=" text-xs w-full"
-          size="xs"
-          on:click={() => goto("/problem/create")}
-          color="light"
-        >
-          <i class="fa-solid fa-rocket mr-2" />
-          Add Problem Space</Button
-        >
-      </div>
-      <h1 class=" text-xl text-primary-600 font-bold px-4">Your Problem Spaces</h1>
-      <ul class="flex-1 overflow-x-hidden overflow-y-auto">
-        {#each filteredProblems as problem}
-          <li>
-            <a
-              href="/problem/show/{problem.id}"
-              class="block p-2 md:text-sm md:p-3 m-2 text-gray-500 text-xs md:text-md rounded-sm hover:text-gray-600 hover:bg-gray-100 flex flex-row flex-shrink-0"
-            >
-              <div class="w-[55px] mr-4">
-                <img
-                  class="h-[40px]"
-                  src={imageUrl(problem.img)}
-                  alt="content"
-                />
-              </div>
-              <div>
-                <span>{(problem.title || "").slice(0, 40)}</span>
-                <span class="bg-gray-100 p-1 border rounded-xl text-xs"
-                  >{problem.membership?.role || "owner"}</span
-                >
-              </div>
-            </a>
-          </li>
-        {/each}
-      </ul>
-    </section>
-
+  <div class="bg-white">
     <section id="MainPane" class="flex-1 overflow-auto">
       <Tabs style="underline" contentClass="p-4">
-        <TabItem open title="Profile">
+        <TabItem open title="My Ideas">
+          <div
+            class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4"
+          >
+            {#each filteredProblems as problem}
+              <a href="/idea/{problem.id}/manage">
+                <MiniProblemCard {problem} />
+              </a>
+            {/each}
+          </div>
+        </TabItem>
+
+        <TabItem title="Profile">
           <UserProfileDisplay user={me} />
         </TabItem>
         <TabItem>
@@ -148,7 +116,7 @@
         </TabItem>
         <TabItem title="Requests">
           <div slot="title" class="flex items-center gap-2">
-            {requested.length} Contribution Request
+            {requested.length} Requests
           </div>
           <section id="Requests" class="flex flex-col m-4">
             {#if requested.length > 0}
@@ -178,11 +146,11 @@
             {/if}
           </section>
         </TabItem>
-        <TabItem title="Notifications">
+        <!-- <TabItem title="Notifications">
           <section id="Feed" class="flex flex-col m-4">
             <NotificationFeedList length={5} />
           </section>
-        </TabItem>
+        </TabItem> -->
       </Tabs>
     </section>
   </div>

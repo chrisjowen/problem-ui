@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import api from "$lib/api";
-  import EditableStakeholder from "$lib/components/customers/EditableStakeholder.svelte";
+  import EditableStakeholder from "$lib/components/idea/manage/EditableStakeholder.svelte";
   import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
   import type { Stakeholder } from "$lib/types";
   import { onMount } from "svelte";

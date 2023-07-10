@@ -2,9 +2,10 @@
   import { browser } from "$app/environment";
   import { Avatar } from "flowbite-svelte";
   import { MD5 } from "crypto-js";
+  import type { User } from "$lib/types";
 
   export let email = "system@problemworthsolving.com";
-  export let user;
+  export let user : null | User = null;
 
   export let size = "xs";
 

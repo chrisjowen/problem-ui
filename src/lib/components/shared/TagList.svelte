@@ -36,7 +36,7 @@
 </script>
 
 {#if editable}
-  <Input type="text" bind:value={tag} on:keydown={onKeyDown}>
+  <Input type="text" bind:value={tag} on:keydown={onKeyDown} size="lg">
     <button slot="right" on:click={saveTag} color="light">
       <i class="fas fa-plus mr-2 " />
     </button>

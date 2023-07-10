@@ -9,6 +9,14 @@ export const flags = writable({
 const authValue = browser ? JSON.parse(window.localStorage.getItem('auth') || '{}') : {};
 
 
+export let  checkLoggedInUser = () => {
+    debugger
+    if(browser){
+        let authValue = JSON.parse(window.localStorage.getItem('auth') || '{}');
+        auth.set(authValue)
+    }   
+}
+
 export const token = writable(authValue.token)
 
 export const overflow = writable(true)

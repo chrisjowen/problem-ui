@@ -1,6 +1,7 @@
+import type { User } from "$lib/types";
 import RestApi from "./common/restApi";
 
-class UserApi extends RestApi {
+class UserApi extends RestApi<User> {
 
     constructor() {
         super("/api/user");

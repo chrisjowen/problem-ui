@@ -47,11 +47,11 @@
   let selection: any;
   let selectedNode = "";
 
-  $: {
-    if (html && editor && !editable) {
-      refresh()
-    }
-  }
+  // $: {
+  //   if (html && editor && !editable) {
+  //     refresh()
+  //   }
+  // }
   
   $: {
     if (selection) {
@@ -165,7 +165,7 @@
   <div class="flex-1 overflow-y-auto  " on:click={onClickEditor} on:keyup={focus}>
     <slot />
     <div
-      class="{ editable ? "px-8 py-4" : ""}  prose prose-td:p-4 prose-zinc prose-h1:text-gray-600 prose-h2:text-gray-500 prose-li:py-0  prose-h2:mt-0 prose-md max-w-none editor relative"
+      class="{ editable ? "px-8 py-4" : ""}  prose prose-td:p-4 prose-zinc prose-li:py-0  prose-h2:mt-0 prose-md max-w-none editor relative"
     >
       <div class="h-full w-full ProseMirror max-w-[1000px]" bind:this={element} />
     </div>

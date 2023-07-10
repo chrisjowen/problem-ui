@@ -1,5 +1,6 @@
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 import { PUBLIC_PROBLEM_API_PATH } from '$env/static/public'
+import type { PaginationResults } from "$lib/types";
 
 class Client {
     protected baseUrl: string = "";
@@ -20,7 +21,23 @@ class Client {
     }
 }
 
-export default class RestApi {
+
+export interface SearchOptions {
+    page?: number;
+    pageSize?: number;
+    query?: string;
+    qs?: any;
+    preloads?: string[];
+}
+
+
+
+
+export type SearchResponse<T> = Promise<AxiosResponse<PaginationResults<T>>>
+export type ApiReponse<T> = Promise<AxiosResponse<T>>
+
+
+export default class RestApi<T> {
     protected client: Client;
     protected baseUrl: string;
     protected path: string;
@@ -35,21 +52,19 @@ export default class RestApi {
     }
 
 
-    update(id: string, params: any) {
+    update(id: string, params: any) : ApiReponse<T>  {
         if (!this.only.includes("update")) throw new Error("Method not allowed")
         return this.client.put(`/${id}`, params)
     }
 
-    create(params: any) {
+    create(params: any) : ApiReponse<T> {
         if (!this.only.includes("create")) throw new Error("Method not allowed")
         return this.client.post("/", params)
     }
 
-    get(id: string, preloads: string[] = [])  {
+    get(id: string, preloads: string[] = []) : ApiReponse<T>   {
         if (!this.only.includes("get")) throw new Error("Method not allowed")
-        return this.client.get(`/${id}?preloads=${preloads.join(',')}`).catch(e => {
-            console.error(e)
-        })
+        return this.client.get(`/${id}?preloads=${preloads.join(',')}`)
     }
 
     delete(id: any) {
@@ -57,7 +72,7 @@ export default class RestApi {
         return this.client.delete(`/${id}`)
     }
 
-    search(options: any) {
+    search(options: SearchOptions) : SearchResponse<T>  {
         let page = options.page || 1;
         let pageSize = options.pageSize || 10;
         let query = options.query || 10;
@@ -69,11 +84,13 @@ export default class RestApi {
         return this.client.get(`/?page=${page}&page_size=${pageSize}&query=${query}&preloads=${preloads}&${qs}`)
     }
 
-    list(query: string = "", pageSize: number = 50, page: number = 1, preloads: string[] = []) {
+    list(query: string = "", pageSize: number = 50, page: number = 1, preloads: string[] = []) : SearchResponse<T>  {
         if (!this.only.includes("list")) throw new Error("Method not allowed")
         return this.client.get(`/?page=${page}&page_size=${pageSize}&query=${query}&preloads=${preloads.join(',')}`)
     }
-
-
-
 }
+
+
+export class UntypedRestApi extends RestApi<any> {}
+
+

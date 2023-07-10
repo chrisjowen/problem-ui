@@ -1,5 +1,6 @@
 <script lang="ts">
-  import type { Stakeholder } from "$lib/types/stakeholder.ts";
+  import type { Stakeholder } from "$lib/types";
+
   export let stakeholder: null | Stakeholder = null;
 
   let metrics: any[] = [];
@@ -9,7 +10,7 @@
       metrics = [
         {
           icon: "fa-mars",
-          value: stakeholder.gender,
+          value: stakeholder.gender || "All Genders",
         },
         {
           icon: "fa-hourglass-end",
@@ -19,11 +20,15 @@
         },
         {
           icon: "fa-user-tag",
-          value: stakeholder.traits?.join(", ") || "No specific traits",
+          value: "Interests: " + stakeholder.interests?.join(", ") || "No specific intersts",
+        },
+        {
+          icon: "fa-map",
+          value: (stakeholder.regions?.join(", ") || "All")  + " - regions",
         },
         {
           icon: "fa-globe",
-          value: stakeholder.regions?.join(", ") || "All regions",
+          value: (stakeholder.races?.join(", ") || "All")  + " - ethnicities",
         },
       ];
     }
@@ -31,11 +36,11 @@
 </script>
 
 {#if stakeholder}
-  <div class="flex text-xs gap-2">
+  <div class="flex  flex-wrap text-xs gap-2 wrap">
     {#each metrics as metric}
-      <div class="flex flex-row  p-2 border rounded-lg border-gray-200 items-center">
+      <div class="flex shrink-0 flex-wrap flex-row  p-2 border rounded-lg border-gray-200 items-center">
         <i class="fa {metric.icon} mr-2" />
-        <div class="flex-1">{metric.value || "All"}</div>
+        <div class="flex-1">{metric.value }</div>
       </div>
     {/each}
   </div>

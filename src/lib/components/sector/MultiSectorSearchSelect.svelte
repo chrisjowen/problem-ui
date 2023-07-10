@@ -1,21 +1,29 @@
 <script lang="ts">
   import api from "$lib/api";
-  import { onMount } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import type { PaginationResults, Sector } from "$lib/types";
   import HighlightedText from "../shared/HighlightedText.svelte";
   import { imageUrl } from "$lib/util/imageutil";
   import { state } from "$lib/store";
+  import { Input } from "flowbite-svelte";
+
 
   export let initialSectorId: string | number | null = null;
   export let selected: any[] = [];
   export let showSelected = true;
+  export let color = "light";
+  export let size = "lg";
 
   export let sectors: PaginationResults<Sector> | null = $state.sectors;
+  
+  let dispatch = createEventDispatcher();
   let q = "";
   let showResults = false;
   let input: any;
 
-  onMount(() => {});
+  onMount(() => {
+    loadSectors()
+  });
 
   $: sorted = sectors?.entries.sort((a: Sector, b: Sector) => {
     if (a.name < b.name) return -1;
@@ -33,6 +41,7 @@
   let onAddSector = (s: Sector) => () => {
     showResults = false;
     selected = selected.concat(s);
+    dispatch("change", selected);
   };
 
   $: {
@@ -41,24 +50,30 @@
 
   let onRemoveSector = (sector: any) => () => {
     selected = selected.filter((s) => s.id !== sector.id);
+    dispatch("change", selected);
   };
 </script>
 
 <div class="relative">
-  <input
+  <Input 
+    size={size}
     bind:this={input}
-    on:focus={() => (showResults = true)}
+    on:click={() => (showResults = true)}
     type="text"
     bind:value={q}
     placeholder="Search for a sector"
-    class="w-full text-sm p-3 border border-gray-300 focus:outline-none active:outline-0 focus:ring-0"
-  />
+ 
+  >
+  <div slot="left">
+    <i class="fas fa-search text-gray-400 mr-2" />
+  </div>
+</Input>
   {#if sectors && showResults}
     <section
       id="results"
-      class="absolute w-full z-10 border max-h-[300px] overflow-auto"
+      class="absolute w-full z-10 border border-gray-300 max-h-[300px] overflow-auto"
     >
-      <ul class="bg-white">
+      <ul class="bg-white" on:mouseleave={() => showResults = false}>
         {#each sorted as sector}
           <li
             class="flex flex-row p-4 hover:bg-primary-100 text-xs items-center cursor-pointer"
@@ -80,21 +95,20 @@
 
 {#if showSelected}
   {#each selected as sector}
-    <span class=" mt-2 mr-4 group border inline-block bg-white">
-      <span class="flex flex-row text-xs">
-        <div class="px-2 flex items-center">
+    <span class=" mt-2 mr-2 group border rounded-md inline-block bg-white">
+      <span class="flex flex-row text-sm text-gray-600">
+        <div class="flex items-center">
           <img
             src={imageUrl(sector.image, { w: 50, h: 50 })}
-            class="w-7 h-7  m-1 border"
+            class="w-8 h-8  rounded-lg m-1 border"
             alt={sector.name}
           />
         </div>
-
         <p class="flex items-center p-2">{sector.name}</p>
         <div
-          class="justify-end ml-4 p-2 flex hover:bg-red-400 hover:text-white"
+          class="justify-end ml-4 p-2 rounded-r-lg flex hover:bg-red-400 hover:text-white"
         >
-          <button on:click={onRemoveSector(sector)} class="px-2">
+          <button on:click={onRemoveSector(sector)} class="px-1">
             <i class="fa fa-close" />
           </button>
         </div>

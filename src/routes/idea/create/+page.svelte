@@ -1,111 +1,131 @@
 <script lang="ts">
+  import Solvers from "./../../../lib/components/idea/create/Solvers.svelte";
+  import BasicInfo from "$lib/components/idea/create/BasicInfo.svelte";
+  import Pitch from "$lib/components/idea/create/Pitch.svelte";
+  import Solution from "$lib/components/idea/create/Solution.svelte";
+  import AddBanner from "$lib/components/idea/create/AddBanner.svelte";
+  import type { Problem } from "$lib/types";
   import api from "$lib/api";
-  import MultiSectorSearchSelect from "$lib/components/sector/MultiSectorSearchSelect.svelte";
-  import StatementTip from "$lib/components/problem/create/StatementTip.svelte";
-  import type { Sector } from "$lib/types";
-  import { Button, Input, Label, StepIndicator } from "flowbite-svelte";
-  import { onMount } from "svelte";
-  import { auth, state } from "$lib/store";
-  import { isLoggedIn, redirectIfNotLoggedIn } from "$lib/util/authUtil";
-  import AiHelper from "$lib/components/shared/AiHelper.svelte";
-  import BlurbInput from "$lib/components/problem/create/BlurbInput.svelte";
-  import StatusIndicator from "$lib/components/problem/create/StatusIndicator.svelte";
-  import ProblemCreateSteps from "$lib/components/problem/create/ProblemCreateSteps.svelte";
-  import { page } from "$app/stores";
-  import Editor from "$lib/components/shared/editor/Editor.svelte";
-  import LoginModal from "$lib/components/shared/LoginModal.svelte";
+  import { goto } from "$app/navigation";
 
+  let idx = 1;
   let idea = {
-    title: "",
-    sectors: [],
-    description: "",
+    basicInfo: {
+      title: "",
+      sectors: [],
+    },
+    pitch: "",
+    solution: {
+      description: "",
+      features: [""],
+    },
+    banner: "",
   };
 
-  function onReview() {}
-</script>
+  let validate: () => void;
+  let problem: Problem;
 
-{#if $state?.sectors?.entries?.length > 0}
-  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 h-full">
-    <section id="sector" class="md:bg-white col-span-1 xl:col-span-2">
-      <div class="p-4">
-        <div class="mb-4 border-b-[1px]">
-          <Label>Title</Label>
-          <Input type="text" class="text-xl" bind:value={idea.title} />
-        </div>
+  let steps = [
+    {
+      title: "Lets Get Basic Information",
+      component: BasicInfo,
+      binding: "basicInfo",
+    },
+    {
+      title: "The 10 Second Pitch",
+      component: Pitch,
+      binding: "pitch",
+    },
+    {
+      title: "Who Are The Solvers?",
+      component: Solvers,
+      binding: "solvers",
+    },
+    // {
+    //   title: "How Will You <br /> Solve It?",
+    //   component: Solution,
+    //   binding: "solution",
+    // },
+    {
+      title: "Add Banner",
+      component: AddBanner,
+      binding: "banner",
+    },
+  ];
 
-        <div class="mb-4">
-          <Label>Description</Label>
+  function next() {
 
-          <div class="border h-[300px]">
-            <Editor
-              height="full"
-              bind:html={idea.description}
-              simple={true}
-              showFullscreen={false}
-            />
-          </div>
-        </div>
 
-        <div class="pb-4 mb-4">
-          <Label>Sectors</Label>
+    if (idx < steps.length) {
+      idx = idx + 1;
 
-          <MultiSectorSearchSelect bind:selected={idea.sectors} />
-        </div>
+      if (idx == steps.length && problem == null) {
+        generateProblem()
+      }
 
-        <div class="p-2 border-t-[1px] z-30 flex justify-end">
-          {#if $auth.loggedInUser}
-            <Button size="xs" on:click={onReview}>
-              <i class="fas fa-robot mr-2" />
-              Review My Idea
-            </Button>
-          {:else}
-            <LoginModal let:click>
-              <Button size="xs" on:click={click} color="light">
-                <i class="fas fa-sign-in-alt mr-2" />
-                Login To Submit
-              </Button>
-            </LoginModal>
-          {/if}
-        </div>
-      </div>
-    </section>
-    <seciton
-      id="helper"
-      class="bg-gray-100 flex justify-center items-top col-span-1 min-h-[150px] w-full"
-    >
-      <div class="flex-1 flex w-full hidden md:block">
-        <AiHelper />
-      </div>
-    </seciton>
-  </div>
-{/if}
-
-<style lang="scss">
-  .speech-bubble {
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    min-height: 150px;
-    position: relative;
-
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      right: 50px;
-      width: 0;
-      height: 0;
-      border: 20px solid transparent;
-      border-top-color: white;
-      border-bottom: 0;
-      border-left: 0;
-      margin-left: -10px;
-      margin-bottom: -20px;
+    }
+    else if(problem) {
+      goto(`/idea/${problem.id}/manage`)
     }
   }
-</style>
 
+  function back() {
+    if (idx > 1) {
+      idx = idx - 1;
+    }
+  }
 
-<!-- Earn the write methadolgy -->
-<!-- Vision statement - all rainbows and good news -->
-<!-- Enabling great minds fo find problems worth solving.  -->
+  $: step = steps[idx - 1];
+
+  function generateProblem() {
+    api.problem.create({
+      title: idea.basicInfo.title,
+      blurb: idea.pitch,
+      sector_ids: idea.basicInfo.sectors.map((s) => s.id)
+    }).then((response) => {
+      problem = response.data;
+    });
+  }
+</script>
+
+<div class="md:flex h-screen">
+  <div
+    class="bg-primary-700 flex items-center justify-center h-[150px] md:h-full md:w-[40%]"
+  >
+    <h1
+      class="text-white
+      font-bold
+      lg:text-7xl
+      md:text-5xl
+      text-2xl
+      bold
+      text-center
+      p-5"
+    >
+      {@html step.title}
+    </h1>
+  </div>
+
+  <div class="  mt-9 flex flex-col flex-1">
+    <div class="flex-1 p-4 flex flex-row items-center">
+      <div class="w-full">
+        <svelte:component
+          this={step.component}
+          bind:validate
+          bind:value={idea[step.binding]}
+          on:valid={next}
+        />
+      </div>
+    </div>
+    <div class="flex border-t-[1px] p-4">
+      <button on:click={back}>
+        <i class="fas fa-arrow-left" />
+        Back
+      </button>
+      <div class="flex-1 text-center">{idx} / {steps.length}</div>
+      <button on:click={validate}>
+        Next <i class="fas fa-arrow-right" />
+      </button>
+    </div>
+  </div>
+</div>

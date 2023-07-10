@@ -11,7 +11,6 @@
 
   let dispatch = createEventDispatcher();
   function onSave(): void {
-    debugger;
     dispatch("save", entity);
   }
 </script>

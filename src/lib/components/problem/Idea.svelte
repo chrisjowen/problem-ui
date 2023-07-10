@@ -34,16 +34,5 @@
         </span>
       {/each}
     </div>
-    {#if isMember(problem)}
-      <div class="flex justify-end">
-        <Button
-          color="light"
-          size="xs"
-          on:click={() => goto(`${problem.id}/update`)}
-        >
-          <i class="fa-solid fa-edit mr-2" />
-          Edit</Button
-        >
-      </div>
-    {/if}
+   
   </div>

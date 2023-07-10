@@ -1,8 +1,9 @@
+import type { Answer, Discussion } from "$lib/types";
 import RestApi from "./common/restApi";
 
 
 
-class AnswerApi extends RestApi {
+class AnswerApi extends RestApi<Answer> {
     constructor(discussionId: string) {
         super(`/api/discussion/${discussionId}/answer`);
     }
@@ -12,7 +13,7 @@ class AnswerApi extends RestApi {
 }
 
 
-class DiscussionApi extends RestApi {
+class DiscussionApi extends RestApi<Discussion> {
     constructor() {
         super('/api/discussion');
     }

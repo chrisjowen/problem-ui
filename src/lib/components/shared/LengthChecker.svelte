@@ -1,6 +1,4 @@
 <script>
-  import { max } from "lodash";
-
   export let input = "";
   export let maxLength = 100;
   export let minLength = 25;
@@ -9,10 +7,9 @@
   $: color = () => {
     if (input.length < minLength) {
       valid = false;
-
       return "text-gray-500";
     }
-    if (input.length > minLength && input.length < maxLength) {
+    if (input.length >= minLength && input.length <= maxLength) {
       valid = true;
       return "text-green-500";
     }
@@ -20,16 +17,18 @@
     return "text-red-500";
   };
 
-  $: minReached = input.length > minLength;
-  $: maxReached = input.length > maxLength;
+  $: minReached = input.length >= minLength;
+  $: maxReached = input.length >= maxLength;
 </script>
 
 <span class={color()}>
   {#if !minReached}
-    Add at least {minLength - input.length} more characters
+  <i class="fas fa-info-circle mr-2" />
+    Required {input.length}/{minLength} characters
   {:else if maxReached}
     Oooh, {input.length - maxLength} characters too long
   {:else}
-    No more than {maxLength - input.length} characters more
+    <i class="fas fa-check mr-2" />
+    {maxLength - input.length} characters remaining
   {/if}
 </span>

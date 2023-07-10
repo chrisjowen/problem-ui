@@ -28,10 +28,10 @@
 </script>
 
 <Modal title="Upload Image" bind:open size="xl" class="w-full">
-  <Dropzone id="dropzone" on:drop={onUpload} on:change={onUpload} bind:files>
+  <Dropzone id="dropzone"  on:drop={onUpload} on:change={onUpload} bind:files>
     <svg
       aria-hidden="true"
-      class="mb-3 w-10 h-20 text-gray-400"
+      class="mb-3 w-10 h-20 text-gray-400 text-center m-auto"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"

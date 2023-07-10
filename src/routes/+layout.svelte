@@ -14,6 +14,7 @@
   import UserMenuItem from "$lib/components/user/UserMenuItem.svelte";
   import NotificationMenu from "$lib/components/notification/NotificationMenu.svelte";
   import api from "$lib/api";
+  import LoginModal from "$lib/components/shared/LoginModal.svelte";
 
   let loggedInUser: any = null;
   let hideSideBar = true;
@@ -55,8 +56,13 @@
     };
   });
 
-  $: showNavBar = $page.route.id != "/login";
+  let showLogin = false;
+  let noNav = ["/login", "/idea/create"];
+
+  $: showNavBar = noNav.indexOf($page.route.id) == -1;
 </script>
+
+<LoginModal bind:open={showLogin} />
 
 <Drawer placement="right" bind:hidden={hideSideBar} id="sidebar2">
   <div>
@@ -72,7 +78,6 @@
       >
     </div>
   </div>
-
   <Sidebar>
     <SidebarWrapper divClass="overflow-y-auto p-2 text-gray-700 ">
       <SidebarGroup>
@@ -112,7 +117,7 @@
             <i class="fa-solid fa-industry" />
           </svelte:fragment>
         </SidebarItem> -->
-        {#if loggedInUser}
+        {#if $auth.loggedInUser}
           <!-- <SidebarItem
             label="Notifications"
             href="/notifications"
@@ -160,27 +165,24 @@
               </div>
             </a>
 
-            <!-- <div class="p-5 px-7 space-x-2 flex text-xs hidden md:block">
-              <a href="/idea" class="hover:bg-primary-600 rounded-xl p-2 px-3">
-                <i class="fa-solid fa-lightbulb text-xs mr-1" />
-                Seed Ideas
-              </a>
-
+            <div class="p-5 px-7 space-x-2 flex text-xs hidden md:block">
               <a
                 href="/problem"
                 class="hover:bg-primary-600 rounded-xl p-2 px-3"
               >
-                <i class="fa-solid fa-rocket text-xs mr-1" />
-                SolveSpaces
+                <i class="fa-solid fa-search text-xs mr-1" />
+                Explore
               </a>
-              <a
-                href="/sector"
-                class="hover:bg-primary-600 rounded-xl p-2 px-3"
-              >
-                <i class="fa-solid fa-industry text-xs mr-1" />
-                Sectors
-              </a>
-            </div> -->
+              {#if loggedInUser}
+                <a
+                  href="/idea/me"
+                  class="hover:bg-primary-600 rounded-xl p-2 px-3"
+                >
+                  <i class="fa-solid fa-rocket text-xs mr-1" />
+                  Your Ideas
+                </a>
+              {/if}
+            </div>
           </div>
 
           <a
@@ -194,22 +196,22 @@
 
         <div class="hidden md:block">
           <div class="justify-end p-5 px-7 space-x-4 flex text-xs">
-            <!-- {#if loggedInUser}
-              <NotificationMenu />
+            {#if loggedInUser}
+              <!-- <NotificationMenu /> -->
               <div class=" m-1 mx-3">
                 <UserMenuItem user={loggedInUser} />
               </div>
             {:else}
               <div>
-                <a
-                  href="/login"
+                <button
+                  on:click={() => (showLogin = true)}
                   class="hover:bg-primary-600 rounded-xl p-2 px-3"
                 >
                   <i class="fas fa-sign-in-alt text-xs mr-1" />
                   Login
-                </a>
+                </button>
               </div>
-            {/if} -->
+            {/if}
           </div>
         </div>
       </div>

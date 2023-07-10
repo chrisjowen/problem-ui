@@ -1,19 +1,19 @@
-import RestApi from "./common/restApi";
+import type { Discussion, Problem, Vote } from "$lib/types";
+import RestApi, { UntypedRestApi } from "./common/restApi";
 
-class CommentsApi extends RestApi {
+class CommentsApi extends UntypedRestApi {
     constructor(id: string) {
         super(`/api/problem/${id}/comment`);
     }
 }
 
-class DiscussionApi extends RestApi {
+class DiscussionApi extends RestApi<Discussion> {
     constructor(id: string) {
         super(`/api/problem/${id}/discussion`);
     }
 }
 
-
-class ProblemApi extends RestApi {
+class ProblemApi extends RestApi<Problem> {
 
     constructor() {
         super('/api/problem');
@@ -46,6 +46,12 @@ class ProblemApi extends RestApi {
         return new RestApi(`/api/problem/${id}/stakeholder`);
     }
 
+    products(id: String) {
+        return new RestApi(`/api/problem/${id}/product`);
+    }
+    votes(id: String) {
+        return new RestApi<Vote>(`/api/problem/${id}/vote`);
+    }
 
     members(id: String) {
         return new RestApi(`/api/problem/${id}/member`);
@@ -55,6 +61,9 @@ class ProblemApi extends RestApi {
     }
     invites(id: string) {
         return new RestApi(`/api/problem/${id}/invite`);
+    }
+    contributionRequests(id: string) {
+        return new RestApi(`/api/problem/${id}/contibute_request`);
     }
 
     precheck(statement: string, sector: string) {

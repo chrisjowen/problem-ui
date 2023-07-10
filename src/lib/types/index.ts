@@ -1,3 +1,4 @@
+import type Products from '$lib/components/problem/Products.svelte';
 
 export type { default as PaginationResults } from './paginationResults';
 export type { default as Comment } from './comment';
@@ -10,6 +11,20 @@ export interface Discussion extends IdentifiableSchema, OwnedSchema {
     tags: [],
 }
 
+
+export interface Product extends IdentifiableSchema, OwnedSchema  {
+    name: string;
+    title: string;
+    img: string;
+    description: string;
+    url: string;
+    screenshot: string;
+    match_percent: number;
+    problem_id: number;
+    problem: null;
+    productHuntUrl: string;
+    crunchbaseURL: string;
+  }
 
 
 export interface Expert extends IdentifiableSchema, OwnedSchema {
@@ -52,7 +67,26 @@ export interface Problem  extends IdentifiableSchema, OwnedSchema{
     status: string;
     img: string;
     sectors: Sector[];
+    stakeholders: Stakeholder[];
+    products: Products[];
+    votes: Vote[];
+    contribution_requests: ContributionRequest[];
 }
+
+
+export interface ContributionRequest  extends IdentifiableSchema, OwnedSchema{
+    message: string;
+    capacity: string;
+    problem_id: string;
+}
+
+export interface Vote  extends IdentifiableSchema, OwnedSchema{
+    liked: boolean;
+    comment: string;
+    answers: any;
+    problem_id: string;
+}
+
 
 export interface Link  extends IdentifiableSchema, OwnedSchema{
     text: string;

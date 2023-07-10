@@ -10,7 +10,6 @@
   let userLinks = [
     { name: "Profile", href: "/profile/me" },
     { name: "Logout", href: "/logout" },
-    { name: "Notifications", href: "/notifications" },
   ];
 
   $: showNotifications = $notifications?.entries?.filter(n => !n.read).length > 0;
@@ -18,7 +17,7 @@
 
 <div class="relative top-[-2px]">
   <a href="#stay" on:click={() => (showUserMenu = true)} class="flex">
-    <Gravitar {user} size="md" bind:notifications={showNotifications} className="hover:rounded-sm rounded-lg h-[32px] w-[32px] " />
+    <Gravitar email={user.email} size="md" bind:notifications={showNotifications} className="hover:rounded-sm rounded-lg h-[32px] w-[32px] " />
   </a>
   {#if showUserMenu}
     <div

@@ -1,138 +1,138 @@
 <script lang="ts">
-  import { auth } from "$lib/store";
+  import { slide } from "svelte/transition";
   import { onMount } from "svelte";
   import api from "$lib/api";
-  import ProblemDisplayLarge from "$lib/components/problem/ProblemDisplayLarge.svelte";
-  import type { Problem } from "$lib/types";
-  import ProblemDisplayListSmall from "$lib/components/problem/ProblemDisplayListSmall.svelte";
-  import { Button } from "flowbite-svelte";
-  import { goto } from "$app/navigation";
-  
+  import type { PaginationResults, Problem, Sector } from "$lib/types";
+  import ProblemCard from "$lib/components/problem/new/ProblemCard.svelte";
+  import { Input, Label } from "flowbite-svelte";
+  import MultiSectorSearchSelect from "$lib/components/sector/MultiSectorSearchSelect.svelte";
+  import type { SearchOptions } from "$lib/api/common/restApi";
 
-  $: publicSpaces = [];
-  let pageInnerWidth: number;
-  let listView = false;
-  let me = $auth.loggedInUser;
-  let myProblems: Problem[] = [];
-  let loading = true
+  let activeProblems: PaginationResults<Problem>;
 
+  let showFilters = false;
+  let filters = {
+    q: "",
+    sectors: [],
+  };
   onMount(() => {
-    loadPublicSpaces();
-    if ($auth.loggedInUser) {
-      loadYourSpaces();
-    }
+    searchProblems();
   });
 
-  $: {
-    if (pageInnerWidth < 760) {
-      listView = false;
+  $: problemsBySector = activeProblems?.entries.reduce(
+    (acc: any, problem: Problem) => {
+      problem.sectors.forEach((sector: Sector) => {
+        if (acc[sector.name] == null) {
+          acc[sector.name] = [];
+        }
+        acc[sector.name].push(problem);
+      });
+      return acc;
+    },
+    {}
+  );
+
+  $: latest = activeProblems && activeProblems.entries.slice(0, 5);
+
+  async function searchProblems() {
+    let q = `status=ACTIVE`;
+    if (filters.q != "") {
+      q += `|OR(title[like]=${filters.q}|blurb[like]=${filters.q})`;
     }
-  }
 
-  async function loadPublicSpaces() {
-    let response = await api.problem.list(`public=true`, 9, 1, [
-      "sectors",
-      "user",
-    ]);
-    publicSpaces = response.data.entries;
-  }
+    let sectors = filters.sectors.map((s) => s.id).join(",");
 
-  async function loadYourSpaces() {
-    loading = true;
-    api.user.get(me.id, ["memberships"]).then(async (r) => {
-      me = r.data;
+    console.log(sectors);
 
-      let activeProblemIds = me.memberships
-        .filter((m: any) => m.status == "active")
-        .map((m: any) => m.problem_id)
-        .join(",");
+    let query: SearchOptions = {
+      query: q,
+      qs: {
+        sectors: sectors,
+      },
+      page: 1,
+      pageSize: 100,
+      preloads: ["user", "sectors"],
+    };
 
-      let query = activeProblemIds
-        ? `OR(id[in]=${activeProblemIds}|user_id=${me.id})`
-        : `user_id=${me.id}`;
-
-      let response = await api.problem.list(query, 50, 1, ["sectors", "user"]);
-      myProblems = response.data.entries;
-      loading = false
-    }).catch(e => {
-      loading = false
-    });
+    let response = await api.problem.search(query);
+    activeProblems = response.data;
   }
 </script>
 
-<svelte:window bind:innerWidth={pageInnerWidth} />
-<div class="bg-gray-50 flex flex-col h-full">
-  <div class="flex-1 overflow-auto">
-    <div class="bg-gray-100 border-b-[1px]">
-      <div class="md:flex border-b-[1px] p-2 justify-end">
-        <Button
-          size="xs"
-          class="w-full md:w-auto"
-          on:click={() => goto("/problem/create")}
-        >
-          <i class="fa-solid fa-rocket mr-1" />
-          Create SolveSpace
-        </Button>
-      </div>
-
-      <div class="max-w-[2000px] w-full p-4">
-        <h1 class="text-xl text-gray-600 flex-1">
-          <i class="fa-solid fa-rocket mr-1" />
-          Your Spaces
-        </h1>
-        {#if loading}
-          <div class="p-4 border m-4 bg-white">Loading...
-          </div>
-        {:else if me && myProblems.length > 0}
-          <div
-            class="grid gap-2 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 sm:grid-cols-1 my-4"
-          >
-            {#each myProblems as problem}
-              <div class="inline-block flex w-full">
-                <ProblemDisplayLarge {problem} />
-              </div>
-            {/each}
-          </div>
-        {:else}
-          <div class="bg-white p-4 mt-2 flex border">
-            <div class="mr-4">
-              <img src="/img/ai.png" alt="Helper AI" class="w-32" />
-            </div>
-            <div >
-              <h1 class="text-xl">No Space Created</h1>
-              <p class="text-gray-500 prose max-w-none">
-                You have not created any spaces yet. Spaces are a place where
-                you can collaborate with others to solve problems, build
-                solutions, and share knowledge.
-              </p>
-              <div class="mt-4 ">
-                <Button
-                  class="w-full md:w-auto"
-                  on:click={() => goto("/problem/create")}
-                >
-                  <i class="fa-solid fa-rocket mr-1" />
-                  Create New Space
-                </Button>
-              </div>
-            </div>
-          </div>
-        {/if}
-      </div>
+<div class=" md:p-0 p-8 mt-8">
+  <div class=" max-w-[1200px] mx-auto mb-2">
+    <div class="headers mb-8">
+      <h1 class="text-3xl text-gray-700 font-bold">Explore</h1>
+      <h2 class="text-lg text-gray-500">
+        Find a problem you want to be build, and maybe even get involved and help out solving it. 
+      </h2>
     </div>
-    <div class="px-4">
-      <h1 class="text-lg my-4 text-gray-600 mb-4">
-        <i class="fa-solid fa-rocket mr-1" />
-        Public SolveSpaces
-      </h1>
-      <div class="grid gap-2 grid-cols-1 lg:grid-cols-3 sm:grid-cols-1 f">
-        {#if !publicSpaces || publicSpaces.length == 0}
-          <p>Loading...</p>
-        {/if}
 
-        {#each publicSpaces as problem}
-          <ProblemDisplayListSmall {problem} />
-        {/each}
+    <div class="flex">
+      <div class="flex-1">
+        <Input
+          type="search"
+          bind:value={filters.q}
+          size="lg"
+          on:keyup={searchProblems}
+        >
+          <i slot="left" class="fa-solid fa-search" />
+        </Input>
       </div>
+
+      <button
+        on:click={() => (showFilters = !showFilters)}
+        class="flex border-gray-300 bg-white border p-2 px-4 ml-2 rounded-lg items-center"
+      >
+        Filters
+        <i class="fa-solid fa-filter ml-2" />
+      </button>
     </div>
   </div>
+
+  {#if showFilters}
+    <div class="bg-white my-8 border" transition:slide>
+      <div class="max-w-[1200px] mx-auto py-12">
+        <div>
+          <Label>Sectors</Label>
+          <MultiSectorSearchSelect
+            bind:selected={filters.sectors}
+            on:change={searchProblems}
+          />
+        </div>
+      </div>
+    </div>
+  {/if}
+
+  <div
+    class="max-w-[1200px] mx-auto 0 overflow-hidden w-full flex flex-col h-full"
+  >
+    {#if problemsBySector != null}
+      <h2 class="text-xl font-bold my-2">Latest</h2>
+      <div class="noscroll flex overflow-auto w-full flex-shrink-0 my-2">
+        {#each latest as problem}
+          <ProblemCard {problem} />
+        {/each}
+      </div>
+
+      {#each Object.keys(problemsBySector) as sector}
+        <h2 class="text-xl font-bold my-4">{sector}</h2>
+        <div class="noscroll flex overflow-auto w-full flex-shrink-0 my-2">
+          {#each problemsBySector[sector] as problem}
+            <ProblemCard {problem} />
+          {/each}
+        </div>
+      {/each}
+    {/if}
+  </div>
 </div>
+
+<style>
+  :global(.noscroll) {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  :global(.noscroll::-webkit-scrollbar) {
+    display: none;
+  }
+</style>

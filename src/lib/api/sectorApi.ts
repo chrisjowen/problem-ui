@@ -1,6 +1,7 @@
+import type { Sector } from "$lib/types";
 import RestApi from "./common/restApi";
 
-class SectorApi extends RestApi {
+class SectorApi extends RestApi<Sector> {
 
     constructor() {
         super('/api/sector');

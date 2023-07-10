@@ -1,6 +1,6 @@
 import RestApi from "./common/restApi";
 
-class ProductApi  extends RestApi{
+class ProductApi  extends RestApi<Product>{
 
     constructor() {
         super('/api/product');

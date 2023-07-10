@@ -32,7 +32,6 @@
   }
 
   let onUserSelected = (user: User) => async () => {
-    debugger;
     await api.problem
       .members(problem.id)
       .create({ member_id: user.id, role: "contributor" });

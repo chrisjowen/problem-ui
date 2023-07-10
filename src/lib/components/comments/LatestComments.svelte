@@ -24,7 +24,7 @@
   function loadComments() {
     api
       .comments(id)
-      .list("", 4, 0, ["user"])
+      .list("", 3, 0, ["user"])
       .then((res: AxiosResponse<PaginationResults<Comment>>) => {
         pagination = res.data;
       });
