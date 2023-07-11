@@ -8,6 +8,8 @@
     type MenuItem,
   } from "$lib/components/shared/leftmenu/CollapseMenu.svelte";
   import { onMount } from "svelte";
+  import { connect } from "$lib/channel/socket";
+  import type { Channel } from "phoenix";
 
   export let problem: Problem;
   let reloadStakeholders: () => void;
@@ -34,10 +36,39 @@
     };
 
   onMount(() => {
+    watch();
     loadPages();
     buildMenu()
   });
   export let menuItems : MenuItem[] = [];
+
+
+  async function watch() {
+    if ($auth.loggedInUser) {
+      let channel: Channel = await connect(
+        `user:${$auth.loggedInUser.id}`,
+        $auth.token
+      );
+
+      ["problem:overview:creating", "problem:stakeholders:creating", "problem:image:complete"].map(
+        (event) =>
+          channel.on(event, () => {
+            console.log(event)
+          })
+      );
+
+
+      ["problem:overview:complete", "problem:stakeholders:complete", "problem:image:complete"].map(
+        (event) =>
+          channel.on(event, () => {
+            console.log(event)
+            reload(true, "Problem updated by AI helper");
+          })
+      );
+    }
+  }
+
+ 
 
 
   function loadPages() {
