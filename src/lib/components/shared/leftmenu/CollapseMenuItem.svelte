@@ -25,28 +25,19 @@
     items-center
     m-1
     flex-shrink-0
-    {selected?.href == item.href && 'bg-gray-100 text-primary-600'} 
-    rounded-lg
-    text-gray-500
-    hover:text-primary-600
+    {selected?.href == item.href ? 'bg-primary-600  text-gray-50' : 'hover:bg-primary-100'} 
+    text-gray-400
     items-center
+    ml-3
+    rounded-md
     md:text-xs"
   >
-    {#if item.children?.length > 0}
-      {#if open}
-        <i class="fas fa-chevron-down pl-2 mr-2 hidden" />
-      {:else}
-        <i class="fas fa-chevron-right pl-2 mr-2 hidden" />
-      {/if}
-    {:else}
-      <span class="mr-4 hidden" />
-    {/if}
     <a
       href={item.virtual ? item.children[0].href : item.href}
-      class="flex flex-1 block md:text-sm md:p-3 items-center flex-shrink-0 p-2 md:p-0"
+      class="flex flex-1 block md:text-sm md:p-2 items-center flex-shrink-0 p-2 md:p-0"
     >
       {#if item.icon}
-        <i class="{item.icon} mr-2" />
+        <i class="{item.icon} mr-2 {selected?.href == item.href && '!text-white'}" />
       {/if}
       <div class="md:inline">
         {item.title}

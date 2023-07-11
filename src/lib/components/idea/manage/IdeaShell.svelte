@@ -125,73 +125,73 @@
     menuItems = [
       {
         title: "Idea",
-        icon: "fa-solid fa-lightbulb",
+        icon: "fa-solid fa-lightbulb text-yellow-300",
         virtual: true,
         children: [
           {
             title: "Preview",
-            icon: "fa-solid fa-eye",
+            icon: "fa-solid fa-eye text-gray-400",
             href: `/idea/${id}`,
           },
 
           {
-            title: "Basic Details",
-            icon: "fa-solid fa-info-circle",
+            title: "Basic Details ",
+            icon: "fa-solid fa-info-circle text-blue-400",
             href: `/idea/${id}/manage/details`,
           },
           {
             title: "Problem Statement",
-            icon: "fa-solid fa-triangle-exclamation",
+            icon: "fa-solid fa-triangle-exclamation text-red-400",
             href: `/idea/${id}/manage/statement`,
           },
           {
             title: "Stakeholders",
-            icon: "fa-solid fa-people-arrows",
+            icon: "fa-solid fa-people-arrows  text-green-400",
             href: `/idea/${id}/manage/stakeholders`,
           },
           {
             title: "Similar Products",
-            icon: "fa-brands fa-product-hunt",
+            icon: "fa-brands fa-product-hunt text-orange-400",
             href: `/idea/${id}/manage/competition`,
           },
         ],
       },
       {
         title: "Research",
-        icon: "fa-solid fa-flask",
+        icon: "fa-solid fa-flask text-yellow-400" ,
         virtual: true,
         children: [
           {
             title: "Crowd Validatation",
-            icon: "fa-solid fa-vial-circle-check",
+            icon: "fa-solid fa-vial-circle-check text-blue-600",
             href: `/idea/${id}/manage`,
           },
         ],
       },
       {
         title: "Collaborate",
-        icon: "fa-solid  fa-user-group",
+        icon: "fa-solid  fa-user-group text-pink-400",
         href: `/idea/${id}/tools`,
         virtual: true,
         children: [
           {
             title: "Members",
-            icon: "fa-solid fa-users",
+            icon: "fa-solid fa-users text-gray-700",
             href: `/idea/${id}/users`,
           },
           {
             title: "Resources",
-            icon: "fa fa-link ",
+            icon: "fa fa-link text-blue-700",
             href: `/idea/${id}/links`,
           },
           {
             title: "Discussions",
-            icon: "fa fa-comment ",
+            icon: "fa fa-comment  text-green-700",
             href: `/idea/${id}/discussion`,
           },
           {
             title: "Notes",
-            icon: "fa fa-file ",
+            icon: "fa fa-file text-red-400",
             href: `/idea/${id}/note`,
             children: notes,
           },
@@ -249,7 +249,12 @@
 
 {#if problem}
   <div class="md:flex h-full">
-    <div class="w-[250px] bg-gray-200">
+    
+    <div class="w-[250px] bg-white border-r-[1px]">
+      <a class="border-b-[1px] p-5  text-xs w-full block font-bold text-gray-600 hidden md:block hover:bg-primary-600 hover:text-gray-50" href="/idea/me">
+        <i class="fa-solid fa-arrow-left mr-2" />
+         Back To Your Ideas
+      </a>
       <CollapseMenu {menuItems} bind:hidden={hideMenu} />
     </div>
     <div class="flex-1 h-full flex flex-col">
