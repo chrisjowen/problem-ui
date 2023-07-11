@@ -14,6 +14,8 @@
 </script>
 
 <div class=" m-4">
+{#if profile}
+
   <section id="UserOverview" class="flex">
     <div class=" mr-8 ">
       <Gravitar {user} className="rounded-full bg-white border m-auto" size="lg" />
@@ -44,7 +46,6 @@
     </div>
   </section>
 
-  {#if profile}
     <section id="Overview" class="space-y-4 mt-4">
       
 
