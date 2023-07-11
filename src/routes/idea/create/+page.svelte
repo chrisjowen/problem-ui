@@ -54,21 +54,16 @@
   ];
 
   function next() {
-
-
     if (idx < steps.length) {
       idx = idx + 1;
-
       if (idx == steps.length && problem == null) {
         generateProblem()
       }
-
     }
     else if(problem) {
       goto(`/idea/${problem.id}/manage`)
     }
   }
-
   function back() {
     if (idx > 1) {
       idx = idx - 1;
@@ -88,7 +83,7 @@
   }
 </script>
 
-<div class="md:flex h-screen">
+<div class="flex flex-col md:flex-row h-screen">
   <div
     class="bg-primary-700 flex items-center justify-center h-[150px] md:h-full md:w-[40%]"
   >
@@ -107,7 +102,7 @@
   </div>
 
   <div class="  mt-9 flex flex-col flex-1">
-    <div class="flex-1 p-4 flex flex-row items-center">
+    <div class="flex-1 p-4 flex flex-row md:items-center">
       <div class="w-full">
         <svelte:component
           this={step.component}

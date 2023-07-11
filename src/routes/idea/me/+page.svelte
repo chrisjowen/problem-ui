@@ -40,25 +40,31 @@
   }
 </script>
 
-
 <div class="md:p-8 p-4 bg-white">
-
   {#if filteredProblems.length == 0}
-    <h1 class="text-xl font-bold">You Have No Ideas</h1>
+    <div class="text-center">
+      <h1 class="text-xl font-bold">You Have No Ideas</h1>
 
-
+      <Button
+        class="mt-4"
+        color="primary"
+        size="xl"
+        on:click={() => goto("/idea/create")}
+      >
+        <i class="fas fa-lightbulb mr-2" /> Create One Now!
+      </Button>
+    </div>
   {:else}
+    <h1 class="mb-4 text-xl font-bold">Jump Back In</h1>
 
-  <h1 class="mb-4 text-xl font-bold">Jump Back In</h1>
-
-  <div
-    class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4"
-  >
-    {#each filteredProblems as problem}
-      <a href="/idea/{problem.id}/manage">
-        <MiniProblemCard {problem} />
-      </a>
-    {/each}
-  </div>
+    <div
+      class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4"
+    >
+      {#each filteredProblems as problem}
+        <a href="/idea/{problem.id}/manage">
+          <MiniProblemCard {problem} />
+        </a>
+      {/each}
+    </div>
   {/if}
 </div>

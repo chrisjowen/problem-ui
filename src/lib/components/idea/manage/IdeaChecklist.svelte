@@ -16,13 +16,13 @@
 <div class="max-w-none pb-8  bg-white border-b-[1px] flex-1">
 
     <div class="bg-white  ">
-        <div class="bg-orange-50 border-b-[1px]  mb-4 p-4 prose max-w-none prose-slate text-center ">
-          <h1>
+        <div class="bg-orange-50 border-b-[1px]  mb-8 p-4 py-8 prose max-w-none prose-slate text-center ">
+          <h1 class="text-orange-500">
             <i class="fas fa-info-circle text-orange-500 mr-2"></i>
-             Prepare For Validation</h1>
-             <p class="mb-4">
+             Get Ready For Validation</h1>
+             <p class="mb-8">
                 Your idea is currently in <span
-                  class="p-1 px-2 border bg-gray-500 text-white bg-primary-800 font-bold"
+                  class=" text-primary-800 font-bold"
                   >{problem.status}</span
                 > mode and wont yet appear on the validation search.
               </p>
@@ -78,7 +78,7 @@
     </div>
 
     <div>
-      <p class="mt-4">
+      <p class="mt-8">
         Once you have completed the above steps, you can begin the validation
         process.
       </p>

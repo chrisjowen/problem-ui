@@ -1,10 +1,11 @@
 <script context="module" lang="ts">
   export interface MenuItem {
     title: string;
-    href: string;
+    href?: string;
     icon?: string;
-    children: MenuItem[];
-    parent: null | MenuItem;
+    children?: MenuItem[];
+    parent?: null | MenuItem;
+    virtual?: boolean;
   }
 </script>
 
@@ -24,17 +25,57 @@
     console.log(flattened);
   });
 
-  let routePath = $page.route.id
-    ?.replace("/(space)", "")
-    .replace("[id]", $page.params.id);
+  $: {
+    if(menuItems) {
+        menuItems = menuItems.map(addParents);
+    }
+  }
 
-  $: selected =
-    routePath &&
-    flattened &&
-    flattened.find((item: MenuItem) => item.href == routePath);
+
+  let path = "/test/[id]/[pageId]"
+
+  
+
+  let routePath = Object.keys($page.params).reduce((acc: string, param: string) => {
+    return acc.replace(`[${param}]`, $page.params[param]);
+  }, $page.route.id!)?.replace("/(space)", "")
+  
+//   $page.route.id
+//     ?.replace("/(space)", "")
+    
+//     .replace("[id]", $page.params.id)
+//     .replace("[pageId]", $page.params.pageId);
+
+
+  $: selected = routePath && flattened && (findExact() || findNearest());
   $: path = (selected && makePath([selected])) || [];
 
+
+  function findExact() {
+    return flattened.find((item: MenuItem) => item.href == routePath)
+  }
+
+  function findNearest() {
+    let nearest =  flattened.filter((item: MenuItem) => {
+        if(!item.href) {
+            return false;
+        }
+        return routePath.includes(item.href)
+    })
+
+    if(nearest.length > 0) {
+        let longest = nearest.sort((a: MenuItem, b: MenuItem) => {
+            return b.href!.length - a.href!.length
+        })[0]
+        return longest
+        
+    }
+    debugger
+    return null
+  }
+
   function makePath(path: MenuItem[]) {
+    flattened = [];
     let itm = path[0];
     if (itm.parent) {
       return makePath([itm.parent, ...path]);
@@ -86,6 +127,7 @@
     {/each}
   </ul>
 </div>
+
 
 <style lang="scss">
   .slide {

@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { children } from "svelte/internal";
   import { page } from "$app/stores";
   import { auth, selectedProblem } from "$lib/store";
   import type { Problem, User } from "$lib/types";
   import api from "$lib/api";
   import { Toast } from "flowbite-svelte";
-  import CollapseMenu from "$lib/components/shared/leftmenu/CollapseMenu.svelte";
+  import CollapseMenu, {
+    type MenuItem,
+  } from "$lib/components/shared/leftmenu/CollapseMenu.svelte";
+  import { onMount } from "svelte";
 
   export let problem: Problem;
   let reloadStakeholders: () => void;
@@ -30,6 +32,29 @@
       const res = await api.problem.update(problem.id, problem);
       reload(true, message);
     };
+
+  onMount(() => {
+    loadPages();
+    buildMenu()
+  });
+  export let menuItems : MenuItem[] = [];
+
+
+  function loadPages() {
+    api.problem
+      .pages($page.params.id)
+      .list("", 50, 1, ["user"])
+      .then((res) => {
+        notes = res.data?.entries?.map((note) => {
+          return {
+            title: note.title,
+            icon: "fa fa-file",
+            href: `/idea/${id}/note/${note.id}`,
+          };
+        });
+        // buildMenu();
+      });
+  }
 
   export function reload(
     force: boolean = false,
@@ -62,91 +87,105 @@
       });
   }
   let hideMenu = true;
-  export let menuItems = [
-    {
-      title: "Idea",
-      icon: "fa-solid fa-lightbulb",
-      href: `/idea/${id}`,
-      virtual: true,
-      children: [
-        {
-          title: "Preview",
-          icon: "fa-solid fa-eye",
-          href: `/idea/${id}`,
-        },
 
-        {
-          title: "Basic Details",
-          icon: "fa-solid fa-info-circle",
-          href: `/idea/${id}/manage/details`,
-        },
-        {
-          title: "Problem Statement",
-          icon: "fa-solid fa-triangle-exclamation",
-          href: `/idea/${id}/manage/statement`,
-        },
-        {
-          title: "Stakeholders",
-          icon: "fa-solid fa-people-arrows",
-          href: `/idea/${id}/manage/stakeholders`,
-        },
-        {
-          title: "Similar Products",
-          icon: "fa-brands fa-product-hunt",
-          href: `/idea/${id}/manage/competition`,
-        },
-      ],
-    },
-    {
-      title: "Research",
-      icon: "fa-solid fa-flask",
-      href: `/idea/${id}/manage`,
-      virtual: true,
-      children: [
-        {
-          title: "Crowd Validatation",
-          icon: "fa-solid fa-vial-circle-check",
-          href: `/idea/${id}/manage`,
-        },
-      ],
-    },
-    {
-      title: "Collaborate",
-      icon: "fa-solid  fa-user-group",
-      href: `/idea/${id}/tools`,
-      virtual: true,
-      children: [
-        {
-          title: "Members",
-          icon: "fa-solid fa-users",
-          href: `/idea/${id}/users`,
-        },
-        {
-          title: "Resources",
-          icon: "fa fa-link ",
-          href: `/idea/${id}/links`,
-        },
-        // {
-        //   title: "Discussions",
-        //   icon: "fa fa-page ",
-        //   href: `/idea/${id}/notes`,
-        // },
-      ],
-    },
+  export let notes: MenuItem[] = [];
 
-    // {
-    //   title: "Solution",
-    //   icon: "fa-brands fa-lab",
-    //   href: `/idea/${id}/manage/solution`,
-    //   children: [
-    //     {
-    //       title: "Competition",
-    //       icon: "fa-brands fa-product-hunt",
-    //       href: `/idea/${id}/manage/competition`,
-    //     },
-    //   ],
-    // },
-  ];
+  function buildMenu() {
+    menuItems = [
+      {
+        title: "Idea",
+        icon: "fa-solid fa-lightbulb",
+        virtual: true,
+        children: [
+          {
+            title: "Preview",
+            icon: "fa-solid fa-eye",
+            href: `/idea/${id}`,
+          },
+
+          {
+            title: "Basic Details",
+            icon: "fa-solid fa-info-circle",
+            href: `/idea/${id}/manage/details`,
+          },
+          {
+            title: "Problem Statement",
+            icon: "fa-solid fa-triangle-exclamation",
+            href: `/idea/${id}/manage/statement`,
+          },
+          {
+            title: "Stakeholders",
+            icon: "fa-solid fa-people-arrows",
+            href: `/idea/${id}/manage/stakeholders`,
+          },
+          {
+            title: "Similar Products",
+            icon: "fa-brands fa-product-hunt",
+            href: `/idea/${id}/manage/competition`,
+          },
+        ],
+      },
+      {
+        title: "Research",
+        icon: "fa-solid fa-flask",
+        virtual: true,
+        children: [
+          {
+            title: "Crowd Validatation",
+            icon: "fa-solid fa-vial-circle-check",
+            href: `/idea/${id}/manage`,
+          },
+        ],
+      },
+      {
+        title: "Collaborate",
+        icon: "fa-solid  fa-user-group",
+        href: `/idea/${id}/tools`,
+        virtual: true,
+        children: [
+          {
+            title: "Members",
+            icon: "fa-solid fa-users",
+            href: `/idea/${id}/users`,
+          },
+          {
+            title: "Resources",
+            icon: "fa fa-link ",
+            href: `/idea/${id}/links`,
+          },
+          {
+            title: "Discussions",
+            icon: "fa fa-comment ",
+            href: `/idea/${id}/discussion`,
+          },
+          {
+            title: "Notes",
+            icon: "fa fa-file ",
+            href: `/idea/${id}/note`,
+            children: notes,
+          },
+        ],
+      },
+
+      // {
+      //   title: "Solution",
+      //   icon: "fa-brands fa-lab",
+      //   href: `/idea/${id}/manage/solution`,
+      //   children: [
+      //     {
+      //       title: "Competition",
+      //       icon: "fa-brands fa-product-hunt",
+      //       href: `/idea/${id}/manage/competition`,
+      //     },
+      //   ],
+      // },
+    ];
+  }
+
+
+ 
+
+
 </script>
 
 {#if toast}

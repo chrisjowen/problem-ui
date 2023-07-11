@@ -31,10 +31,10 @@
         {:else}
           <div class="bg-white">
             <div
-              class="bg-primary-50 border-b-[1px] mb-4 p-4 prose max-w-none prose-slate rounded-lg text-center"
+              class="bg-primary-50 border-b-[1px] mb-4 p-4 py-8 prose max-w-none prose-slate text-center"
             >
-              <h1>
-                <i class="fas fa-info-circle text-primary-500 mr-2" />
+              <h1 class="text-primary-700">
+                <i class="fas fa-info-circle  mr-2" />
                 Idea Is Being Validated
               </h1>
               <p>
@@ -51,7 +51,7 @@
                 communities to get feedback.
               </p>
 
-              <div class="grid grid-cols-5 gap-4 mt-8">
+              <div class="grid md:grid-cols-3  gap-4 mt-8">
                 <ShareCommunity url="https://www.reddit.com/r/Entrepreneur/" text="/r/Entrepreneur/" />
                 <ShareCommunity url="https://www.reddit.com/r/Startup_Ideas/" text="/r/Startup_Ideas/" />
                 <ShareCommunity url="https://www.facebook.com/groups/startupandentrepreneur/" text="Facebook - startupandentrepreneur" />

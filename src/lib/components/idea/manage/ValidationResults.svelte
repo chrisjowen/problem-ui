@@ -30,10 +30,17 @@
 </script>
 
 {#if statistics}
-  <div class="my-4">
+
+<div class="my-4">
+    <h1 class="mb-4">Votes</h1>
+    <ValidationVotes {problem} />
+  </div>
+
+
+  <div class="mb-4">
     <div class="mb-4 space-y-2 w-full text-xl border p-4">
       <div class="flex items-center">
-        <div class="mr-2 w-[90px] text-green-500">
+        <div class="mr-2 w-[90px] text-green-600">
             <i class="fas fa-thumbs-up ml-2" /> {ratio.likes}% 
         </div>
         <div class="flex-1 ">
@@ -43,25 +50,18 @@
       </div>
 
       <div class="flex items-center">
-        <div class="mr-2 w-[90px] text-red-500">
+        <div class="mr-2 w-[90px] text-red-600">
             <i class="fas fa-thumbs-down ml-2" /> {ratio.dislikes}% 
         </div>
         <div class="flex-1 ">
           <div style="width: {ratio.dislikes}%" class="p-5 bg-red-500 text-white flex items-center">
           </div>
         </div>
-      
       </div>
     </div>
-
-
   </div>
 
-  <div class="mb-4">
-    <h1 class="mb-4">Votes</h1>
-    <ValidationVotes {problem} />
-  </div>
-
+ 
   <h1 class="mb-4">Comments</h1>
   <div class="bg-white border mb-4 p-4">
     {#if problem.comments.length > 0}

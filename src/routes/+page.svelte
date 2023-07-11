@@ -61,25 +61,53 @@
   </div>
 </div>
 <!-- Features  -->
-<div class="max-w-[1200px] m-auto p-4">
-  <div class="flex">
+<div class="max-w-[1200px] m-auto p-4 py-8">
+  <div class="flex items-center">
     <div class="flex-1">
-      <h2 class="text-xl font-bold my-2">Trending Ideas</h2>
+      <h2 class="md:text-xl text-2xl text-primary-800 font-bold ">
+        <i class="fas fa-fire text-yellow-300 mx-2" />
+        Trending Ideas</h2>
     </div>
-    <a
-      href="/idea/"
-      color="light"
-      class="hover:bg-gray-50 px-2 text-xs rounded-lg flex items-center"
-    >
-      <i class="fas fa-lightbulb text-yellow-300 mx-2" />
-      Explore All Ideas
-      <i class="fas fa-chevron-right text-gray-500 mx-2" />
-    </a>
+    <div>
+      <a
+        href="/idea/"
+        class="hover:bg-white p-3 font-bold text-primary-900 text-xs  rounded-lg flex items-center"
+      >
+        <i class="fas fa-lightbulb text-yellow-300 mx-2" />
+        <span>Explore More Ideas</span>
+        <i class="fas fa-chevron-right text-gray-500 mx-2" />
+      </a>
+    </div>
   </div>
-  <div class="noscroll flex overflow-auto w-full flex-shrink-0 my-2">
+  <div class="noscroll flex overflow-auto w-full flex-shrink-0 my-8 pb-[100px]">
     {#each problems as problem}
-        <ProblemCard {problem} className="mr-4" />
+      <ProblemCard {problem} className="mr-4" />
     {/each}
+  </div>
+</div>
+
+<div class="py-9 bg-gray-200">
+  <div class="max-w-[1200px] m-auto text-center xl:px-0 px-6">
+    <h2 class="text-4xl md:text-6xl  font-bold   py-4 text-primary-700">
+      Just Want To Solve Your Idea?
+    </h2>
+    <div class="prose max-w-none text-gray-800 mb-9 md:py-9">
+      <p class="text-lg mdtext-2xl ">
+        Validation is just the start of your journey and your going to need a
+        lot of help along the way.
+
+        <br />
+        This is why we created
+        <strong class="text-primary-800 font-bold">SolveSpaces</strong>
+        a central place to collaborate, find experts move the dial on your startup
+      </p>
+    </div>
+      <SolveSpaceOverview />
+  </div>
+</div>
+<div class="bg-gray-100 py-8 xl:px-0 px-4">
+  <div class="max-w-[1200px] m-auto text-center">
+    <FeatureList />
   </div>
 </div>
 

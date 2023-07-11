@@ -1,59 +1,51 @@
- <script>
+<script>
   import { onMount } from "svelte";
 
-    export let url = "https://www.reddit.com/r/startups";
-    export let text = "/r/startups";
+  export let url = "https://www.reddit.com/r/startups";
+  export let text = "/r/startups";
 
-    let image = "";
-    onMount(() => {
-        image = getImage();
-    });
+  let image = "";
+  onMount(() => {
+    image = getImage();
+  });
 
-    function getImage() {
-        if(url.includes("reddit")) {
-            return "/img/logos/reddit.png";
-        }
-        if(url.includes("facebook")) {
-            return "/img/logos/facebook.png";
-        }
-        if(url.includes("linkedin")) {
-            return "/img/logos/linkedin.webp";
-        }
-        if(url.includes("quora")) {
-            return "/img/logos/quora.png";
-        }
-
-        return `https://image.thum.io/get/${url}`
+  function getImage() {
+    if (url.includes("reddit")) {
+      return "/img/logos/reddit.png";
     }
- </script>
- 
- <div
-    class="border p-3 relative
+    if (url.includes("facebook")) {
+      return "/img/logos/facebook.png";
+    }
+    if (url.includes("linkedin")) {
+      return "/img/logos/linkedin.webp";
+    }
+    if (url.includes("quora")) {
+      return "/img/logos/quora.png";
+    }
+
+    return `https://image.thum.io/get/${url}`;
+  }
+</script>
+
+<a
+  target="_blank"
+  href={url}
+  class="border p-3 relative
     w-full
+    items-center
+    flex
     bg-white
     overflow-hidden
+    text-sm
     rounded-xl
-    hover:shadow-xl
+    hover:shadow-lg
     transition-shadow
-    duration-[0.5s]
+    duration-[0.2s]
     ease-in-out"
-  >
-    <a target="_blank" href="{url}">
-      <div
-        class="w-full h-[100px] overflow-hidden border mb-4 rounded-xl justify-center text-center flex items-center
-        bg-[url('{image}')]
-        "
-      >
-        <object
-          title="{url}"
-          data={image}
-          type="image/png"
-          class="w-full"
-        />
-      </div>
-    </a>
-    <a target="_blank" href="{url}" class="flex items-cente text-xs">
-      <i class="fas fa-external-link-alt mr-2" /> {text}
-    </a>
+>
+  <img class="w-[30px] h-[30px] rounded-full mr-4" src={image} alt={url} />
+  <div class="flex-1">
+    {text}
   </div>
-
+  <i class="fas fa-chevron-right"></i>
+</a>

@@ -19,10 +19,18 @@
   }
 </script>
 
-<li >
+<li>
   <div
-    class="flex  items-center m-1 flex-shrink-0 {selected?.href == item.href &&
-      'bg-gray-100'}  {open ? '' : ''} rounded-lg hover:text-primary-600 items-center md:text-xs"
+    class="flex
+    items-center
+    m-1
+    flex-shrink-0
+    {selected?.href == item.href && 'bg-gray-100 text-primary-600'} 
+    rounded-lg
+    text-gray-500
+    hover:text-primary-600
+    items-center
+    md:text-xs"
   >
     {#if item.children?.length > 0}
       {#if open}
@@ -45,7 +53,7 @@
       </div>
     </a>
   </div>
-  {#if item.children && open}
+  {#if item.children}
     <div class="ml-3">
       {#each item.children as child}
         <ul>

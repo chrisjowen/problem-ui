@@ -67,12 +67,12 @@
       {#if $auth?.loggedInUser}
       <h1 class="text-sm md:text-lg mb-4 mt-4 font-bold ml-2 md:ml-0">Your Reponse</h1>
 
-      <section id="your-answer" class="bg-gray-50 md:p-4 p-3 border mt-4">
+      <section id="your-answer" class="bg-gray-50 border mt-4">
         <div class="border bg-white   h-[400px] ">
           <Editor bind:html={answer}   />
         </div>
-        <div class="flex justify-end mt-4 z-30 relative">
-          <Button size="xs" class="bg-primary-400" on:click={onCreateAnswer}>
+        <div class="flex justify-end  z-30  p-2  relative">
+          <Button size="xs"  on:click={onCreateAnswer}>
             <i class="fas fa-play mr-2" />
             Post Answer
           </Button>

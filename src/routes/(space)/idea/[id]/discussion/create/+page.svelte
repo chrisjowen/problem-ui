@@ -3,30 +3,30 @@
   import { page } from "$app/stores";
   import api from "$lib/api";
   import EditableDiscussion from "$lib/components/discussion/EditableDiscussion.svelte";
-  import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
+  import IdeaShell from "$lib/components/idea/manage/IdeaShell.svelte";
   import type { Discussion, Problem } from "$lib/types";
+  import type { PageData } from "../$types";
 
-  let problem: Problem;
+  export let data: PageData;
+  let problem: Problem = data.problem;
+
   let discussion: Discussion = {
     title: "",
     question: "",
     tags: [],
-    problem_id: $page.params.id
+    problem_id: $page.params.id,
   };
 
-
   function onSave(): void {
-    api.discussion
-      .create(discussion)
-      .then((res) => {
-        discussion = res.data;
-        goto(`/problem/show/${$page.params.id}/discussion/${discussion.id}`)
-      });
+    api.discussion.create(discussion).then((res) => {
+      discussion = res.data;
+      goto(`/idea/${$page.params.id}/discussion/${discussion.id}`);
+    });
   }
 </script>
 
-<ProblemLayout bind:problem>
+<IdeaShell bind:problem>
   {#if discussion}
-    <EditableDiscussion bind:discussion={discussion}  on:save={onSave} />
+    <EditableDiscussion bind:discussion on:save={onSave} />
   {/if}
-</ProblemLayout>
+</IdeaShell>

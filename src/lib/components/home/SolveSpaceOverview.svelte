@@ -4,7 +4,7 @@
 </script>
 
 <div class="space-y-4 mb-4 overflow-hidden w-full">
-  <Saos animation={"from-left 1s  both"} once={true}>
+  <Saos animation={"from-left 0.75s  both"} once={true}>
     <div class="flex">
       <div>
         <Gravitar
@@ -21,7 +21,7 @@
     </div>
   </Saos>
 
-  <Saos animation={"from-right 1.5s  both"} once={true}>
+  <Saos animation={"from-right 1s  both"} once={true}>
     <div class="flex">
       <div class="flex-1">
         <p class="speech-bubble mb-4 bg-white p-8 rounded-xl">
@@ -36,7 +36,7 @@
     </div>
   </Saos>
 
-  <Saos animation={"from-left 2s  both"} once={true}>
+  <Saos animation={"from-left 1.25s  both"} once={true}>
     <div class="flex">
       <div>
         <Gravitar
@@ -53,7 +53,7 @@
     </div>
   </Saos>
 
-  <Saos animation={"from-right 2.5s  both"} once={true}>
+  <Saos animation={"from-right 1.5s  both"} once={true}>
     <div class="flex">
       <div class="flex-1">
         <p class="speech-bubble mb-4 bg-white p-8 rounded-xl">

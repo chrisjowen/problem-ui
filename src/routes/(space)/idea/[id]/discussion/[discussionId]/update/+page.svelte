@@ -3,36 +3,34 @@
   import { page } from "$app/stores";
   import api from "$lib/api";
   import EditableDiscussion from "$lib/components/discussion/EditableDiscussion.svelte";
-  import ProblemLayout from "$lib/components/problem/ProblemLayout.svelte";
+  import IdeaShell from "$lib/components/idea/manage/IdeaShell.svelte";
   import type { Discussion, Problem } from "$lib/types";
   import { onMount } from "svelte";
+  import type { PageData } from "../$types";
 
-  let problem: Problem;
+  export let data: PageData;
+  let problem: Problem = data.problem;
   let discussion: Discussion;
   let discussionId = $page.params.discussionId;
 
   onMount(load);
 
   function load() {
-    api.discussion.get(discussionId)
-      .then((res) => {
-        discussion = res.data;
-      });
+    api.discussion.get(discussionId).then((res) => {
+      discussion = res.data;
+    });
   }
 
-
   function onSave(): void {
-    api.discussion
-      .update(discussionId, discussion)
-      .then((res) => {
-        discussion = res.data;
-        goto(`/problem/show/${$page.params.id}/discussion/${discussionId}`)
-      });
+    api.discussion.update(discussionId, discussion).then((res) => {
+      discussion = res.data;
+      goto(`/problem/show/${$page.params.id}/discussion/${discussionId}`);
+    });
   }
 </script>
 
-<ProblemLayout bind:problem>
+<IdeaShell bind:problem>
   {#if discussion}
-    <EditableDiscussion bind:discussion={discussion} on:save={onSave} />
+    <EditableDiscussion bind:discussion on:save={onSave} />
   {/if}
-</ProblemLayout>
+</IdeaShell>

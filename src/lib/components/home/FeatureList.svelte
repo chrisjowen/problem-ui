@@ -11,7 +11,7 @@
       icon: "fa fa-user-plus ",
     },
     {
-      title: "Sector & Industry News",
+      title: "Follow Industry News",
       overview:
         "Stay up to date with the latest news and trends in your sector and industry.",
       icon: "fas fa-newspaper",
@@ -29,7 +29,7 @@
       icon: "fa fa-link",
     },
     {
-      title: "Collaborative Notes & Pages",
+      title: "Collaborative Notes",
       overview:
         "Document you important findings and share them with the rest of the team",
       icon: "fas fa-file",
@@ -60,43 +60,38 @@
   ];
 </script>
 
-<div class="max-w-[1000px] m-auto">
-  <h2 class="text-2xl md:mb-4 py-4 text-gray-800">Features:</h2>
-
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 m-auto">
   {#each features as feature}
-    <Saos animation={"slide-in-bottom 0.9s both"} once={true}>
-      <div class="flex border bg-white relative p-8 rounded-lg mb-2">
-        {#if feature.coming}
-          <div class="flex justify-end mt-4 absolute md:top-0 md:right-5 right-[5px] top-[-10px]">
-            <p
-              class="bg-gray-400 text-white inline text-xs p-1 px-2 rounded-lg"
-            >
-              Coming Soon
-            </p>
-          </div>
-        {/if}
-        <div>
-          <div
-            class="rounded-full bg-primary-700 md:w-[60px] md:h-[60px] w-[50px] h-[50px] text-gray-100 text-center flex items-center justify-center"
-          >
-            <i class="{feature.icon} text-xl md:text-2xl" />
-          </div>
-        </div>
-        <div class="md:px-8 px-4 flex-1">
-          <h2 class="md:text-2xl text-xl">{feature.title}</h2>
-
-          <p class="text-sm md-text-md">
-            {@html feature.overview}
+    <div class="flex border bg-white relative p-8 rounded-lg">
+      {#if feature.coming}
+        <div
+          class="flex justify-end mt-4 absolute md:top-0 md:right-5 right-[5px] top-[-10px]"
+        >
+          <p class="bg-gray-400 text-white inline text-xs p-1 px-2 rounded-lg">
+            Coming Soon
           </p>
         </div>
+      {/if}
+      <div>
+        <div
+          class="rounded-full bg-primary-700 md:w-[60px] md:h-[60px] w-[50px] h-[50px] text-gray-100 text-center flex items-center justify-center"
+        >
+          <i class="{feature.icon} text-xl md:text-2xl" />
+        </div>
       </div>
-    </Saos>
-  {/each}
+      <div class="md:px-8 px-4 flex-1">
+        <h2 class="md:text-2xl text-xl font-bold">{feature.title}</h2>
 
-  <div class="py-4">
-    <Button class="w-full" size="xl" on:click={() => goto("/problem/create")} >
-      <i class="fas fa-rocket mr-2" />
-      Create Your SolveSpace
-    </Button>
-  </div>
+        <p class="text-sm md-text-md">
+          {@html feature.overview}
+        </p>
+      </div>
+    </div>
+  {/each}
+</div>
+<div class="py-8 text-center">
+  <Button class="m-auto py-4 px-8" size="xl" on:click={() => goto("/idea/create")}>
+    <i class="fas fa-rocket mr-2" />
+    Create Your SolveSpace
+  </Button>
 </div>
