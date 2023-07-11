@@ -64,7 +64,7 @@
   let hideMenu = true;
   export let menuItems = [
     {
-      title: "Ideation",
+      title: "Idea",
       icon: "fa-solid fa-lightbulb",
       href: `/idea/${id}`,
       virtual: true,
@@ -74,32 +74,26 @@
           icon: "fa-solid fa-eye",
           href: `/idea/${id}`,
         },
+
         {
-          title: "Manage",
-          icon: "fa-solid fa-edit",
-          virtual: true,
-          children: [
-            {
-              title: "Basic Details",
-              icon: "fa-solid fa-info-circle",
-              href: `/idea/${id}/manage/details`,
-            },
-            {
-              title: "Problem Statement",
-              icon: "fa-solid fa-triangle-exclamation",
-              href: `/idea/${id}/manage/statement`,
-            },
-            {
-              title: "Stakeholders",
-              icon: "fa-solid fa-people-arrows",
-              href: `/idea/${id}/manage/stakeholders`,
-            },
-            {
-              title: "Competition",
-              icon: "fa-brands fa-product-hunt",
-              href: `/idea/${id}/manage/competition`,
-            },
-          ],
+          title: "Basic Details",
+          icon: "fa-solid fa-info-circle",
+          href: `/idea/${id}/manage/details`,
+        },
+        {
+          title: "Problem Statement",
+          icon: "fa-solid fa-triangle-exclamation",
+          href: `/idea/${id}/manage/statement`,
+        },
+        {
+          title: "Stakeholders",
+          icon: "fa-solid fa-people-arrows",
+          href: `/idea/${id}/manage/stakeholders`,
+        },
+        {
+          title: "Similar Products",
+          icon: "fa-brands fa-product-hunt",
+          href: `/idea/${id}/manage/competition`,
         },
       ],
     },
@@ -110,23 +104,33 @@
       virtual: true,
       children: [
         {
-          title: "Idea Validatation",
+          title: "Crowd Validatation",
           icon: "fa-solid fa-vial-circle-check",
           href: `/idea/${id}/manage`,
         },
       ],
     },
     {
-      title: "Collaboration",
-      icon: "fa-solid fa-users",
+      title: "Collaborate",
+      icon: "fa-solid  fa-user-group",
       href: `/idea/${id}/tools`,
       virtual: true,
       children: [
+        {
+          title: "Members",
+          icon: "fa-solid fa-users",
+          href: `/idea/${id}/users`,
+        },
         {
           title: "Resources",
           icon: "fa fa-link ",
           href: `/idea/${id}/links`,
         },
+        // {
+        //   title: "Discussions",
+        //   icon: "fa fa-page ",
+        //   href: `/idea/${id}/notes`,
+        // },
       ],
     },
 

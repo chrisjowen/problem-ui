@@ -53,6 +53,7 @@
 
   function loadRequests() {
     let allProblemIds = problems?.map((p: any) => p?.id).join(",") || "";
+    if(allProblemIds.length == 0) return;
     api.membership
       .list(`problem_id[in]=${allProblemIds}|status=requested`, 50, 1, [
         "problem",
@@ -64,22 +65,13 @@
 </script>
 
 {#if me}
-  <div class="bg-white">
+  <div>
     <section id="MainPane" class="flex-1 overflow-auto">
-      <Tabs style="underline" contentClass="p-4">
-        <TabItem open title="My Ideas">
-          <div
-            class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4"
-          >
-            {#each filteredProblems as problem}
-              <a href="/idea/{problem.id}/manage">
-                <MiniProblemCard {problem} />
-              </a>
-            {/each}
-          </div>
-        </TabItem>
-
-        <TabItem title="Profile">
+      <div class="p-4">
+        <UserProfileDisplay user={me} />
+      </div>
+      <!-- <Tabs style="underline" contentClass="p-4">
+        <TabItem title="Profile" open>
           <UserProfileDisplay user={me} />
         </TabItem>
         <TabItem>
@@ -116,10 +108,10 @@
         </TabItem>
         <TabItem title="Requests">
           <div slot="title" class="flex items-center gap-2">
-            {requested.length} Requests
+            {requested?.length || 0} Requests
           </div>
           <section id="Requests" class="flex flex-col m-4">
-            {#if requested.length > 0}
+            {#if requested?.length > 0}
               <ul class="flex-1 overflow-x-hidden overflow-y-auto">
                 {#each requested as request}
                   <li class="bg-white border mb-2">
@@ -146,12 +138,12 @@
             {/if}
           </section>
         </TabItem>
-        <!-- <TabItem title="Notifications">
+        <TabItem title="Notifications">
           <section id="Feed" class="flex flex-col m-4">
             <NotificationFeedList length={5} />
           </section>
-        </TabItem> -->
-      </Tabs>
+        </TabItem>
+      </Tabs> -->
     </section>
   </div>
 {/if}

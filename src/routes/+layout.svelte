@@ -60,6 +60,11 @@
   let noNav = ["/login", "/idea/create"];
 
   $: showNavBar = noNav.indexOf($page.route.id) == -1;
+
+  function login() {
+    showLogin = false;
+    setTimeout(() => (showLogin = true), 100);
+  }
 </script>
 
 <LoginModal bind:open={showLogin} />
@@ -91,19 +96,15 @@
           </svelte:fragment>
         </SidebarItem>
 
-
         <SidebarItem
-        label="Your Ideas"
-        href="/idea/me"
-        on:click={() => (hideSideBar = true)}
-      >
-        <svelte:fragment slot="icon">
-          <i class="fas fa-lightbulb text-xs" />
-        </svelte:fragment>
-
-        
-
-      </SidebarItem>
+          label="Your Ideas"
+          href="/idea/me"
+          on:click={() => (hideSideBar = true)}
+        >
+          <svelte:fragment slot="icon">
+            <i class="fas fa-lightbulb text-xs" />
+          </svelte:fragment>
+        </SidebarItem>
 
         <!-- <SidebarItem
           label="Seed Ideas"
@@ -219,7 +220,7 @@
             {:else}
               <div>
                 <button
-                  on:click={() => (showLogin = true)}
+                  on:click={login}
                   class="hover:bg-primary-600 rounded-xl p-2 px-3"
                 >
                   <i class="fas fa-sign-in-alt text-xs mr-1" />

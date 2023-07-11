@@ -59,7 +59,7 @@
   }
 </script>
 
-<div class=" md:p-0 p-8 mt-8">
+<div class=" xl:p-0 p-8 mt-8">
   <div class=" max-w-[1200px] mx-auto mb-2">
     <div class="headers mb-8">
       <h1 class="text-3xl text-gray-700 font-bold">Explore</h1>
@@ -82,7 +82,7 @@
 
       <button
         on:click={() => (showFilters = !showFilters)}
-        class="flex border-gray-300 bg-white border p-2 px-4 ml-2 rounded-lg items-center"
+        class="flex border-gray-300 bg-white border p-2  px-4 ml-2 rounded-lg items-center"
       >
         Filters
         <i class="fa-solid fa-filter ml-2" />
@@ -91,7 +91,7 @@
   </div>
 
   {#if showFilters}
-    <div class="bg-white my-8 border" transition:slide>
+    <div class="bg-white my-8 border  xl:p-0  p-4" transition:slide>
       <div class="max-w-[1200px] mx-auto py-12">
         <div>
           <Label>Sectors</Label>
