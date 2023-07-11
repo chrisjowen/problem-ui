@@ -15,6 +15,7 @@
   import NotificationMenu from "$lib/components/notification/NotificationMenu.svelte";
   import api from "$lib/api";
   import LoginModal from "$lib/components/shared/LoginModal.svelte";
+  import { browser } from "$app/environment";
 
   let loggedInUser: any = null;
   let hideSideBar = true;
@@ -22,6 +23,13 @@
   auth.subscribe((value) => {
     loggedInUser = value.loggedInUser;
   });
+
+
+  $: {
+    if(browser){
+      $page.route.id && document.getElementById("main-pane")?.scrollTo(0, 0);
+    }
+  }
 
   onMount(() => {
     if ($state?.sectors == null) {
@@ -32,6 +40,8 @@
         $state.soons = r.data;
       });
     }
+    console.log(document.getElementById("main-pane"))
+ 
 
     const report_error = (msg: string = "unknown error") => {
       console.error("Caught unhandled rejection:", msg);
@@ -235,6 +245,7 @@
   {/if}
 
   <div
+    id="main-pane"
     class="flex-1 h-full {$overflow ? 'overflow-auto' : 'overflow-hidden'}  "
   >
     <slot />

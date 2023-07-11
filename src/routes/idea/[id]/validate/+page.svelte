@@ -3,9 +3,13 @@
   import api from "$lib/api";
   import ProblemValidationView from "$lib/components/idea/view/IdeaValidationView.svelte";
   import type { Problem } from "$lib/types";
+  import { onMount } from "svelte";
   import type { PageData } from "./$types";
+  import { browser } from "$app/environment";
   export let data: PageData;
   let problem: Problem;
+
+
 
   async function reload() {
     let response = await api.problem
